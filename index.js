@@ -11,5 +11,6 @@ require("dotenv").config();
 
 app.use("/student", require("./routes/student"));
 app.use("/staff", require("./routes/staff"));
+app.use("/auth", require("./routes/auth"));
 
 app.listen(PORT, () => console.log(`The server started on port ${PORT}`));

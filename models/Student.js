@@ -59,6 +59,7 @@ StudentSchema.methods.isValidPassword = async function (plainText) {
     return await compareHash(plainText, this.password);
   } catch (err) {
     console.error(err.message);
+    throw Error("Failed to check if password is valid");
   }
 };
 

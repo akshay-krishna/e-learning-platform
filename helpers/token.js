@@ -9,9 +9,16 @@ const genToken = async (payload) => {
   }
 };
 
+/**
+ * verify the passed token
+ * return false if the token has expired
+ */
 const verifyToken = async (token) => {
   try {
     const decoded = await verify(token, process.env.SECRET);
+    if (Date.now() > decoded.exp) {
+      return false;
+    }
     return decoded;
   } catch (err) {
     console.error(err.message);
