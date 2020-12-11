@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const genPayload = require("../helpers/payload");
 const { genToken } = require("../helpers/token");
+const auth = require("../middleware/auth");
 const Staff = require("../models/Staff");
 
 const router = Router();
@@ -36,7 +37,7 @@ router.post("/", async (req, res) => {
  * *get a staff info
  * TODO: allow only an authenticated user to access their own data
  */
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   const { id } = req.params;
   try {
     const staff = await Staff.findById(id, "-password");
@@ -52,7 +53,7 @@ router.get("/:id", async (req, res) => {
  * *update a user
  * TODO: Only alow authenticated user to update their own data
  */
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const { id } = req.params;
   const { body } = req;
   try {
@@ -71,7 +72,7 @@ router.put("/:id", async (req, res) => {
  * *delete a staff
  * TODO: only allow authenticated user to delete their own data
  */
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   const { id } = req.params;
   try {
     await Staff.findByIdAndDelete(id);

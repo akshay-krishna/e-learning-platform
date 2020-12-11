@@ -9,4 +9,14 @@ const genToken = async (payload) => {
   }
 };
 
-module.exports = { genToken };
+const verifyToken = async (token) => {
+  try {
+    const decoded = await verify(token, process.env.SECRET);
+    return decoded;
+  } catch (err) {
+    console.error(err.message);
+    throw Error("Failed to verify the token");
+  }
+};
+
+module.exports = { genToken, verifyToken };

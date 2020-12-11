@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const genPayload = require("../helpers/payload");
 const { genToken } = require("../helpers/token");
+const auth = require("../middleware/auth");
 const Student = require("../models/Student");
 
 const router = Router();
@@ -32,7 +33,7 @@ router.post("/", async (req, res) => {
  ** Get the id of a student
  * TODO: Make it such that only an authenticated student can access their data
  */
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   const { id } = req.params;
   try {
     const student = await Student.findById(id, "-password");
@@ -51,7 +52,7 @@ router.get("/:id", async (req, res) => {
  * TODO: Make it such that only an authenticated user can updated their data
  */
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const { id } = req.params;
   const { body } = req;
   try {
@@ -71,7 +72,7 @@ router.put("/:id", async (req, res) => {
  * TODO: Make it that only an admin can delete a user
  */
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   const { id } = req.params;
   try {
     await Student.findByIdAndDelete(id);
