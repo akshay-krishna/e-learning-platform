@@ -30,7 +30,7 @@ router.post("/student", async (req, res) => {
 
 /**
  * *authenticate a staff
- *
+ * @params {eduMail, password}
  */
 router.post("/staff", async (req, res) => {
   const { eduMail, password } = req.body;

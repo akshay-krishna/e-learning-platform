@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const genPayload = require("../helpers/payload");
 const { genToken } = require("../helpers/token");
+const admin = require("../middleware/admin");
 const auth = require("../middleware/auth");
 const Staff = require("../models/Staff");
 
@@ -8,8 +9,9 @@ const router = Router();
 
 /**
  * *create a staff
+ * TODO: Make it such that only an admin can create an staff
  */
-router.post("/", async (req, res) => {
+router.post("/", admin, async (req, res) => {
   const { name, password, eduMail } = req.body;
 
   try {
@@ -35,7 +37,6 @@ router.post("/", async (req, res) => {
 
 /**
  * *get a staff info
- * TODO: allow only an authenticated user to access their own data
  */
 router.get("/:id", auth, async (req, res) => {
   const { id } = req.params;
@@ -51,7 +52,6 @@ router.get("/:id", auth, async (req, res) => {
 
 /**
  * *update a user
- * TODO: Only alow authenticated user to update their own data
  */
 router.put("/:id", auth, async (req, res) => {
   const { id } = req.params;
@@ -70,7 +70,6 @@ router.put("/:id", auth, async (req, res) => {
 
 /**
  * *delete a staff
- * TODO: only allow authenticated user to delete their own data
  */
 router.delete("/:id", auth, async (req, res) => {
   const { id } = req.params;

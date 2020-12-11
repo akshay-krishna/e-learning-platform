@@ -10,12 +10,21 @@ const StaffSchema = new Schema({
     required: true,
     type: Schema.Types.String,
   },
-
   eduMail: {
     type: Schema.Types.String,
     required: true,
     unique: true,
   },
+  mails: [
+    {
+      type: Schema.Types.String,
+    },
+  ],
+  phoneNo: [
+    {
+      type: Schema.Types.String,
+    },
+  ],
 });
 
 StaffSchema.pre("save", async function () {

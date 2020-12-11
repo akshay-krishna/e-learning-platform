@@ -17,6 +17,7 @@ const verifyToken = async (token) => {
   try {
     const decoded = await verify(token, process.env.SECRET);
     if (Date.now() > decoded.exp) {
+      console.log("token expired");
       return false;
     }
     return decoded;

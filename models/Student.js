@@ -15,6 +15,20 @@ const StudentSchema = new Schema({
     unique: true,
     required: true,
   },
+  mails: [
+    {
+      type: Schema.Types.String,
+    },
+  ],
+  phoneNo: [
+    {
+      type: Schema.Types.String,
+    },
+  ],
+  semester: {
+    type: Schema.Types.Number,
+    default: 1,
+  },
   //   admitNo: {
   //     type: Schema.Types.Number,
   //     unique: true,
@@ -26,20 +40,6 @@ const StudentSchema = new Schema({
   //   regNo: {
   //     type: Schema.Types.Number,
   //     unique: true,
-  //   },
-
-  //   mails: [
-  //     {
-  //       type: Schema.Types.String,
-  //     },
-  //   ],
-  //   phoneNo: [
-  //     {
-  //       type: Schema.Types.String,
-  //     },
-  //   ],
-  //   semester: {
-  //     type: Schema.Types.Number,
   //   },
   //   department: {
   //     type: Schema.Types.String,

@@ -31,7 +31,6 @@ router.post("/", async (req, res) => {
 
 /**
  ** Get the id of a student
- * TODO: Make it such that only an authenticated student can access their data
  */
 router.get("/:id", auth, async (req, res) => {
   const { id } = req.params;
@@ -49,7 +48,6 @@ router.get("/:id", auth, async (req, res) => {
 
 /**
  * *update a specific user
- * TODO: Make it such that only an authenticated user can updated their data
  */
 
 router.put("/:id", auth, async (req, res) => {
@@ -69,7 +67,6 @@ router.put("/:id", auth, async (req, res) => {
 
 /**
  * *Delete a specific user
- * TODO: Make it that only an admin can delete a user
  */
 
 router.delete("/:id", auth, async (req, res) => {
