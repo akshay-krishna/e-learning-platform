@@ -4,8 +4,9 @@ const Classroom = require("../models/Classroom");
 const Department = require("../models/Department");
 
 const router = Router();
+router.use(admin);
 
-router.get("/", admin, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const departments = await Department.find();
     if (!departments) return res.sendStatus(404);
@@ -19,7 +20,7 @@ router.get("/", admin, async (req, res) => {
 /**
  * Create a new department
  */
-router.post("/", admin, async (req, res) => {
+router.post("/", async (req, res) => {
   let { name } = req.body;
   name = name.toLowerCase();
   try {
@@ -37,7 +38,7 @@ router.post("/", admin, async (req, res) => {
 /**
  * get all the info of a specific department
  */
-router.get("/:id", admin, async (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const department = await Department.findById(id)
@@ -52,7 +53,7 @@ router.get("/:id", admin, async (req, res) => {
 });
 
 // create a classroom under the department given by the id parameter
-router.post("/:id/classroom", admin, async (req, res) => {
+router.post("/:id/classroom", async (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
   try {

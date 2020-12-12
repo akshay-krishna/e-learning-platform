@@ -14,5 +14,6 @@ app.use("/staffs", require("./routes/staff"));
 app.use("/auth", require("./routes/auth"));
 app.use("/department", require("./routes/department"));
 app.use("/classrooms", require("./routes/classroom"));
+app.use("/admins", require("./routes/admin"));
 
 app.listen(PORT, () => console.log(`The server started on port ${PORT}`));

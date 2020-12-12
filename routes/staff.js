@@ -9,53 +9,6 @@ const Staff = require("../models/Staff");
 const router = Router();
 
 /**
- * get all the staffs
- *
- */
-router.get("/", admin, async (req, res) => {
-  try {
-    const staffs = await Staff.find({}, "-password");
-    if (!staffs) return res.sendStatus(404);
-    res.json({ staffs });
-  } catch (error) {
-    console.error(err.message);
-    res.sendStatus(500);
-  }
-});
-
-/**
- * *create a staff
- */
-router.post("/:deptId", admin, async (req, res) => {
-  const { name, password, eduMail } = req.body;
-  const { deptId } = req.params;
-  try {
-    const department = await Department.findById(deptId);
-    if (!department) return res.sendStatus(404);
-    const staff = new Staff({
-      eduMail,
-      name,
-      password,
-      department: deptId,
-    });
-    const savedStaff = await staff.save();
-    department.staffMembers.push(savedStaff.id);
-    await department.save();
-    const payload = genPayload(savedStaff);
-    const token = await genToken(payload);
-
-    res.json({ token, id: savedStaff.id });
-  } catch (err) {
-    console.error(err);
-    if (err.code == 11000) {
-      res.status(409).json(err.keyValue);
-    }
-    console.error(err.message);
-    res.sendStatus(500);
-  }
-});
-
-/**
  * *get a staff info
  */
 router.get("/:id", auth, async (req, res) => {
