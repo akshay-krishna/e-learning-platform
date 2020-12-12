@@ -1,25 +1,31 @@
 const { Router } = require("express");
 const genPayload = require("../helpers/payload");
 const { genToken } = require("../helpers/token");
+const admin = require("../middleware/admin");
 const auth = require("../middleware/auth");
+const Department = require("../models/Department");
 const Student = require("../models/Student");
 
 const router = Router();
 
 /**
  * Create a student
- * TODO: Make it such that only an admin can create students
  */
-router.post("/", async (req, res) => {
+router.post("/:deptId", admin, async (req, res) => {
   const { name, password, eduMail } = req.body;
-
+  const { deptId } = req.params;
   try {
+    const department = await Department.findById(deptId);
+    if (!department) return res.sendStatus(404);
     const student = new Student({
       eduMail,
       name,
       password,
+      department: deptId,
     });
     const savedStudent = await student.save();
+    department.studentMembers.push(savedStudent.id);
+    await department.save();
     const payload = genPayload(savedStudent);
     const token = await genToken(payload);
     res.json({ token, id: savedStudent.id });

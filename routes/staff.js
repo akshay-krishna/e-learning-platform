@@ -3,24 +3,46 @@ const genPayload = require("../helpers/payload");
 const { genToken } = require("../helpers/token");
 const admin = require("../middleware/admin");
 const auth = require("../middleware/auth");
+const Department = require("../models/Department");
 const Staff = require("../models/Staff");
 
 const router = Router();
 
 /**
+ * get all the staffs
+ *
+ */
+
+router.get("/", admin, async (req, res) => {
+  try {
+    const staffs = await Staff.find({}, "-password");
+    if (!staffs) return res.sendStatus(404);
+    res.json({ staffs });
+  } catch (error) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
+
+/**
  * *create a staff
  * TODO: Make it such that only an admin can create an staff
  */
-router.post("/", admin, async (req, res) => {
+router.post("/:deptId", admin, async (req, res) => {
   const { name, password, eduMail } = req.body;
-
+  const { deptId } = req.params;
   try {
+    const department = await Department.findById(deptId);
+    if (!department) return res.sendStatus(404);
     const staff = new Staff({
       eduMail,
       name,
       password,
+      department: deptId,
     });
     const savedStaff = await staff.save();
+    department.staffMembers.push(savedStaff.id);
+    await department.save();
     const payload = genPayload(savedStaff);
     const token = await genToken(payload);
 

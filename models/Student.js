@@ -29,6 +29,10 @@ const StudentSchema = new Schema({
     type: Schema.Types.Number,
     default: 1,
   },
+  department: {
+    type: Schema.Types.ObjectId,
+    ref: "departments",
+  },
   //   admitNo: {
   //     type: Schema.Types.Number,
   //     unique: true,
@@ -40,9 +44,6 @@ const StudentSchema = new Schema({
   //   regNo: {
   //     type: Schema.Types.Number,
   //     unique: true,
-  //   },
-  //   department: {
-  //     type: Schema.Types.String,
   //   },
 });
 

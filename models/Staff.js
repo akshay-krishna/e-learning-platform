@@ -25,6 +25,11 @@ const StaffSchema = new Schema({
       type: Schema.Types.String,
     },
   ],
+
+  department: {
+    type: Schema.Types.ObjectId,
+    ref: "departments",
+  },
 });
 
 StaffSchema.pre("save", async function () {
