@@ -8,6 +8,18 @@ const Student = require("../models/Student");
 
 const router = Router();
 
+//get all students
+router.get("/", admin, async (req, res) => {
+  try {
+    const students = await Student.find({}, "-password");
+    if (!students) return res.sendStatus(404);
+    res.json({ students });
+  } catch (error) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
+
 /**
  * Create a student
  */

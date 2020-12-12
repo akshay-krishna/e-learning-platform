@@ -1,4 +1,5 @@
 const { verifyToken } = require("../helpers/token");
+const Admin = require("../models/Admin");
 
 /**
  * checks if there is a auth header if yes,
@@ -19,7 +20,6 @@ const auth = async (req, res, next) => {
 
   const { sub } = decoded;
   if (!(sub === id)) return res.sendStatus(401);
-
   req.uid = sub;
   next();
 };

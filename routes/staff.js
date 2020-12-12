@@ -12,7 +12,6 @@ const router = Router();
  * get all the staffs
  *
  */
-
 router.get("/", admin, async (req, res) => {
   try {
     const staffs = await Staff.find({}, "-password");
@@ -26,7 +25,6 @@ router.get("/", admin, async (req, res) => {
 
 /**
  * *create a staff
- * TODO: Make it such that only an admin can create an staff
  */
 router.post("/:deptId", admin, async (req, res) => {
   const { name, password, eduMail } = req.body;

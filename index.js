@@ -9,10 +9,10 @@ app.use(express.json());
 require("./config/db")();
 require("dotenv").config();
 
-app.use("/student", require("./routes/student"));
+app.use("/students", require("./routes/student"));
 app.use("/staffs", require("./routes/staff"));
 app.use("/auth", require("./routes/auth"));
 app.use("/department", require("./routes/department"));
-// app.use("/classroom/", require("./routes/classroom"));
+app.use("/classrooms", require("./routes/classroom"));
 
 app.listen(PORT, () => console.log(`The server started on port ${PORT}`));
