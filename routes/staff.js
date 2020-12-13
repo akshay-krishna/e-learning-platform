@@ -32,7 +32,6 @@ router.get("/:id", async (req, res) => {
  *  ?route --> /staffs/:id
  *  @param {body: contains the required updated data}
  *  @access private
- *  TODO: Change the use from the department collection too.
  */
 
 router.put("/:id", async (req, res) => {

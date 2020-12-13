@@ -34,7 +34,6 @@ router.get("/:id", async (req, res) => {
  *  ?route --> /students/:id
  *  @param {body: contains the required updated data}
  *  @access private
- *  TODO: update the user from the department too
  */
 
 router.put("/:id", async (req, res) => {

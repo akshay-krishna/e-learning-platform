@@ -124,7 +124,6 @@ router.get("/staffs", async (req, res) => {
  *  ?route --> /admins/:cid/homeroom
  *  @param {staffId: <id of staff>}
  *  @access private
- *  TODO: add the teacher to the classroom staffMembers
  */
 
 router.put("/:cid/homeroom", admin, async (req, res) => {
@@ -133,6 +132,7 @@ router.put("/:cid/homeroom", admin, async (req, res) => {
   try {
     const classroom = await Classroom.findById(cid);
     classroom.homeRoomTeacher = staffId;
+    classroom.staffMembers.push(staffId);
     await classroom.save();
     res.sendStatus(200);
   } catch (err) {
