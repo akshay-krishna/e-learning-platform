@@ -122,17 +122,38 @@ router.get("/staffs", async (req, res) => {
  *  *set the homeroom teacher
  *  @method PUT
  *  ?route --> /admins/:cid/homeroom
- *  @param {teach: <id of teacher>}
+ *  @param {staffId: <id of staff>}
  *  @access private
  */
 
 router.put("/:cid/homeroom", admin, async (req, res) => {
   const { cid } = req.params;
-  const { teach } = req.body;
+  const { staffId } = req.body;
   try {
     const classroom = await Classroom.findById(cid);
-    classroom.homeRoomTeacher = teach;
+    classroom.homeRoomTeacher = staffId;
     await classroom.save();
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
+
+/**
+ *  *set department head
+ *  @method PUT
+ *  ?route --> /admins/deptId/head
+ *  @param {head: <id of staff>}
+ */
+
+router.put("/:deptId/head", admin, async (req, res) => {
+  const { deptId } = req.params;
+  const { staffId } = req.body;
+  try {
+    const department = await Department.findById(deptId);
+    department.head = staffId;
+    await department.save();
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);

@@ -27,7 +27,7 @@ router.get("/:id", async (req, res) => {
 });
 
 /**
- *  *update a user
+ *  *update a staff
  *  @method PUT
  *  ?route --> /staffs/:id
  *  @param {body: contains the required updated data}

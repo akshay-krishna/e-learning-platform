@@ -64,7 +64,7 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const department = await Department.findById(id)
-      .populate("classrooms staffMembers studentMembers", "-password")
+      .populate("classrooms staffMembers studentMembers head", "-password")
       .exec();
     if (!department) return res.sendStatus(404);
     res.json({ department });

@@ -54,7 +54,7 @@ router.get("/:cid", classCharge, async (req, res) => {
  *  @access private
  */
 
-router.put("/:cid/staffs", async (req, res) => {
+router.put("/:cid/staffs", admin, async (req, res) => {
   const { staffs } = req.body;
   const { cid } = req.params;
   try {
@@ -78,7 +78,7 @@ router.put("/:cid/staffs", async (req, res) => {
  *  @access private
  */
 
-router.put("/:cid/students", async (req, res) => {
+router.put("/:cid/students", classCharge, async (req, res) => {
   const { students } = req.body;
   const { cid } = req.params;
   try {
