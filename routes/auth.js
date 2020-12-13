@@ -3,6 +3,7 @@ const genPayload = require("../helpers/payload");
 const { genToken } = require("../helpers/token");
 const Student = require("../models/Student");
 const Staff = require("../models/Staff");
+const Admin = require("../models/Admin");
 const router = Router();
 
 /**
@@ -46,7 +47,7 @@ router.post("/staff", async (req, res) => {
     if (!staff) return res.sendStatus(404);
 
     const isValidPassword = await staff.isValidPassword(password);
-    if (!isValidPassword) return res.sendStatus(404);
+    if (!isValidPassword) return res.sendStatus(401);
 
     const payload = genPayload(staff);
     const token = await genToken(payload);

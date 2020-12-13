@@ -88,7 +88,7 @@ router.post("/:deptId/staff", async (req, res) => {
  *  @access private
  */
 
-router.get("/student", async (req, res) => {
+router.get("/students", async (req, res) => {
   try {
     const students = await Student.find({}, "-password");
     if (!students) return res.sendStatus(404);
@@ -107,7 +107,7 @@ router.get("/student", async (req, res) => {
  *  @access private
  */
 
-router.get("/", async (req, res) => {
+router.get("/staffs", async (req, res) => {
   try {
     const staffs = await Staff.find({}, "-password");
     if (!staffs) return res.sendStatus(404);

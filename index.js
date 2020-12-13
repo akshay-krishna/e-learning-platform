@@ -7,6 +7,7 @@ app.use(express.json());
 
 // create a connection to the database
 require("./config/db")();
+require("./config/initdb")();
 require("dotenv").config();
 
 app.use("/auth", require("./routes/auth"));

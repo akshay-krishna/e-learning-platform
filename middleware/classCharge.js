@@ -1,5 +1,6 @@
 const { verifyToken } = require("../helpers/token");
 const Admin = require("../models/Admin");
+const Classroom = require("../models/Classroom");
 
 /**
  * checks if there is a auth header if yes,verify it.
@@ -7,23 +8,25 @@ const Admin = require("../models/Admin");
  * it means that the authorized user is not the owner of the requested resource
  */
 
-const auth = async (req, res, next) => {
-  const { id } = req.params;
+const classCharge = async (req, res, next) => {
+  const { cid } = req.params;
   const { authorization } = req.headers;
   if (!authorization) return res.sendStatus(401);
 
   try {
     const decoded = await verifyToken(authorization);
-
     if (!decoded) return res.sendStatus(401);
 
     const { sub } = decoded;
-
+    const { homeRoomTeacher } = await Classroom.findById(
+      cid,
+      "homeRoomTeacher"
+    );
     const isAdmin = await Admin.exists({ staffId: sub });
     if (isAdmin) {
       req.uid = sub;
       next();
-    } else if (sub === id) {
+    } else if (JSON.stringify(homeRoomTeacher) === JSON.stringify(sub)) {
       req.uid = sub;
       next();
     } else {
@@ -35,4 +38,4 @@ const auth = async (req, res, next) => {
   }
 };
 
-module.exports = auth;
+module.exports = classCharge;

@@ -1,4 +1,6 @@
 const { Router } = require("express");
+const admin = require("../middleware/admin");
+const classCharge = require("../middleware/classCharge");
 const Classroom = require("../models/Classroom");
 
 const router = Router();
@@ -11,7 +13,7 @@ const router = Router();
  *  @access private
  */
 
-router.get("/", async (req, res) => {
+router.get("/", admin, async (req, res) => {
   try {
     const classrooms = await Classroom.find();
     if (!classrooms) return res.sendStatus(404);
@@ -30,7 +32,7 @@ router.get("/", async (req, res) => {
  *  @access private
  */
 
-router.get("/:cid", async (req, res) => {
+router.get("/:cid", classCharge, async (req, res) => {
   const { cid } = req.params;
   try {
     const classroom = await Classroom.findById(cid)
