@@ -23,7 +23,7 @@ router.post("/student", async (req, res) => {
     const isValidPassword = student.isValidPassword(password);
     if (!isValidPassword) return res.sendStatus(401);
 
-    const payload = genPayload(student);
+    const payload = await genPayload(student);
     const token = await genToken(payload);
     res.json({ token, id: student.id });
   } catch (err) {
@@ -49,7 +49,7 @@ router.post("/staff", async (req, res) => {
     const isValidPassword = await staff.isValidPassword(password);
     if (!isValidPassword) return res.sendStatus(401);
 
-    const payload = genPayload(staff);
+    const payload = await genPayload(staff);
     const token = await genToken(payload);
     res.json({ token, id: staff.id });
   } catch (err) {

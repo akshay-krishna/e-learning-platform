@@ -32,6 +32,7 @@ router.get("/:id", async (req, res) => {
  *  ?route --> /staffs/:id
  *  @param {body: contains the required updated data}
  *  @access private
+ *  TODO: Change the use from the department collection too.
  */
 
 router.put("/:id", async (req, res) => {
@@ -55,6 +56,7 @@ router.put("/:id", async (req, res) => {
  *  ?route --> /classrooms/:id
  *  @param none
  *  @access private
+ *  TODO: delete the user from the department too
  */
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;

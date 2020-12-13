@@ -1,7 +1,4 @@
 const { verifyToken } = require("../helpers/token");
-const Admin = require("../models/Admin");
-const Classroom = require("../models/Classroom");
-
 /**
  * checks if there is a auth header if yes,verify it.
  * if the sub field of the verified token do not match with the given id parameter return 404
@@ -17,16 +14,11 @@ const classCharge = async (req, res, next) => {
     const decoded = await verifyToken(authorization);
     if (!decoded) return res.sendStatus(401);
 
-    const { sub } = decoded;
-    const { homeRoomTeacher } = await Classroom.findById(
-      cid,
-      "homeRoomTeacher"
-    );
-    const isAdmin = await Admin.exists({ staffId: sub });
+    const { sub, isAdmin, isHomeroomTeacher } = decoded;
     if (isAdmin) {
       req.uid = sub;
       next();
-    } else if (JSON.stringify(homeRoomTeacher) === JSON.stringify(sub)) {
+    } else if (isHomeroomTeacher) {
       req.uid = sub;
       next();
     } else {

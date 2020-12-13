@@ -34,7 +34,7 @@ router.post("/:deptId/student", async (req, res) => {
     const savedStudent = await student.save();
     department.studentMembers.push(savedStudent.id);
     await department.save();
-    const payload = genPayload(savedStudent);
+    const payload = await genPayload(savedStudent);
     const token = await genToken(payload);
     res.json({ token, id: savedStudent.id });
   } catch (err) {
@@ -66,7 +66,7 @@ router.post("/:deptId/staff", async (req, res) => {
     const savedStaff = await staff.save();
     department.staffMembers.push(savedStaff.id);
     await department.save();
-    const payload = genPayload(savedStaff);
+    const payload = await genPayload(savedStaff);
     const token = await genToken(payload);
 
     res.json({ token, id: savedStaff.id });
@@ -124,6 +124,7 @@ router.get("/staffs", async (req, res) => {
  *  ?route --> /admins/:cid/homeroom
  *  @param {staffId: <id of staff>}
  *  @access private
+ *  TODO: add the teacher to the classroom staffMembers
  */
 
 router.put("/:cid/homeroom", admin, async (req, res) => {
