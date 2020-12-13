@@ -1,11 +1,8 @@
 const { verifyToken } = require("../helpers/token");
-const Admin = require("../models/Admin");
 
 /**
- * checks if there is a auth header if yes,
- * verify it.
- * if the sub field of the verified token do not match with the
- * given id parameter return 404
+ * checks if there is a auth header if yes,verify it.
+ * if the sub field of the verified token do not match with the given id parameter return 404
  * it means that the authorized user is not the owner of the requested resource
  */
 

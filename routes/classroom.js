@@ -1,10 +1,16 @@
 const { Router } = require("express");
 const Classroom = require("../models/Classroom");
-const Staff = require("../models/Staff");
 
 const router = Router();
 
-// get all the classrooms
+/**
+ *  *get all the classrooms
+ *  @method GET
+ *  ?route -->/classrooms
+ *  @param none
+ *  @access private
+ */
+
 router.get("/", async (req, res) => {
   try {
     const classrooms = await Classroom.find();
@@ -16,7 +22,14 @@ router.get("/", async (req, res) => {
   }
 });
 
-// get the details of a particular classroom
+/**
+ *  *get the details of a particular classroom
+ *  @method GET
+ *  ?route --> /classrooms/:cid
+ *  @param none
+ *  @access private
+ */
+
 router.get("/:cid", async (req, res) => {
   const { cid } = req.params;
   try {
@@ -31,7 +44,14 @@ router.get("/:cid", async (req, res) => {
   }
 });
 
-// Add staffs to the classroom
+/**
+ *  *Add staffs to the classroom
+ *  @method PUT
+ *  ?route --> /classrooms/:cid/staffs
+ *  @param {staffs: <array of staffs id>}
+ *  @access private
+ */
+
 router.put("/:cid/staffs", async (req, res) => {
   const { staffs } = req.body;
   const { cid } = req.params;
@@ -48,7 +68,14 @@ router.put("/:cid/staffs", async (req, res) => {
   }
 });
 
-// Add students to the classroom
+/**
+ *  *Add students to the classroom
+ *  @method PUT
+ *  ?route --> /classrooms/:cid/students
+ *  @param {students: <array of students id>}
+ *  @access private
+ */
+
 router.put("/:cid/students", async (req, res) => {
   const { students } = req.body;
   const { cid } = req.params;

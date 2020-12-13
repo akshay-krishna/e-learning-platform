@@ -1,17 +1,20 @@
 const { Router } = require("express");
-const genPayload = require("../helpers/payload");
-const { genToken } = require("../helpers/token");
-const admin = require("../middleware/admin");
 const auth = require("../middleware/auth");
-const Department = require("../models/Department");
 const Staff = require("../models/Staff");
 
 const router = Router();
 
+router.use(auth);
+
 /**
- * *get a staff info
+ *  *get a staff info
+ *  @method GET
+ *  ?route --> /staffs/:id
+ *  @param none
+ *  @access private
  */
-router.get("/:id", auth, async (req, res) => {
+
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const staff = await Staff.findById(id, "-password");
@@ -24,9 +27,14 @@ router.get("/:id", auth, async (req, res) => {
 });
 
 /**
- * *update a user
+ *  *update a user
+ *  @method PUT
+ *  ?route --> /staffs/:id
+ *  @param {body: contains the required updated data}
+ *  @access private
  */
-router.put("/:id", auth, async (req, res) => {
+
+router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { body } = req;
   try {
@@ -42,9 +50,13 @@ router.put("/:id", auth, async (req, res) => {
 });
 
 /**
- * *delete a staff
+ *  *delete a staff
+ *  @method DELETE
+ *  ?route --> /classrooms/:id
+ *  @param none
+ *  @access private
  */
-router.delete("/:id", auth, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     await Staff.findByIdAndDelete(id);

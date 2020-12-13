@@ -8,10 +8,15 @@ const Staff = require("../models/Staff");
 const Student = require("../models/Student");
 const router = Router();
 
+// Every path in this route is only accessible to the admin
 router.use(admin);
 
 /**
- * Create a student
+ *  *Create a student
+ *  @method POST
+ *  ?route --> /admins/:deptId/student
+ *  @param {name: String, password: String, eduMail: String}
+ *  @access private
  */
 
 router.post("/:deptId/student", async (req, res) => {
@@ -39,8 +44,13 @@ router.post("/:deptId/student", async (req, res) => {
 });
 
 /**
- * *create a staff
+ *  *Create a staff
+ *  @method POST
+ *  ?route --> /admins/:deptId/staff
+ *  @param {name: String, password: String, eduMail: String}
+ *  @access private
  */
+
 router.post("/:deptId/staff", async (req, res) => {
   const { name, password, eduMail } = req.body;
   const { deptId } = req.params;
@@ -70,7 +80,14 @@ router.post("/:deptId/staff", async (req, res) => {
   }
 });
 
-//get all students
+/**
+ *  *get all students
+ *  @method GET
+ *  ?route --> /admins/students
+ *  @param none
+ *  @access private
+ */
+
 router.get("/student", async (req, res) => {
   try {
     const students = await Student.find({}, "-password");
@@ -83,8 +100,11 @@ router.get("/student", async (req, res) => {
 });
 
 /**
- * get all the staffs
- *
+ *  *get all the staffs
+ *  @method GET
+ *  ?route --> /admins/staffs
+ *  @param none
+ *  @access private
  */
 
 router.get("/", async (req, res) => {
@@ -98,7 +118,14 @@ router.get("/", async (req, res) => {
   }
 });
 
-// set the homeroom teacher
+/**
+ *  *set the homeroom teacher
+ *  @method PUT
+ *  ?route --> /admins/:cid/homeroom
+ *  @param {teach: <id of teacher>}
+ *  @access private
+ */
+
 router.put("/:cid/homeroom", admin, async (req, res) => {
   const { cid } = req.params;
   const { teach } = req.body;

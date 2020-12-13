@@ -1,5 +1,10 @@
 const { compare, hash } = require("bcrypt");
 
+/**
+ * hash the given string and return it
+ * @param {string} plainText
+ */
+
 const genHash = async (plainText) => {
   try {
     return await hash(plainText, 10);
@@ -8,6 +13,12 @@ const genHash = async (plainText) => {
     throw Error("Failed to hash the password");
   }
 };
+
+/**
+ * Compare the passed in plainText with the hash and return it
+ * @param {string} plainText
+ * @param {string} hash
+ */
 
 const compareHash = async (plainText, hash) => {
   try {

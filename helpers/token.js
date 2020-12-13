@@ -1,5 +1,9 @@
 const { sign, verify } = require("jsonwebtoken");
 
+/**
+ * create a jwt from the passed in payload
+ * @param {object} payload
+ */
 const genToken = async (payload) => {
   try {
     return await sign(payload, process.env.SECRET);

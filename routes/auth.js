@@ -6,8 +6,11 @@ const Staff = require("../models/Staff");
 const router = Router();
 
 /**
- * * authenticate a student
- * @param {eduMail, password}
+ *  *authenticate a student
+ *  @method POST
+ *  ?route --> /auth/student
+ *  @param {eduMail, password}
+ *  @access public
  */
 
 router.post("/student", async (req, res) => {
@@ -29,9 +32,13 @@ router.post("/student", async (req, res) => {
 });
 
 /**
- * *authenticate a staff
- * @params {eduMail, password}
+ *  *authenticate a staff
+ *  @method POST
+ *  ?route --> /auth/staff
+ *  @param {eduMail, password}
+ *  @access public
  */
+
 router.post("/staff", async (req, res) => {
   const { eduMail, password } = req.body;
   try {

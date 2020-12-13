@@ -6,6 +6,18 @@ const Department = require("../models/Department");
 const router = Router();
 router.use(admin);
 
+/**
+ * *every router in this path is admin only
+ */
+
+/**
+ *  *get all the departments
+ *  @method GET
+ *  ?route --> /departments
+ *  @param none
+ *  @access admin
+ */
+
 router.get("/", async (req, res) => {
   try {
     const departments = await Department.find();
@@ -18,8 +30,13 @@ router.get("/", async (req, res) => {
 });
 
 /**
- * Create a new department
+ *  *Create a new department
+ *  @method POST
+ *  ?route --> /departments
+ *  @param {name: <department name>}
+ *  @access admin
  */
+
 router.post("/", async (req, res) => {
   let { name } = req.body;
   name = name.toLowerCase();
@@ -36,8 +53,13 @@ router.post("/", async (req, res) => {
 });
 
 /**
- * get all the info of a specific department
+ *  *get all the info of a specific department
+ *  @method GET
+ *  ?route --> /departments/:id
+ *  @param none
+ *  @access admin
  */
+
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -52,7 +74,14 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// create a classroom under the department given by the id parameter
+/**
+ *  *create a classroom under the department given by the id parameter
+ *  @method POST
+ *  ?route --> /departments/:id/classroom
+ *  @param {name: <classroom name>}
+ *  @access admin
+ */
+
 router.post("/:id/classroom", async (req, res) => {
   const { id } = req.params;
   const { name } = req.body;

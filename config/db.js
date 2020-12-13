@@ -1,5 +1,8 @@
 const { connect } = require("mongoose");
 
+/**
+ * create a connection to the database
+ */
 const connectDb = async () => {
   try {
     await connect("mongodb://localhost:27017/test", {
