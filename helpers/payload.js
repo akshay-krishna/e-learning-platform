@@ -4,11 +4,23 @@
  * @param {Date} time
  */
 
-const genPayload = (data, time = Date.now()) => ({
-  sub: data.id,
-  name: data.name,
-  iat: time,
-  exp: time + 86400000,
-});
+const isAdmin = require("./isAdmin");
+const isDeptHead = require("./isDeptHead");
+const isHomeroomTeacher = require("./isHomeroomTeacher");
+
+const genPayload = async (data, time = Date.now()) => {
+  const { id, name } = data;
+  const payload = {
+    sub: id,
+    name: name,
+    iat: time,
+    exp: time + 86400000,
+    isAdmin: await isAdmin(id),
+    isHomeroomTeacher: await isHomeroomTeacher(id),
+    isDeptHead: await isDeptHead(id),
+  };
+
+  return payload;
+};
 
 module.exports = genPayload;

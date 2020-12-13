@@ -1,5 +1,4 @@
 const { verifyToken } = require("../helpers/token");
-const Admin = require("../models/Admin");
 
 /**
  * check if auth header is present if yes,
@@ -14,9 +13,7 @@ const admin = async (req, res, next) => {
     const decoded = await verifyToken(authorization);
     if (!decoded) return res.sendStatus(401);
 
-    const { sub } = decoded;
-
-    const isAdmin = await Admin.exists({ staffId: sub });
+    const { sub, isAdmin } = decoded;
     if (!isAdmin) {
       return res.sendStatus(401);
     }
