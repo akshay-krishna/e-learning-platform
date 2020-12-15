@@ -1,9 +1,15 @@
 const { Router } = require("express");
-const admin = require("../middleware/admin");
-const classCharge = require("../middleware/classCharge");
-const Classroom = require("../models/Classroom");
 
-const router = Router();
+// middleware
+const classCharge = require("../middleware/classCharge");
+const deptHead = require("../middleware/deptHead");
+const auth = require("../middleware/auth");
+
+// models
+const Classroom = require("../models/Classroom");
+const Department = require("../models/Department");
+
+const router = Router(); //initialize the route
 
 /**
  *  *get all the classrooms
@@ -13,11 +19,37 @@ const router = Router();
  *  @access private
  */
 
-router.get("/", admin, async (req, res) => {
+router.get("/", deptHead, async (req, res) => {
   try {
     const classrooms = await Classroom.find();
     if (!classrooms) return res.sendStatus(404);
     res.json({ classrooms });
+  } catch (err) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
+
+/**
+ *  *create a classroom
+ *  @method POST
+ *  ?route --> /classrooms
+ *  @param {name: <classroom name>, deptId: <department under which the class is being created>}
+ *  @access private
+ */
+
+router.post("/", deptHead, async (req, res) => {
+  const { name, deptId } = req.body;
+  try {
+    const classroom = new Classroom({
+      name,
+      department: deptId,
+    });
+    const department = await Department.findById(deptId);
+    department.classrooms.push(classroom.id);
+    await classroom.save();
+    await department.save();
+    res.sendStatus(200);
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);
@@ -32,7 +64,7 @@ router.get("/", admin, async (req, res) => {
  *  @access private
  */
 
-router.get("/:cid", classCharge, async (req, res) => {
+router.get("/:cid", auth, async (req, res) => {
   const { cid } = req.params;
   try {
     const classroom = await Classroom.findById(cid)
@@ -54,7 +86,7 @@ router.get("/:cid", classCharge, async (req, res) => {
  *  @access private
  */
 
-router.put("/:cid/staffs", admin, async (req, res) => {
+router.put("/:cid/staffs", deptHead, async (req, res) => {
   const { staffs } = req.body;
   const { cid } = req.params;
   try {
@@ -93,5 +125,32 @@ router.put("/:cid/students", classCharge, async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+/**
+ *  *set the homeroom teacher
+ *  @method PUT
+ *  ?route --> /classrooms/:cid/homeroom
+ *  @param {staffId: <id of staff>}
+ *  @access private
+ */
+
+router.put("/:cid/homeroom", deptHead, async (req, res) => {
+  const { cid } = req.params;
+  const { staffId } = req.body;
+  try {
+    const classroom = await Classroom.findById(cid);
+    classroom.homeRoomTeacher = staffId;
+    classroom.staffMembers.push(staffId);
+    await classroom.save();
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
+
+/**
+ * TODO: delete a classroom
+ */
 
 module.exports = router;

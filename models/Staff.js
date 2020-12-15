@@ -48,4 +48,4 @@ StaffSchema.methods.isValidPassword = async function (plainText) {
   }
 };
 
-module.exports = StaffModel = model("staffs", StaffSchema);
+module.exports = model("staffs", StaffSchema);

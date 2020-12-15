@@ -7,7 +7,6 @@ const { verifyToken } = require("../helpers/token");
  */
 
 const auth = async (req, res, next) => {
-  const { id } = req.params;
   const { authorization } = req.headers;
   if (!authorization) return res.sendStatus(401);
 
@@ -15,17 +14,9 @@ const auth = async (req, res, next) => {
     const decoded = await verifyToken(authorization);
     if (!decoded) return res.sendStatus(401);
 
-    const { sub, isAdmin } = decoded;
-
-    if (isAdmin) {
-      req.uid = sub;
-      next();
-    } else if (sub === id) {
-      req.uid = sub;
-      next();
-    } else {
-      return res.sendStatus(401);
-    }
+    const { sub } = decoded;
+    req.uid = sub;
+    next();
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);

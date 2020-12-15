@@ -1,10 +1,73 @@
 const { Router } = require("express");
+const saveToDb = require("../helpers/saveToDb");
+
+// middleware
+const admin = require("../middleware/admin");
 const auth = require("../middleware/auth");
+
+// models
+const Department = require("../models/Department");
 const Staff = require("../models/Staff");
 
-const router = Router();
+const router = Router(); //initialize the router
 
-router.use(auth);
+/**
+ *  *get all the staffs
+ *  @method GET
+ *  ?route --> /staffs
+ *  @param none
+ *  @access private
+ */
+
+router.get("/", admin, async (req, res) => {
+  try {
+    const staffs = await Staff.find({}, "-password");
+    if (!staffs) return res.sendStatus(404);
+    res.json({ staffs });
+  } catch (error) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
+
+/**
+ *  *Create a staff
+ *  @method POST
+ *  ?route --> /staffs
+ *  @param {deptId: <id of department>, staffList: [<{name, password, eduMail}>]}
+ *  @access private
+ */
+
+router.post("/", admin, async (req, res) => {
+  const { staffList, deptId } = req.body;
+
+  try {
+    const department = await Department.findById(deptId);
+    if (!department) return res.sendStatus(404);
+    const savedStaffs = staffList.map((staff) => {
+      const { name, password, eduMail } = staff;
+      const newStaff = new Staff({
+        eduMail,
+        name,
+        password,
+        department: deptId,
+      });
+
+      saveToDb(newStaff);
+      return newStaff.id;
+    });
+    department.staffMembers.push(...savedStaffs);
+    await department.save();
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    if (err.code == 11000) {
+      res.status(409).json({ error: err.keyValue });
+    }
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
 
 /**
  *  *get a staff info
@@ -14,7 +77,7 @@ router.use(auth);
  *  @access private
  */
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   const { id } = req.params;
   try {
     const staff = await Staff.findById(id, "-password");
@@ -32,10 +95,9 @@ router.get("/:id", async (req, res) => {
  *  ?route --> /staffs/:id
  *  @param {body: contains the required updated data}
  *  @access private
- *  TODO: Change the use from the department collection too.
  */
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const { id } = req.params;
   const { body } = req;
   try {
@@ -58,7 +120,7 @@ router.put("/:id", async (req, res) => {
  *  @access private
  *  TODO: delete the user from the department too
  */
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   const { id } = req.params;
   try {
     await Staff.findByIdAndDelete(id);

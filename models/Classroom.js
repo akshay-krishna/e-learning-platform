@@ -32,4 +32,4 @@ const ClassroomSchema = new Schema({
   ],
 });
 
-module.exports = classroomModel = model("classrooms", ClassroomSchema);
+module.exports = model("classrooms", ClassroomSchema);

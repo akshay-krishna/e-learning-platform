@@ -64,4 +64,4 @@ StudentSchema.methods.isValidPassword = async function (plainText) {
   }
 };
 
-module.exports = StudentModel = model("students", StudentSchema);
+module.exports = model("students", StudentSchema);
