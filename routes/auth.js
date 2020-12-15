@@ -1,10 +1,14 @@
 const { Router } = require("express");
+
+// helpers
 const genPayload = require("../helpers/payload");
 const { genToken } = require("../helpers/token");
+
+// models
 const Student = require("../models/Student");
 const Staff = require("../models/Staff");
-const Admin = require("../models/Admin");
-const router = Router();
+
+const router = Router(); //initialize the router
 
 /**
  *  *authenticate a student

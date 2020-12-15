@@ -1,14 +1,11 @@
 const { Router } = require("express");
 const admin = require("../middleware/admin");
-const Classroom = require("../models/Classroom");
+const deptHead = require("../middleware/deptHead");
+
+// models
 const Department = require("../models/Department");
 
-const router = Router();
-router.use(admin);
-
-/**
- * *every router in this path is admin only
- */
+const router = Router(); //initialize the router
 
 /**
  *  *get all the departments
@@ -18,7 +15,7 @@ router.use(admin);
  *  @access admin
  */
 
-router.get("/", async (req, res) => {
+router.get("/", admin, async (req, res) => {
   try {
     const departments = await Department.find();
     if (!departments) return res.sendStatus(404);
@@ -37,7 +34,7 @@ router.get("/", async (req, res) => {
  *  @access admin
  */
 
-router.post("/", async (req, res) => {
+router.post("/", admin, async (req, res) => {
   let { name } = req.body;
   name = name.toLowerCase();
   try {
@@ -57,10 +54,10 @@ router.post("/", async (req, res) => {
  *  @method GET
  *  ?route --> /departments/:id
  *  @param none
- *  @access admin
+ *  @access private
  */
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", deptHead, async (req, res) => {
   const { id } = req.params;
   try {
     const department = await Department.findById(id)
@@ -75,30 +72,28 @@ router.get("/:id", async (req, res) => {
 });
 
 /**
- *  *create a classroom under the department given by the id parameter
- *  @method POST
- *  ?route --> /departments/:id/classroom
- *  @param {name: <classroom name>}
- *  @access admin
+ *  *set department head
+ *  @method PUT
+ *  ?route --> /departments/:id/head
+ *  @param {head: <id of staff>}
  */
 
-router.post("/:id/classroom", async (req, res) => {
-  const { id } = req.params;
-  const { name } = req.body;
+router.put("/:id/head", async (req, res) => {
+  const { deptId } = req.params;
+  const { staffId } = req.body;
   try {
-    const classroom = new Classroom({
-      name,
-      department: id,
-    });
-    const department = await Department.findById(id);
-    department.classrooms.push(classroom.id);
+    const department = await Department.findById(deptId);
+    department.head = staffId;
     await department.save();
-    await classroom.save();
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);
   }
 });
+
+/**
+ * TODO: delete a department
+ */
 
 module.exports = router;

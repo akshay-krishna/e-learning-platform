@@ -29,4 +29,4 @@ const DepartmentSchema = new Schema({
   ],
 });
 
-module.exports = DepartmentModel = model("departments", DepartmentSchema);
+module.exports = model("departments", DepartmentSchema);

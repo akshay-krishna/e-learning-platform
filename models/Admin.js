@@ -7,4 +7,4 @@ const AdminSchema = new Schema({
   },
 });
 
-module.exports = AdminModel = model("admins", AdminSchema);
+module.exports = model("admins", AdminSchema);
