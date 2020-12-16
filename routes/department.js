@@ -61,7 +61,10 @@ router.get("/:id", deptHead, async (req, res) => {
   const { id } = req.params;
   try {
     const department = await Department.findById(id)
-      .populate("classrooms staffMembers studentMembers head", "-password")
+      .populate({
+        path: "staffMembers studentMembers classrooms head",
+        select: "name eduMail",
+      })
       .exec();
     if (!department) return res.sendStatus(404);
     res.json({ department });
@@ -79,10 +82,15 @@ router.get("/:id", deptHead, async (req, res) => {
  */
 
 router.put("/:id/head", async (req, res) => {
-  const { deptId } = req.params;
+  const { id } = req.params;
   const { staffId } = req.body;
   try {
-    const department = await Department.findById(deptId);
+    const isDepartmentMember = await Department.exists({
+      _id: id,
+      staffMembers: staffId,
+    });
+    if (!isDepartmentMember) return res.sendStatus(400);
+    const department = await Department.findById(id);
     department.head = staffId;
     await department.save();
     res.sendStatus(200);

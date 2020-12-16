@@ -8,20 +8,22 @@ const auth = require("../middleware/auth");
 // models
 const Classroom = require("../models/Classroom");
 const Department = require("../models/Department");
+const Staff = require("../models/Staff");
 
-const router = Router(); //initialize the route
+const router = Router({ mergeParams: true }); //initialize the route
 
 /**
  *  *get all the classrooms
  *  @method GET
- *  ?route -->/classrooms
+ *  ?route -->/departments/:id/classrooms
  *  @param none
  *  @access private
  */
 
 router.get("/", deptHead, async (req, res) => {
+  const { id } = req.params;
   try {
-    const classrooms = await Classroom.find();
+    const classrooms = await Classroom.find({ department: id });
     if (!classrooms) return res.sendStatus(404);
     res.json({ classrooms });
   } catch (err) {
@@ -33,19 +35,20 @@ router.get("/", deptHead, async (req, res) => {
 /**
  *  *create a classroom
  *  @method POST
- *  ?route --> /classrooms
+ *  ?route --> /departments/:id/classrooms
  *  @param {name: <classroom name>, deptId: <department under which the class is being created>}
  *  @access private
  */
 
 router.post("/", deptHead, async (req, res) => {
-  const { name, deptId } = req.body;
+  const { id } = req.params;
+  const { name } = req.body;
   try {
     const classroom = new Classroom({
       name,
-      department: deptId,
+      department: id,
     });
-    const department = await Department.findById(deptId);
+    const department = await Department.findById(id);
     department.classrooms.push(classroom.id);
     await classroom.save();
     await department.save();
@@ -59,7 +62,7 @@ router.post("/", deptHead, async (req, res) => {
 /**
  *  *get the details of a particular classroom
  *  @method GET
- *  ?route --> /classrooms/:cid
+ *  ?route --> /departments/:id/classrooms/:cid
  *  @param none
  *  @access private
  */
@@ -68,8 +71,10 @@ router.get("/:cid", auth, async (req, res) => {
   const { cid } = req.params;
   try {
     const classroom = await Classroom.findById(cid)
-      .populate("department", "name")
-      .populate("staffMembers studentMembers homeRoomTeacher", "-password")
+      .populate({
+        path: "homeRoomTeacher department studentMembers staffMembers",
+        select: "eduMail name",
+      })
       .exec();
     res.json({ classroom });
   } catch (err) {
@@ -81,7 +86,7 @@ router.get("/:cid", auth, async (req, res) => {
 /**
  *  *Add staffs to the classroom
  *  @method PUT
- *  ?route --> /classrooms/:cid/staffs
+ *  ?route --> /departments/:id/classrooms/:cid/staffs
  *  @param {staffs: <array of staffs id>}
  *  @access private
  */
@@ -105,7 +110,7 @@ router.put("/:cid/staffs", deptHead, async (req, res) => {
 /**
  *  *Add students to the classroom
  *  @method PUT
- *  ?route --> /classrooms/:cid/students
+ *  ?route --> /departments/:id/classrooms/:cid/students
  *  @param {students: <array of students id>}
  *  @access private
  */
@@ -129,7 +134,7 @@ router.put("/:cid/students", classCharge, async (req, res) => {
 /**
  *  *set the homeroom teacher
  *  @method PUT
- *  ?route --> /classrooms/:cid/homeroom
+ *  ?route --> /departments/:id/classrooms/:cid/homeroom
  *  @param {staffId: <id of staff>}
  *  @access private
  */
@@ -138,9 +143,13 @@ router.put("/:cid/homeroom", deptHead, async (req, res) => {
   const { cid } = req.params;
   const { staffId } = req.body;
   try {
+    const isMemberOfClass = await Classroom.exists({
+      _id: cid,
+      staffMembers: staffId,
+    });
+    if (!isMemberOfClass) return res.sendStatus(400);
     const classroom = await Classroom.findById(cid);
     classroom.homeRoomTeacher = staffId;
-    classroom.staffMembers.push(staffId);
     await classroom.save();
     res.sendStatus(200);
   } catch (err) {

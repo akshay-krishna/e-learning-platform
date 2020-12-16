@@ -18,14 +18,6 @@ const FeedSchema = new Schema({
     enum: ["staffs", "students"],
     default: "students",
   },
-
-  replies: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "replies",
-      required: true,
-    },
-  ],
 });
 
 module.exports = model("feeds", FeedSchema);
