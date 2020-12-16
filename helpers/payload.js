@@ -7,9 +7,11 @@
 const isAdmin = require("./isAdmin");
 const isDeptHead = require("./isDeptHead");
 const isHomeroomTeacher = require("./isHomeroomTeacher");
+const isStaff = require("./isStaff");
 
 const genPayload = async (data, time = Date.now()) => {
   const { id, name } = data;
+
   const payload = {
     sub: id,
     name: name,
@@ -18,8 +20,8 @@ const genPayload = async (data, time = Date.now()) => {
     isAdmin: await isAdmin(id),
     isHomeroomTeacher: await isHomeroomTeacher(id),
     isDeptHead: await isDeptHead(id),
+    isStaff: await isStaff(id),
   };
-
   return payload;
 };
 

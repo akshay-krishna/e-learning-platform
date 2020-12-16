@@ -30,6 +30,13 @@ const ClassroomSchema = new Schema({
       ref: "students",
     },
   ],
+
+  feeds: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "feeds",
+    },
+  ],
 });
 
 module.exports = model("classrooms", ClassroomSchema);
