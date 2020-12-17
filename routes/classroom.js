@@ -8,7 +8,6 @@ const auth = require("../middleware/auth");
 // models
 const Classroom = require("../models/Classroom");
 const Department = require("../models/Department");
-const Staff = require("../models/Staff");
 
 const router = Router({ mergeParams: true }); //initialize the route
 
@@ -77,6 +76,27 @@ router.get("/:cid", auth, async (req, res) => {
       })
       .exec();
     res.json({ classroom });
+  } catch (err) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
+
+/**
+ *  *update classroom
+ *  @method PUT
+ *  ?route --> /departments/:id/classrooms/:cid/
+ *  @param {body: <update data>}
+ *  @access private
+ */
+
+router.put("/:cid", classCharge, async (req, res) => {
+  const { cid } = req.params;
+  const { body } = req.body;
+
+  try {
+    await Classroom.findByIdAndUpdate(cid, body);
+    res.sendStatus(200);
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);

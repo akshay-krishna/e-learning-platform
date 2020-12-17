@@ -78,6 +78,26 @@ router.get("/:id", deptHead, async (req, res) => {
 });
 
 /**
+ *  *update a department
+ *  @method PUT
+ *  ?route --> /departments/:id/
+ *  @param {body: <update data>}
+ */
+
+router.put("/:id", deptHead, async (req, res) => {
+  const { id } = req.params;
+  const { body } = req;
+
+  try {
+    await Department.findByIdAndUpdate(id, body);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
+
+/**
  *  *set department head
  *  @method PUT
  *  ?route --> /departments/:id/head
@@ -104,7 +124,10 @@ router.put("/:id/head", async (req, res) => {
 });
 
 /**
- * TODO: delete a department
+ *  *delete a department
+ *  @method DELETE
+ *  ?route --> /departments/:id/
+ *  @param none
  */
 
 router.delete("/:id", admin, async (req, res) => {
