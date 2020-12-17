@@ -9,19 +9,20 @@ const auth = require("../middleware/auth");
 const Department = require("../models/Department");
 const Staff = require("../models/Staff");
 
-const router = Router(); //initialize the router
+const router = Router({ mergeParams: true }); //initialize the router
 
 /**
- *  *get all the staffs
+ *  *get all the staffs under a department
  *  @method GET
- *  ?route --> /staffs
+ *  ?route --> /departments/:id/staffs
  *  @param none
  *  @access private
  */
 
 router.get("/", admin, async (req, res) => {
+  const { id } = req.params;
   try {
-    const staffs = await Staff.find({}, "-password");
+    const staffs = await Staff.find({ department: id }, "-password");
     if (!staffs) return res.sendStatus(404);
     res.json({ staffs });
   } catch (error) {
@@ -33,16 +34,17 @@ router.get("/", admin, async (req, res) => {
 /**
  *  *Create a staff
  *  @method POST
- *  ?route --> /staffs
+ *  ?route --> /departments/:id/staffs
  *  @param {deptId: <id of department>, staffList: [<{name, password, eduMail}>]}
  *  @access private
  */
 
 router.post("/", admin, async (req, res) => {
-  const { staffList, deptId } = req.body;
+  const { staffList } = req.body;
+  const { id } = req.params;
 
   try {
-    const department = await Department.findById(deptId);
+    const department = await Department.findById(id);
     if (!department) return res.sendStatus(404);
     const savedStaffs = staffList.map((staff) => {
       const { name, password, eduMail } = staff;
@@ -50,7 +52,7 @@ router.post("/", admin, async (req, res) => {
         eduMail,
         name,
         password,
-        department: deptId,
+        department: id,
       });
 
       saveToDb(newStaff);
@@ -72,15 +74,15 @@ router.post("/", admin, async (req, res) => {
 /**
  *  *get a staff info
  *  @method GET
- *  ?route --> /staffs/:id
+ *  ?route --> /departments/:id/staffs/:sid
  *  @param none
  *  @access private
  */
 
-router.get("/:id", auth, async (req, res) => {
-  const { id } = req.params;
+router.get("/:sid", auth, async (req, res) => {
+  const { sid } = req.params;
   try {
-    const staff = await Staff.findById(id, "-password");
+    const staff = await Staff.findById(sid, "-password");
     if (!staff) return res.sendStatus(404);
     res.json({ staff });
   } catch (err) {
@@ -92,16 +94,16 @@ router.get("/:id", auth, async (req, res) => {
 /**
  *  *update a staff
  *  @method PUT
- *  ?route --> /staffs/:id
+ *  ?route --> /departments/:id/staffs/:sid
  *  @param {body: contains the required updated data}
  *  @access private
  */
 
-router.put("/:id", auth, async (req, res) => {
-  const { id } = req.params;
+router.put("/:sid", auth, async (req, res) => {
+  const { sid } = req.params;
   const { body } = req;
   try {
-    await Staff.findByIdAndUpdate(id, body);
+    await Staff.findByIdAndUpdate(sid, body);
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);
@@ -115,15 +117,22 @@ router.put("/:id", auth, async (req, res) => {
 /**
  *  *delete a staff
  *  @method DELETE
- *  ?route --> /classrooms/:id
+ *  ?route --> /departments/:id/staffs/:sid
  *  @param none
  *  @access private
- *  TODO: delete the user from the department too
  */
-router.delete("/:id", auth, async (req, res) => {
-  const { id } = req.params;
+
+router.delete("/:sid", auth, async (req, res) => {
+  const { sid, id } = req.params;
+
   try {
-    await Staff.findByIdAndDelete(id);
+    const isHead = await Department.exists({ _id: id, head: sid });
+    if (isHead) return res.sendStatus(406);
+    const department = await Department.findById(id);
+    const staffIndex = department.staffMembers.indexOf(sid);
+    await Staff.findByIdAndDelete(sid);
+    department.staffMembers.splice(staffIndex, 1);
+    await department.save();
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);

@@ -9,19 +9,20 @@ const auth = require("../middleware/auth");
 const Department = require("../models/Department");
 const Student = require("../models/Student");
 
-const router = Router(); //initialize the route
+const router = Router({ mergeParams: true }); //initialize the route
 
 /**
  *  *get all students
  *  @method GET
- *  ?route --> /students
+ *  ?route --> /departments/:id/students
  *  @param none
  *  @access private
  */
 
 router.get("/", admin, async (req, res) => {
+  const { id } = req.params;
   try {
-    const students = await Student.find({}, "-password");
+    const students = await Student.find({ department: id }, "-password");
     if (!students) return res.sendStatus(404);
     res.json({ students });
   } catch (error) {
@@ -33,15 +34,16 @@ router.get("/", admin, async (req, res) => {
 /**
  *  *Create a student
  *  @method POST
- *  ?route --> /students
- *  @param {deptId: <id of department>, studentList: [<{name, password, eduMail}>]}
+ *  ?route --> /departments/:id/students
+ *  @param {studentList: [<{name, password, eduMail}>]}
  *  @access private
  */
 
 router.post("/", admin, async (req, res) => {
-  const { studentList, deptId } = req.body;
+  const { id } = req.params;
+  const { studentList } = req.body;
   try {
-    const department = await Department.findById(deptId);
+    const department = await Department.findById(id);
     if (!department) return res.sendStatus(404);
     const savedStudents = studentList.map((student) => {
       const { name, password, eduMail } = student;
@@ -49,7 +51,7 @@ router.post("/", admin, async (req, res) => {
         eduMail,
         name,
         password,
-        department: deptId,
+        department: id,
       });
       saveToDb(newStudent);
       return newStudent.id;
@@ -66,15 +68,15 @@ router.post("/", admin, async (req, res) => {
 /**
  *  *Get a student info
  *  @method GET
- *  ?route --> /students/:id
+ *  ?route --> /departments/:id/students/:sid
  *  @param none
  *  @access private
  */
 
-router.get("/:id", auth, async (req, res) => {
-  const { id } = req.params;
+router.get("/:sid", auth, async (req, res) => {
+  const { sid } = req.params;
   try {
-    const student = await Student.findById(id, "-password");
+    const student = await Student.findById(sid, "-password");
     res.json({ student });
   } catch (err) {
     console.log(err.message);
@@ -88,16 +90,16 @@ router.get("/:id", auth, async (req, res) => {
 /**
  *  *update a specific student
  *  @method PUT
- *  ?route --> /students/:id
+ *  ?route --> /departments/:id/students/:sid
  *  @param {body: contains the required updated data}
  *  @access private
  */
 
-router.put("/:id", auth, async (req, res) => {
-  const { id } = req.params;
+router.put("/:sid", auth, async (req, res) => {
+  const { sid } = req.params;
   const { body } = req;
   try {
-    await Student.findByIdAndUpdate(id, body);
+    await Student.findByIdAndUpdate(sid, body);
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);
@@ -111,16 +113,20 @@ router.put("/:id", auth, async (req, res) => {
 /**
  *  *Delete a specific student
  *  @method DELETE
- *  ?route --> /students/:id
+ *  ?route --> /departments/:id/students/:sid
  *  @param none
  *  @access private
- *  TODO: delete the user from the department too
  */
 
-router.delete("/:id", auth, async (req, res) => {
-  const { id } = req.params;
+router.delete("/:sid", auth, async (req, res) => {
+  const { id, sid } = req.params;
   try {
-    await Student.findByIdAndDelete(id);
+    const department = await Department.findById(id);
+    const studentIndex = department.studentMembers.indexOf(sid);
+
+    await Student.findByIdAndDelete(sid);
+    department.studentIndex.splice(studentIndex, 1);
+    await department.save();
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);
