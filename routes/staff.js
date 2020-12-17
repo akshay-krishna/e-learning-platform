@@ -120,12 +120,19 @@ router.put("/:sid", auth, async (req, res) => {
  *  ?route --> /departments/:id/staffs/:sid
  *  @param none
  *  @access private
- *  TODO: delete the user from the department too
  */
+
 router.delete("/:sid", auth, async (req, res) => {
-  const { sid } = req.params;
+  const { sid, id } = req.params;
+
   try {
+    const isHead = await Department.exists({ _id: id, head: sid });
+    if (isHead) return res.sendStatus(406);
+    const department = await Department.findById(id);
+    const staffIndex = department.staffMembers.indexOf(sid);
     await Staff.findByIdAndDelete(sid);
+    department.staffMembers.splice(staffIndex, 1);
+    await department.save();
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);

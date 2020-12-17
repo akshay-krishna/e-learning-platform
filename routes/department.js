@@ -1,9 +1,12 @@
 const { Router } = require("express");
 const admin = require("../middleware/admin");
 const deptHead = require("../middleware/deptHead");
+const Classroom = require("../models/Classroom");
 
 // models
 const Department = require("../models/Department");
+const Staff = require("../models/Staff");
+const Student = require("../models/Student");
 
 const router = Router(); //initialize the router
 
@@ -103,5 +106,21 @@ router.put("/:id/head", async (req, res) => {
 /**
  * TODO: delete a department
  */
+
+router.delete("/:id", admin, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const department = await Department.findById(id);
+    if (!department) return res.sendStatus(404);
+    await Student.deleteMany({ department: id });
+    await Staff.deleteMany({ department: id });
+    await Classroom.deleteMany({ department: id });
+    await Department.findByIdAndDelete(id);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
 
 module.exports = router;

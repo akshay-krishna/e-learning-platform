@@ -159,7 +159,27 @@ router.put("/:cid/homeroom", deptHead, async (req, res) => {
 });
 
 /**
- * TODO: delete a classroom
+ *  *delete a classroom
+ *  @method DELETE
+ *  ?route --> /departments/:id/classrooms/:cid/
+ *  @param none
+ *  @access private
  */
+
+router.delete("/:cid", deptHead, async (req, res) => {
+  const { id, cid } = req.params;
+
+  try {
+    const department = await Department.findById(id);
+    const classIndex = department.classrooms.indexOf(cid);
+    await Classroom.findByIdAndDelete(cid);
+    department.classrooms.splice(classIndex, 1);
+    await department.save();
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
 
 module.exports = router;

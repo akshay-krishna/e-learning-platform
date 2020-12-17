@@ -116,13 +116,17 @@ router.put("/:sid", auth, async (req, res) => {
  *  ?route --> /departments/:id/students/:sid
  *  @param none
  *  @access private
- *  TODO: delete the user from the department too
  */
 
 router.delete("/:sid", auth, async (req, res) => {
-  const { sid } = req.params;
+  const { id, sid } = req.params;
   try {
+    const department = await Department.findById(id);
+    const studentIndex = department.studentMembers.indexOf(sid);
+
     await Student.findByIdAndDelete(sid);
+    department.studentIndex.splice(studentIndex, 1);
+    await department.save();
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);

@@ -15,7 +15,7 @@ const auth = async (req, res, next) => {
     const decoded = await verifyToken(authorization);
     if (!decoded) return res.sendStatus(401);
 
-    const { sub, isStaff } = decoded;
+    const { sub, isStaff, isHomeroomTeacher, isDeptHead, isAdmin } = decoded;
     req.uid = sub;
     req.isStaff = isStaff;
     next();
