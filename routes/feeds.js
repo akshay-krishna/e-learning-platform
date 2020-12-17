@@ -17,14 +17,11 @@ router.get("/", auth, async (req, res) => {
   const { cid } = req.params;
   try {
     const feedList = await Classroom.findById(cid, "feeds");
-    const feeds = await Feed.find(
-      {
-        _id: {
-          $in: feedList.feeds,
-        },
+    const feeds = await Feed.find({
+      _id: {
+        $in: feedList.feeds,
       },
-      "-replies"
-    )
+    })
       .populate({ path: "author", select: "name eduMail" })
       .exec();
 
@@ -56,6 +53,8 @@ router.post("/", auth, async (req, res) => {
 
   if (isStaff) {
     data.onModel = "staffs";
+  } else {
+    data.onModel = "students";
   }
 
   const feed = new Feed(data);
@@ -85,7 +84,14 @@ router.get("/:id", auth, async (req, res) => {
   try {
     const feed = await Feed.findById(id)
       .populate({ path: "author", select: "name eduMail" })
-      .populate({ path: "replies", populate: "author" })
+      .populate({
+        path: "comment",
+        populate: {
+          path: "author",
+          populate: "author",
+          select: "name eduMail",
+        },
+      })
       .exec();
     res.json({ feed });
   } catch (err) {
@@ -100,6 +106,16 @@ router.get("/:id", auth, async (req, res) => {
  *  ?route --> /feeds/:id
  *  @access auth
  */
+
+// router.put("/:id", auth, async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//     const feed = await Feed.findById
+//   } catch (err) {
+
+//   }
+// });
 
 /**
  *  *delete feed
