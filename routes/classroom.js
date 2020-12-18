@@ -14,15 +14,15 @@ const router = Router({ mergeParams: true }); //initialize the route
 /**
  *  *get all the classrooms
  *  @method GET
- *  ?route -->/departments/:id/classrooms
+ *  ?route -->/departments/:deptId/classrooms
  *  @param none
- *  @access detpHead
+ *  @access deptHead
  */
 
 router.get("/", deptHead, async (req, res) => {
-  const { id } = req.params;
+  const { deptId } = req.params;
   try {
-    const classrooms = await Classroom.find({ department: id });
+    const classrooms = await Classroom.find({ department: deptId });
     if (!classrooms) return res.sendStatus(404);
     res.json({ classrooms });
   } catch (err) {
@@ -34,24 +34,24 @@ router.get("/", deptHead, async (req, res) => {
 /**
  *  *create a classroom
  *  @method POST
- *  ?route --> /departments/:id/classrooms
- *  @param {name: <classroom name>, deptId: <department under which the class is being created>}
+ *  ?route --> /departments/:deptId/classrooms
+ *  @param {name: <classroom name>}
  *  @access deptHead
  */
 
 router.post("/", deptHead, async (req, res) => {
-  const { id } = req.params;
+  const { deptId } = req.params;
   const { name } = req.body;
   try {
     const classroom = new Classroom({
       name,
-      department: id,
+      department: deptId,
     });
-    const department = await Department.findById(id);
+    const department = await Department.findById(deptId);
     department.classrooms.push(classroom.id);
     await classroom.save();
     await department.save();
-    res.sendStatus(200);
+    res.sendStatus(201);
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);
@@ -61,15 +61,15 @@ router.post("/", deptHead, async (req, res) => {
 /**
  *  *get the details of a particular classroom
  *  @method GET
- *  ?route --> /departments/:id/classrooms/:cid
+ *  ?route --> /departments/:deptId/classrooms/:id
  *  @param none
  *  @access auth
  */
 
-router.get("/:cid", auth, async (req, res) => {
-  const { cid } = req.params;
+router.get("/:id", auth, async (req, res) => {
+  const { id } = req.params;
   try {
-    const classroom = await Classroom.findById(cid)
+    const classroom = await Classroom.findById(id)
       .populate({
         path: "homeRoomTeacher department studentMembers staffMembers",
         select: "eduMail name",
@@ -89,17 +89,17 @@ router.get("/:cid", auth, async (req, res) => {
 /**
  *  *update classroom
  *  @method PUT
- *  ?route --> /departments/:id/classrooms/:cid/
+ *  ?route --> /departments/:deptId/classrooms/:id
  *  @param {body: <update data>}
  *  @access private
  */
 
-router.put("/:cid", classCharge, async (req, res) => {
-  const { cid } = req.params;
+router.put("/:id", classCharge, async (req, res) => {
+  const { id } = req.params;
   const { body } = req.body;
 
   try {
-    await Classroom.findByIdAndUpdate(cid, body);
+    await Classroom.findByIdAndUpdate(id, body);
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);
@@ -110,16 +110,16 @@ router.put("/:cid", classCharge, async (req, res) => {
 /**
  *  *Add staffs to the classroom
  *  @method PUT
- *  ?route --> /departments/:id/classrooms/:cid/staffs
+ *  ?route --> /departments/:deptId/classrooms/:id/staffs
  *  @param {staffs: <array of staffs id>}
  *  @access deptHead
  */
 
-router.put("/:cid/staffs", deptHead, async (req, res) => {
+router.put("/:id/staffs", deptHead, async (req, res) => {
   const { staffs } = req.body;
-  const { cid } = req.params;
+  const { id } = req.params;
   try {
-    const classroom = await Classroom.findById(cid);
+    const classroom = await Classroom.findById(id);
     staffs.forEach((staff) => {
       classroom.staffMembers.push(staff);
     });
@@ -134,16 +134,16 @@ router.put("/:cid/staffs", deptHead, async (req, res) => {
 /**
  *  *Add students to the classroom
  *  @method PUT
- *  ?route --> /departments/:id/classrooms/:cid/students
+ *  ?route --> /departments/:deptId/classrooms/:id/students
  *  @param {students: <array of students id>}
  *  @access classCharge
  */
 
-router.put("/:cid/students", classCharge, async (req, res) => {
+router.put("/:id/students", classCharge, async (req, res) => {
   const { students } = req.body;
-  const { cid } = req.params;
+  const { id } = req.params;
   try {
-    const classroom = await Classroom.findById(cid);
+    const classroom = await Classroom.findById(id);
     students.forEach((student) => {
       classroom.studentMembers.push(student);
     });
@@ -158,21 +158,21 @@ router.put("/:cid/students", classCharge, async (req, res) => {
 /**
  *  *set the homeroom teacher
  *  @method PUT
- *  ?route --> /departments/:id/classrooms/:cid/homeroom
+ *  ?route --> /departments/:deptId/classrooms/:id/homeroom
  *  @param {staffId: <id of staff>}
  *  @access deptHead
  */
 
-router.put("/:cid/homeroom", deptHead, async (req, res) => {
-  const { cid } = req.params;
+router.put("/:id/homeroom", deptHead, async (req, res) => {
+  const { id } = req.params;
   const { staffId } = req.body;
   try {
     const isMemberOfClass = await Classroom.exists({
-      _id: cid,
+      _id: id,
       staffMembers: staffId,
     });
     if (!isMemberOfClass) return res.sendStatus(400);
-    const classroom = await Classroom.findById(cid);
+    const classroom = await Classroom.findById(id);
     classroom.homeRoomTeacher = staffId;
     await classroom.save();
     res.sendStatus(200);
@@ -185,19 +185,19 @@ router.put("/:cid/homeroom", deptHead, async (req, res) => {
 /**
  *  *delete a classroom
  *  @method DELETE
- *  ?route --> /departments/:id/classrooms/:cid/
+ *  ?route --> /departments/:deptId/classrooms/:id/
  *  @param none
  *  @access deptHead
  */
 
-router.delete("/:cid", deptHead, async (req, res) => {
-  const { id, cid } = req.params;
+router.delete("/:id", deptHead, async (req, res) => {
+  const { id, deptId } = req.params;
 
   try {
-    const department = await Department.findById(id);
+    const department = await Department.findById(deptId);
     if (!department) return res.sendStatus(404);
-    const classIndex = department.classrooms.indexOf(cid);
-    await Classroom.findByIdAndDelete(cid);
+    const classIndex = department.classrooms.indexOf(id);
+    await Classroom.findByIdAndDelete(id);
     department.classrooms.splice(classIndex, 1);
     await department.save();
     res.sendStatus(200);

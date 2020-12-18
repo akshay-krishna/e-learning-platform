@@ -1,10 +1,14 @@
 const { Router } = require("express");
+
+// middleware
 const auth = require("../middleware/auth");
+
+// models
 const Feed = require("../models/Feed");
 const Classroom = require("../models/Classroom");
 const Comment = require("../models/Comment");
 
-const router = Router({ mergeParams: true });
+const router = Router({ mergeParams: true }); // initialize the router
 
 /**
  *  *get all the feeds

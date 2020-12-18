@@ -14,15 +14,15 @@ const router = Router({ mergeParams: true }); //initialize the router
 /**
  *  *get all the staffs under a department
  *  @method GET
- *  ?route --> /departments/:id/staffs
+ *  ?route --> /departments/:deptId/staffs
  *  @param none
  *  @access admin
  */
 
 router.get("/", admin, async (req, res) => {
-  const { id } = req.params;
+  const { deptId } = req.params;
   try {
-    const staffs = await Staff.find({ department: id }, "-password");
+    const staffs = await Staff.find({ department: deptId }, "-password");
     if (!staffs) return res.sendStatus(404);
     res.json({ staffs });
   } catch (error) {
@@ -34,17 +34,17 @@ router.get("/", admin, async (req, res) => {
 /**
  *  *Create a staff
  *  @method POST
- *  ?route --> /departments/:id/staffs
+ *  ?route --> /departments/:deptId/staffs
  *  @param {deptId: <id of department>, staffList: [<{name, password, eduMail}>]}
  *  @access admin
  */
 
 router.post("/", admin, async (req, res) => {
   const { staffList } = req.body;
-  const { id } = req.params;
+  const { deptId } = req.params;
 
   try {
-    const department = await Department.findById(id);
+    const department = await Department.findById(deptId);
     if (!department) return res.sendStatus(404);
     const savedStaffs = staffList.map((staff) => {
       const { name, password, eduMail } = staff;
@@ -52,7 +52,7 @@ router.post("/", admin, async (req, res) => {
         eduMail,
         name,
         password,
-        department: id,
+        department: deptId,
       });
 
       saveToDb(newStaff);
@@ -60,7 +60,7 @@ router.post("/", admin, async (req, res) => {
     });
     department.staffMembers.push(...savedStaffs);
     await department.save();
-    res.sendStatus(200);
+    res.sendStatus(201);
   } catch (err) {
     console.error(err);
     if (err.code == 11000) {
@@ -74,15 +74,15 @@ router.post("/", admin, async (req, res) => {
 /**
  *  *get a staff info
  *  @method GET
- *  ?route --> /departments/:id/staffs/:sid
+ *  ?route --> /departments/:deptId/staffs/:id
  *  @param none
  *  @access auth
  */
 
-router.get("/:sid", auth, async (req, res) => {
-  const { sid } = req.params;
+router.get("/:id", auth, async (req, res) => {
+  const { id } = req.params;
   try {
-    const staff = await Staff.findById(sid, "-password");
+    const staff = await Staff.findById(id, "-password");
     if (!staff) return res.sendStatus(404);
     res.json({ staff });
   } catch (err) {
@@ -94,17 +94,17 @@ router.get("/:sid", auth, async (req, res) => {
 /**
  *  *update a staff
  *  @method PUT
- *  ?route --> /departments/:id/staffs/:sid
+ *  ?route --> /departments/:deptId/staffs/:id
  *  @param {body: contains the required updated data}
  *  @access auth
  *  TODO: only allow a staff to update only his/her data
  */
 
-router.put("/:sid", auth, async (req, res) => {
-  const { sid } = req.params;
+router.put("/:id", auth, async (req, res) => {
+  const { id } = req.params;
   const { body } = req;
   try {
-    await Staff.findByIdAndUpdate(sid, body);
+    await Staff.findByIdAndUpdate(id, body);
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);
@@ -118,20 +118,20 @@ router.put("/:sid", auth, async (req, res) => {
 /**
  *  *delete a staff
  *  @method DELETE
- *  ?route --> /departments/:id/staffs/:sid
+ *  ?route --> /departments/:deptId/staffs/:id
  *  @param none
  *  @access admin
  */
 
-router.delete("/:sid", admin, async (req, res) => {
-  const { sid, id } = req.params;
+router.delete("/:id", admin, async (req, res) => {
+  const { id, deptId } = req.params;
 
   try {
-    const isHead = await Department.exists({ _id: id, head: sid });
+    const isHead = await Department.exists({ _id: deptId, head: id });
     if (isHead) return res.sendStatus(406);
     const department = await Department.findById(id);
-    const staffIndex = department.staffMembers.indexOf(sid);
-    await Staff.findByIdAndDelete(sid);
+    const staffIndex = department.staffMembers.indexOf(id);
+    await Staff.findByIdAndDelete(id);
     department.staffMembers.splice(staffIndex, 1);
     await department.save();
     res.sendStatus(200);

@@ -14,15 +14,15 @@ const router = Router({ mergeParams: true }); //initialize the route
 /**
  *  *get all students
  *  @method GET
- *  ?route --> /departments/:id/students
+ *  ?route --> /departments/:deptId/students
  *  @param none
  *  @access admin
  */
 
 router.get("/", admin, async (req, res) => {
-  const { id } = req.params;
+  const { deptId } = req.params;
   try {
-    const students = await Student.find({ department: id }, "-password");
+    const students = await Student.find({ department: deptId }, "-password");
     if (!students) return res.sendStatus(404);
     res.json({ students });
   } catch (error) {
@@ -34,16 +34,16 @@ router.get("/", admin, async (req, res) => {
 /**
  *  *Create a student
  *  @method POST
- *  ?route --> /departments/:id/students
+ *  ?route --> /departments/:deptId/students
  *  @param {studentList: [<{name, password, eduMail}>]}
  *  @access admin
  */
 
 router.post("/", admin, async (req, res) => {
-  const { id } = req.params;
+  const { deptId } = req.params;
   const { studentList } = req.body;
   try {
-    const department = await Department.findById(id);
+    const department = await Department.findById(deptId);
     if (!department) return res.sendStatus(404);
     const savedStudents = studentList.map((student) => {
       const { name, password, eduMail } = student;
@@ -51,14 +51,14 @@ router.post("/", admin, async (req, res) => {
         eduMail,
         name,
         password,
-        department: id,
+        department: deptId,
       });
       saveToDb(newStudent);
       return newStudent.id;
     });
     department.studentMembers.push(...savedStudents);
     await department.save();
-    res.sendStatus(200);
+    res.sendStatus(201);
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);
@@ -68,15 +68,15 @@ router.post("/", admin, async (req, res) => {
 /**
  *  *Get a student info
  *  @method GET
- *  ?route --> /departments/:id/students/:sid
+ *  ?route --> /departments/:deptId/students/:id
  *  @param none
  *  @access auth
  */
 
-router.get("/:sid", auth, async (req, res) => {
-  const { sid } = req.params;
+router.get("/:id", auth, async (req, res) => {
+  const { id } = req.params;
   try {
-    const student = await Student.findById(sid, "-password");
+    const student = await Student.findById(id, "-password");
     res.json({ student });
   } catch (err) {
     console.log(err.message);
@@ -90,17 +90,17 @@ router.get("/:sid", auth, async (req, res) => {
 /**
  *  *update a specific student
  *  @method PUT
- *  ?route --> /departments/:id/students/:sid
+ *  ?route --> /departments/:deptId/students/:id
  *  @param {body: contains the required updated data}
  *  @access auth
  *  TODO: only allow a student to update only his/her data
  */
 
-router.put("/:sid", auth, async (req, res) => {
-  const { sid } = req.params;
+router.put("/:id", auth, async (req, res) => {
+  const { id } = req.params;
   const { body } = req;
   try {
-    await Student.findByIdAndUpdate(sid, body);
+    await Student.findByIdAndUpdate(id, body);
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);
@@ -114,19 +114,19 @@ router.put("/:sid", auth, async (req, res) => {
 /**
  *  *Delete a specific student
  *  @method DELETE
- *  ?route --> /departments/:id/students/:sid
+ *  ?route --> /departments/:deptId/students/:id
  *  @param none
  *  @access admin
  */
 
-router.delete("/:sid", admin, async (req, res) => {
-  const { id, sid } = req.params;
+router.delete("/:id", admin, async (req, res) => {
+  const { deptId, id } = req.params;
   try {
-    const department = await Department.findById(id);
-    const studentIndex = department.studentMembers.indexOf(sid);
+    const department = await Department.findById(deptId);
+    const studentIndex = department.studentMembers.indexOf(id);
 
-    await Student.findByIdAndDelete(sid);
-    department.studentIndex.splice(studentIndex, 1);
+    await Student.findByIdAndDelete(id);
+    department.studentMembers.splice(studentIndex, 1);
     await department.save();
     res.sendStatus(200);
   } catch (err) {

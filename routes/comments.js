@@ -1,9 +1,13 @@
 const { Router } = require("express");
+
+// middleware
 const auth = require("../middleware/auth");
+
+// models
 const Comment = require("../models/Comment");
 const Feed = require("../models/Feed");
 
-const router = Router({ mergeParams: true });
+const router = Router({ mergeParams: true }); //initialize the router
 
 /**
  *  *create a comment for feed
@@ -33,7 +37,7 @@ router.post("/", auth, async (req, res) => {
     await newComment.save();
     const { comment } = await Feed.findById(fid);
     await Feed.findByIdAndUpdate(fid, { comment: [...comment, newComment.id] });
-    res.sendStatus(200);
+    res.sendStatus(201);
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);

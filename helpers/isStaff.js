@@ -1,4 +1,6 @@
 const Staff = require("../models/Staff");
+
+// checks weather if the user with passed in id is a staff
 const isStaff = async (id) => {
   try {
     return await Staff.exists({ _id: id });

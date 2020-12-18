@@ -1,5 +1,6 @@
 const Admin = require("../models/Admin");
 
+// checks if the user with the passed in id is an admin
 const isAdmin = async (id) => {
   try {
     return await Admin.exists({ staffId: id });

@@ -2,6 +2,8 @@ const Admin = require("../models/Admin");
 const Department = require("../models/Department");
 const Staff = require("../models/Staff");
 
+// checks the database for a root department and create it if not found,
+// also checks if there is a root admin if not create it.
 const initDb = async () => {
   try {
     const isAdmin = await Staff.exists({ name: "root" });
