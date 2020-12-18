@@ -2,6 +2,7 @@ const { Router } = require("express");
 const auth = require("../middleware/auth");
 const Feed = require("../models/Feed");
 const Classroom = require("../models/Classroom");
+const Comment = require("../models/Comment");
 
 const router = Router({ mergeParams: true });
 
@@ -35,8 +36,8 @@ router.get("/", auth, async (req, res) => {
 /**
  *  *create a feed
  *  @method POST
- *  ?route --> /feeds
- *  @param {title: String, body: String, cid: objectId}
+ *  ?route --> /classrooms/:cid/feeds
+ *  @param {title: String, body: String}
  *  @access private
  */
 
@@ -74,7 +75,7 @@ router.post("/", auth, async (req, res) => {
 /**
  *  *get a feed
  *  @method GET
- *  ?route --> /feeds/:id
+ *  ?route --> /classrooms/:cid/feeds/:id
  *  @access auth
  */
 
@@ -103,26 +104,53 @@ router.get("/:id", auth, async (req, res) => {
 /**
  *  *update a feed
  *  @method PUT
- *  ?route --> /feeds/:id
+ *  ?route --> /classrooms/:cid/feeds/:id
  *  @access auth
  */
 
-// router.put("/:id", auth, async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const feed = await Feed.findById
-//   } catch (err) {
-
-//   }
-// });
+router.put("/:id", auth, async (req, res) => {
+  const { id } = req.params;
+  const { update } = req.body;
+  const { uid } = req;
+  try {
+    const exists = await Feed.exists({ _id: id, author: uid });
+    if (!exists) return res.sendStatus(401);
+    await Feed.findByIdAndUpdate(id, update);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
 
 /**
  *  *delete feed
  *  @method DELETE
- *  ?route --> /feeds/:id
+ *  ?route --> /classrooms/:cid/feeds/:id
  *  @access auth
- *  TODO: feed delete route
  */
+
+router.delete("/:id", auth, async (req, res) => {
+  const { id, cid } = req.params;
+  const { uid } = req;
+
+  try {
+    const exists = await Feed.exists({ _id: id, author: uid });
+    if (!exists) return res.sendStatus(401);
+
+    const classroom = await Classroom.findById(cid);
+    const feedIndex = await classroom.feeds.indexOf(id);
+    classroom.feeds.splice(feedIndex, 1);
+
+    await Comment.deleteMany({ feed: id });
+    await Feed.findByIdAndDelete(id);
+    await classroom.save();
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
 
 module.exports = router;

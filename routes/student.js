@@ -16,7 +16,7 @@ const router = Router({ mergeParams: true }); //initialize the route
  *  @method GET
  *  ?route --> /departments/:id/students
  *  @param none
- *  @access private
+ *  @access admin
  */
 
 router.get("/", admin, async (req, res) => {
@@ -36,7 +36,7 @@ router.get("/", admin, async (req, res) => {
  *  @method POST
  *  ?route --> /departments/:id/students
  *  @param {studentList: [<{name, password, eduMail}>]}
- *  @access private
+ *  @access admin
  */
 
 router.post("/", admin, async (req, res) => {
@@ -70,7 +70,7 @@ router.post("/", admin, async (req, res) => {
  *  @method GET
  *  ?route --> /departments/:id/students/:sid
  *  @param none
- *  @access private
+ *  @access auth
  */
 
 router.get("/:sid", auth, async (req, res) => {
@@ -92,7 +92,8 @@ router.get("/:sid", auth, async (req, res) => {
  *  @method PUT
  *  ?route --> /departments/:id/students/:sid
  *  @param {body: contains the required updated data}
- *  @access private
+ *  @access auth
+ *  TODO: only allow a student to update only his/her data
  */
 
 router.put("/:sid", auth, async (req, res) => {
@@ -115,10 +116,10 @@ router.put("/:sid", auth, async (req, res) => {
  *  @method DELETE
  *  ?route --> /departments/:id/students/:sid
  *  @param none
- *  @access private
+ *  @access admin
  */
 
-router.delete("/:sid", auth, async (req, res) => {
+router.delete("/:sid", admin, async (req, res) => {
   const { id, sid } = req.params;
   try {
     const department = await Department.findById(id);

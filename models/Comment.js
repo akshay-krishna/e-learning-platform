@@ -9,7 +9,11 @@ const CommentSchema = new Schema({
     refPath: "onModel",
     default: "students",
   },
-
+  feed: {
+    type: Schema.Types.ObjectId,
+    ref: "feeds",
+    required: true,
+  },
   onModel: {
     type: Schema.Types.String,
     enum: ["students", "staffs"],

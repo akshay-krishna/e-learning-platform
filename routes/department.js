@@ -57,7 +57,7 @@ router.post("/", admin, async (req, res) => {
  *  @method GET
  *  ?route --> /departments/:id
  *  @param none
- *  @access private
+ *  @access deptHead
  */
 
 router.get("/:id", deptHead, async (req, res) => {
@@ -82,9 +82,10 @@ router.get("/:id", deptHead, async (req, res) => {
  *  @method PUT
  *  ?route --> /departments/:id/head
  *  @param {head: <id of staff>}
+ *  @access admin
  */
 
-router.put("/:id/head", async (req, res) => {
+router.put("/:id/head", admin, async (req, res) => {
   const { id } = req.params;
   const { staffId } = req.body;
   try {
@@ -104,7 +105,11 @@ router.put("/:id/head", async (req, res) => {
 });
 
 /**
- * TODO: delete a department
+ *  *delete a department
+ *  @method DELETE
+ *  ?route --> /departments/:id
+ *  @param none
+ *  @access admin
  */
 
 router.delete("/:id", admin, async (req, res) => {
