@@ -16,7 +16,7 @@ const router = Router({ mergeParams: true }); //initialize the route
  *  @method GET
  *  ?route -->/departments/:id/classrooms
  *  @param none
- *  @access private
+ *  @access detpHead
  */
 
 router.get("/", deptHead, async (req, res) => {
@@ -36,7 +36,7 @@ router.get("/", deptHead, async (req, res) => {
  *  @method POST
  *  ?route --> /departments/:id/classrooms
  *  @param {name: <classroom name>, deptId: <department under which the class is being created>}
- *  @access private
+ *  @access deptHead
  */
 
 router.post("/", deptHead, async (req, res) => {
@@ -63,7 +63,7 @@ router.post("/", deptHead, async (req, res) => {
  *  @method GET
  *  ?route --> /departments/:id/classrooms/:cid
  *  @param none
- *  @access private
+ *  @access auth
  */
 
 router.get("/:cid", auth, async (req, res) => {
@@ -73,6 +73,10 @@ router.get("/:cid", auth, async (req, res) => {
       .populate({
         path: "homeRoomTeacher department studentMembers staffMembers",
         select: "eduMail name",
+      })
+      .populate({
+        path: "feeds",
+        select: "title body",
       })
       .exec();
     res.json({ classroom });
@@ -108,7 +112,7 @@ router.put("/:cid", classCharge, async (req, res) => {
  *  @method PUT
  *  ?route --> /departments/:id/classrooms/:cid/staffs
  *  @param {staffs: <array of staffs id>}
- *  @access private
+ *  @access deptHead
  */
 
 router.put("/:cid/staffs", deptHead, async (req, res) => {
@@ -132,7 +136,7 @@ router.put("/:cid/staffs", deptHead, async (req, res) => {
  *  @method PUT
  *  ?route --> /departments/:id/classrooms/:cid/students
  *  @param {students: <array of students id>}
- *  @access private
+ *  @access classCharge
  */
 
 router.put("/:cid/students", classCharge, async (req, res) => {
@@ -156,7 +160,7 @@ router.put("/:cid/students", classCharge, async (req, res) => {
  *  @method PUT
  *  ?route --> /departments/:id/classrooms/:cid/homeroom
  *  @param {staffId: <id of staff>}
- *  @access private
+ *  @access deptHead
  */
 
 router.put("/:cid/homeroom", deptHead, async (req, res) => {
@@ -183,7 +187,7 @@ router.put("/:cid/homeroom", deptHead, async (req, res) => {
  *  @method DELETE
  *  ?route --> /departments/:id/classrooms/:cid/
  *  @param none
- *  @access private
+ *  @access deptHead
  */
 
 router.delete("/:cid", deptHead, async (req, res) => {
@@ -191,6 +195,7 @@ router.delete("/:cid", deptHead, async (req, res) => {
 
   try {
     const department = await Department.findById(id);
+    if (!department) return res.sendStatus(404);
     const classIndex = department.classrooms.indexOf(cid);
     await Classroom.findByIdAndDelete(cid);
     department.classrooms.splice(classIndex, 1);

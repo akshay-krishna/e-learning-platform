@@ -16,7 +16,7 @@ const router = Router({ mergeParams: true }); //initialize the router
  *  @method GET
  *  ?route --> /departments/:id/staffs
  *  @param none
- *  @access private
+ *  @access admin
  */
 
 router.get("/", admin, async (req, res) => {
@@ -36,7 +36,7 @@ router.get("/", admin, async (req, res) => {
  *  @method POST
  *  ?route --> /departments/:id/staffs
  *  @param {deptId: <id of department>, staffList: [<{name, password, eduMail}>]}
- *  @access private
+ *  @access admin
  */
 
 router.post("/", admin, async (req, res) => {
@@ -76,7 +76,7 @@ router.post("/", admin, async (req, res) => {
  *  @method GET
  *  ?route --> /departments/:id/staffs/:sid
  *  @param none
- *  @access private
+ *  @access auth
  */
 
 router.get("/:sid", auth, async (req, res) => {
@@ -96,7 +96,8 @@ router.get("/:sid", auth, async (req, res) => {
  *  @method PUT
  *  ?route --> /departments/:id/staffs/:sid
  *  @param {body: contains the required updated data}
- *  @access private
+ *  @access auth
+ *  TODO: only allow a staff to update only his/her data
  */
 
 router.put("/:sid", auth, async (req, res) => {
@@ -119,10 +120,10 @@ router.put("/:sid", auth, async (req, res) => {
  *  @method DELETE
  *  ?route --> /departments/:id/staffs/:sid
  *  @param none
- *  @access private
+ *  @access admin
  */
 
-router.delete("/:sid", auth, async (req, res) => {
+router.delete("/:sid", admin, async (req, res) => {
   const { sid, id } = req.params;
 
   try {
