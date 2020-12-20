@@ -71,12 +71,16 @@ router.get("/:id", auth, async (req, res) => {
   try {
     const classroom = await Classroom.findById(id)
       .populate({
-        path: "homeRoomTeacher department studentMembers staffMembers",
-        select: "eduMail name",
+        path: "homeRoomTeacher department studentMembers",
+        select: "name",
       })
       .populate({
         path: "feeds",
         select: "title body",
+      })
+      .populate({
+        path: "courses",
+        populate: { path: "teach", select: "name" },
       })
       .exec();
     res.json({ classroom });
@@ -108,21 +112,20 @@ router.put("/:id", classCharge, async (req, res) => {
 });
 
 /**
- *  *Add staffs to the classroom
+ *  *Create a course under the classroom
  *  @method PUT
- *  ?route --> /departments/:deptId/classrooms/:id/staffs
+ *  ?route --> /departments/:deptId/classrooms/:id/courses
  *  @param {staffs: <array of staffs id>}
  *  @access deptHead
  */
 
-router.put("/:id/staffs", deptHead, async (req, res) => {
-  const { staffs } = req.body;
-  const { id } = req.params;
+router.put("/:id/courses", deptHead, async (req, res) => {
+  const { course } = req.body;
+  const { id, 
+    deptId } = req.params;
   try {
     const classroom = await Classroom.findById(id);
-    staffs.forEach((staff) => {
-      classroom.staffMembers.push(staff);
-    });
+    classroom.courses.push(course);
     await classroom.save();
     res.sendStatus(200);
   } catch (err) {
