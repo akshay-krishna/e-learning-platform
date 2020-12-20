@@ -4,8 +4,10 @@
   "description": "server code for online learning platform",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon .",
-    "start": "node ."
+    "server": "nodemon .",
+    "client": "npm start --prefix ../client",
+    "start": "node .",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "akshay",
   "license": "ISC",
