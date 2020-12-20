@@ -1,5 +1,5 @@
 {
-  "name": "e-learning-platform-server",
+  "name": "server",
   "version": "1.0.0",
   "description": "server code for online learning platform",
   "main": "index.js",
