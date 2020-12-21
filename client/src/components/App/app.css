@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#root {
+  height: 100%;
+}
+.app__container {
+  background-color: #fafbff;
+  display: flex;
+  height: 100%;
+}

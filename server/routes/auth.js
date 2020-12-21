@@ -29,7 +29,11 @@ router.post("/student", async (req, res) => {
 
     const payload = await genPayload(student);
     const token = await genToken(payload);
-    res.json({ token, id: student.id });
+    payload.exp = undefined;
+    payload.sub = undefined;
+    payload.iat = undefined;
+
+    res.json({ token, id: student.id, ...payload });
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);
@@ -55,7 +59,11 @@ router.post("/staff", async (req, res) => {
 
     const payload = await genPayload(staff);
     const token = await genToken(payload);
-    res.json({ token, id: staff.id });
+    payload.exp = undefined;
+    payload.sub = undefined;
+    payload.iat = undefined;
+
+    res.json({ token, id: staff.id, ...payload });
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);
