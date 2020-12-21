@@ -47,7 +47,7 @@ router.post("/student", async (req, res) => {
 router.post("/staff", async (req, res) => {
   const { eduMail, password } = req.body;
   try {
-    const staff = await Staff.findOne({ eduMail });
+    const staff = await Staff.findOne({ eduMail: eduMail });
     if (!staff) return res.sendStatus(404);
 
     const isValidPassword = await staff.isValidPassword(password);
