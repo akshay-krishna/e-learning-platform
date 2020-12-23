@@ -1,0 +1,47 @@
+.card {
+  width: 45%;
+  position: relative;
+  height: 450px;
+  background-color: #fff;
+  box-shadow: 2px 2px 8px var(--shadow);
+  border-radius: 5px;
+  margin-bottom: 1.5em;
+  min-height: 260.892px;
+  max-width: 721.849px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease-in-out;
+  top: 0;
+}
+
+.card:hover {
+  top: -5px;
+  box-shadow: 2px 8px 16px var(--shadow);
+}
+
+.card__content {
+  text-align: justify;
+  padding: 0 2em;
+  padding-top: 1.5em;
+  width: 100%;
+}
+.card__content > h5 {
+  font-size: 2em;
+}
+
+.card__banner {
+  width: 100%;
+  background-color: var(--primary);
+  height: 40%;
+  border-radius: 5px;
+}
+.card__banner > .bg__img {
+  background-image: url("https://cdn.dribbble.com/users/163342/screenshots/3988903/classroomstill_800x600.jpg?compress=1&resize=800x600");
+  background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}

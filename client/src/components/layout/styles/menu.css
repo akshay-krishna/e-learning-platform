@@ -1,0 +1,30 @@
+.menu {
+  display: flex;
+  width: 100vw;
+  height: fit-content;
+  background: #fff;
+  box-shadow: 2px 0px 8px 0px var(--shadow);
+  position: fixed;
+}
+
+.menu__navItem {
+  flex: 0.06;
+  padding: 0.8em 0;
+  text-align: center;
+  font-size: 1.023em;
+}
+
+.menu__navItem a {
+  color: var(--textSecondary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.menu__navItem > .active__link {
+  color: var(--textPrimary);
+}
+
+.menu__nav {
+  display: flex;
+  justify-content: flex-end;
+}

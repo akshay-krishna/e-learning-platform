@@ -1,21 +1,11 @@
 import { useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
 import { userContext } from "../../context/userContext";
 
-const Dashboard = () => {
-  const { user, dispatch } = useContext(userContext);
-  const history = useHistory();
+import "./styles/dashboard.css";
 
-  const onClick = () => {
-    dispatch({ type: "logout" });
-    history.goBack();
-  };
-  return (
-    <div>
-      <h1>hello {user.name}</h1>
-      <button onClick={onClick}>logout</button>
-    </div>
-  );
+const Dashboard = () => {
+  const { user } = useContext(userContext);
+  return <div className="dashboard"></div>;
 };
 
 export default Dashboard;

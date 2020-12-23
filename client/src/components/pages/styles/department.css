@@ -1,0 +1,37 @@
+.department {
+  width: 100%;
+}
+
+.department__cards {
+  transform: translateY(10vh);
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.department__addIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 2px 2px 8px var(--shadow);
+  background-color: var(--textPrimary);
+  margin: 0 auto;
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.fa-plus {
+  color: #ffffff;
+}
+
+.department__addIcon:hover {
+  bottom: 55px;
+  box-shadow: 4px 4px 12px var(--shadow);
+}

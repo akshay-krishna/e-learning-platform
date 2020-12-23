@@ -1,8 +1,9 @@
-import { Fragment, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import login from "../../api/login";
 import { userContext } from "../../context/userContext";
 import { useHistory } from "react-router-dom";
 
+import "./styles/login.css";
 const Login = () => {
   const history = useHistory();
   const { dispatch } = useContext(userContext);
@@ -30,18 +31,25 @@ const Login = () => {
   const { eduMail, password } = data;
 
   return (
-    <Fragment>
-      <form onSubmit={onSubmit}>
-        <input type="text" name="eduMail" value={eduMail} onChange={onChange} />
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={onChange}
-        />
-        <button type="submit">Submit</button>
-      </form>
-    </Fragment>
+    <div className="login">
+      <div className="login__container">
+        <form onSubmit={onSubmit}>
+          <input
+            type="text"
+            name="eduMail"
+            value={eduMail}
+            onChange={onChange}
+          />
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={onChange}
+          />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
   );
 };
 

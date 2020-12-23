@@ -14,7 +14,6 @@ const App = () => {
     <Fragment>
       <div className="app__container">
         {auth ? <Menu /> : null}
-
         <Switch>{auth ? <PrivateRoutes /> : <AuthRoute />}</Switch>
       </div>
     </Fragment>
