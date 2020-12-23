@@ -17,7 +17,6 @@ const Menu = () => {
   };
 
   const isActive = (path) => {
-    console.log(path, pathName);
     return path === pathName;
   };
 
@@ -36,8 +35,8 @@ const Menu = () => {
             </div>
             <div className="menu__navItem">
               <Link
-                to="/department"
-                className={isActive("/department") ? "active__link" : null}
+                to="/departments"
+                className={isActive("/departments") ? "active__link" : null}
               >
                 department
               </Link>

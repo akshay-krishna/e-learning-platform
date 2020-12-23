@@ -27,3 +27,17 @@ export const createDepartment = async (token, data) => {
     throw Error("Failed to create a department");
   }
 };
+
+export const getDepartment = async (token, id) => {
+  try {
+    const res = await axios.get(`/departments/${id}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return res.data;
+  } catch (err) {
+    console.error(err.response);
+    throw Error(`Failed to fetch ${id}`);
+  }
+};

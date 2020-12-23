@@ -1,5 +1,6 @@
 .department {
   width: 100%;
+  height: 100%;
 }
 
 .department__cards {
@@ -28,7 +29,7 @@
 }
 
 .fa-plus {
-  color: #ffffff;
+  color: var(--white);
 }
 
 .department__addIcon:hover {
@@ -48,7 +49,7 @@
 }
 
 .department__newDepartment > .newDepartment {
-  background-color: #ffffff;
+  background-color: var(--white);
   box-shadow: 2px 2px 8px var(--shadow);
   border-radius: 5px;
   width: 60%;
@@ -125,6 +126,6 @@
 
 .newDepartment > form > button:hover {
   background-color: var(--primary);
-  color: #ffffff;
-  border: 3px solid #ffffff;
+  color: var(--white);
+  border: 3px solid var(--white);
 }

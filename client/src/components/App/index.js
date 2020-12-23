@@ -4,6 +4,7 @@ import { userContext } from "../../context/userContext";
 import Menu from "../layout/Menu";
 import Dashboard from "../pages/Dashboard";
 import Department from "../pages/Department";
+import DepartmentDetails from "../pages/DepartmentDetails";
 import Login from "../pages/Login";
 
 import "./app.css";
@@ -23,8 +24,11 @@ const App = () => {
 const PrivateRoutes = () => {
   return (
     <Fragment>
-      <Route exact path="/dashboard" component={Dashboard} />
-      <Route exact path="/department" component={Department} />
+      <Switch>
+        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/departments" component={Department} />
+        <Route exact path="/departments/:id" component={DepartmentDetails} />
+      </Switch>
     </Fragment>
   );
 };

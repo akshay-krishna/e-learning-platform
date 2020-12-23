@@ -2,7 +2,7 @@
   width: 45%;
   position: relative;
   height: 450px;
-  background-color: #fff;
+  background-color: var(--white);
   box-shadow: 2px 2px 8px var(--shadow);
   border-radius: 5px;
   margin-bottom: 1.5em;
