@@ -5,6 +5,7 @@
   background: #fff;
   box-shadow: 2px 0px 8px 0px var(--shadow);
   position: fixed;
+  z-index: 1000;
 }
 
 .menu__navItem {
@@ -15,13 +16,13 @@
 }
 
 .menu__navItem a {
-  color: var(--textSecondary);
+  color: var(--textPrimary);
   text-decoration: none;
   font-weight: 600;
 }
 
 .menu__navItem > .active__link {
-  color: var(--textPrimary);
+  color: var(--primary);
 }
 
 .menu__nav {
