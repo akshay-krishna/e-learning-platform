@@ -20,7 +20,7 @@ const router = Router(); //initialize the router
 
 router.get("/", admin, async (req, res) => {
   try {
-    const departments = await Department.find();
+    const departments = await Department.find({ name: { $ne: "root" } });
     if (!departments) return res.sendStatus(404);
     res.json({ departments });
   } catch (err) {
@@ -38,12 +38,12 @@ router.get("/", admin, async (req, res) => {
  */
 
 router.post("/", admin, async (req, res) => {
-  let { name } = req.body;
+  let { name, description } = req.body;
   name = name.toLowerCase();
   try {
     const isPresent = await Department.exists({ name });
     if (isPresent) return res.sendStatus(409);
-    const department = new Department({ name });
+    const department = new Department({ name, description });
     await department.save();
     res.sendStatus(201);
   } catch (err) {
