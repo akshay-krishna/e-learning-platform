@@ -28,7 +28,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.fa-plus {
+.department__addIcon .fa-plus {
   color: var(--white);
 }
 

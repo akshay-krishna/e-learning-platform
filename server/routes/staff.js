@@ -42,6 +42,9 @@ router.get("/", admin, async (req, res) => {
 router.post("/", admin, async (req, res) => {
   const { staffList } = req.body;
   const { deptId } = req.params;
+  console.log(staffList);
+  console.log(req.body);
+  console.log(deptId);
 
   try {
     const department = await Department.findById(deptId);

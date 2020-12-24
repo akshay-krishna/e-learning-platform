@@ -1,8 +1,9 @@
-import { useContext, useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getDepartment } from "../../api/department";
 import { userContext } from "../../context/userContext";
-import departmentOption from "../../reducers/departmentOption";
+import AddMemberForm from "../layout/AddMemberForm";
+import ShowMembers from "../layout/ShowMembers";
 import "./styles/departmentDetails.css";
 
 const DepartmentDetails = () => {
@@ -57,7 +58,9 @@ const Option = ({ option, department }) => {
   let component = null;
   switch (type) {
     case "staff":
-      component = <Staffs department={department} />;
+      component = (
+        <Staffs staffMembers={department.staffMembers} id={department._id} />
+      );
       break;
     case "cls":
       component = <Classrooms department={department} />;
@@ -69,12 +72,42 @@ const Option = ({ option, department }) => {
   return component;
 };
 
-const Staffs = ({ department }) => {
+const Staffs = ({ staffMembers, id }) => {
+  const [allStaffs, setAllStaffs] = useState(true);
+  console.log(staffMembers);
+  const onClick = (e) => {
+    const parent = e.target.parentNode;
+    if (e.target === parent.firstChild) {
+      parent.firstChild.classList.add("staffs__navItems--active");
+      parent.lastChild.classList.remove("staffs__navItems--active");
+      setAllStaffs(true);
+    } else {
+      parent.firstChild.classList.remove("staffs__navItems--active");
+      parent.lastChild.classList.add("staffs__navItems--active");
+      setAllStaffs(false);
+    }
+  };
+
   return (
-    <div>
-      <form>
-        <input type="text" name="" id="" />
-      </form>
+    <div className="staffs">
+      <div className="staffs__nav">
+        <div className="staffs__navContainer">
+          <div
+            className="staffs__navItems staffs__navItems--active"
+            onClick={onClick}
+          >
+            All Staffs
+          </div>
+          <div onClick={onClick} className="staffs__navItems">
+            Add Staffs
+          </div>
+        </div>
+      </div>
+      {allStaffs ? (
+        <ShowMembers staffMembers={staffMembers} />
+      ) : (
+        <AddMemberForm id={id} />
+      )}
     </div>
   );
 };

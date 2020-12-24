@@ -1,0 +1,83 @@
+/** addMembers */
+
+.addMember {
+  height: 50px;
+}
+
+.addMember > form {
+  width: 80%;
+  margin: 2em auto;
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+.input__container {
+  border: 1px solid var(--textSecondary);
+  border-radius: 5px;
+  height: 100%;
+  background-color: var(--white);
+  padding: 0.4em;
+  width: 24%;
+  position: relative;
+  transition: all 0.22s ease-in-out;
+  color: var(--textSecondary);
+}
+
+.input__container > label {
+  left: 0px;
+  top: -60%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  position: absolute;
+}
+.input__container > input {
+  outline: none;
+  border: none;
+  font-size: 0.9em;
+  color: var(--textPrimary);
+  font-weight: 400;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.addMember__btn {
+  color: var(--primary);
+  font-size: 1em;
+  font-weight: 600;
+  width: 24%;
+  border: 3px solid var(--primary);
+  outline: none;
+  border-radius: 5px;
+  background-color: var(--white);
+  transition: all 0.2s ease-in-out;
+}
+
+.addMember__btn:hover,
+.addMember__btn:focus {
+  background-color: var(--primary);
+  color: var(--white);
+  border: 3px solid var(--white);
+}
+
+.input__container--focus {
+  border: 3px solid var(--primary);
+  color: var(--primary);
+}
+
+.addMember__card__container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+/** Icons */
+.fa-trash-alt {
+  transition: all 0.8s ease-in-out;
+  color: var(--textSecondary);
+}
+
+.fa-trash-alt:hover {
+  color: red;
+}

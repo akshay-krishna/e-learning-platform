@@ -1,7 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;600&display=swap");
 :root {
   --primary: #7f50ff;
+  --primaryDull: #f5f2ffdc;
   --secondary: #70ff17;
+  --secondaryDull: #e5ffd69e;
   --textPrimary: #0f0f0f;
   --textSecondary: #7a7a7a;
   --shadow: #b0bec5;
