@@ -9,7 +9,6 @@ import "./styles/departmentDetails.css";
 const DepartmentDetails = () => {
   const { token } = useContext(userContext).user;
   const { id } = useParams();
-
   const [department, setDepartment] = useState({});
   const [option, setOption] = useState({
     type: "cls",
@@ -53,7 +52,7 @@ const DepartmentDetails = () => {
   );
 };
 
-const Option = ({ option, department }) => {
+const Option = ({ option, department, setIsUpdate }) => {
   const { type } = option;
   let component = null;
   switch (type) {
@@ -72,9 +71,8 @@ const Option = ({ option, department }) => {
   return component;
 };
 
-const Staffs = ({ staffMembers, id }) => {
+const Staffs = ({ staffMembers, id, setIsUpdate }) => {
   const [allStaffs, setAllStaffs] = useState(true);
-  console.log(staffMembers);
   const onClick = (e) => {
     const parent = e.target.parentNode;
     if (e.target === parent.firstChild) {
@@ -106,7 +104,7 @@ const Staffs = ({ staffMembers, id }) => {
       {allStaffs ? (
         <ShowMembers staffMembers={staffMembers} />
       ) : (
-        <AddMemberForm id={id} />
+        <AddMemberForm id={id} setAllStaffs={setAllStaffs} />
       )}
     </div>
   );

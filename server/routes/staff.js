@@ -42,9 +42,6 @@ router.get("/", admin, async (req, res) => {
 router.post("/", admin, async (req, res) => {
   const { staffList } = req.body;
   const { deptId } = req.params;
-  console.log(staffList);
-  console.log(req.body);
-  console.log(deptId);
 
   try {
     const department = await Department.findById(deptId);
@@ -62,8 +59,8 @@ router.post("/", admin, async (req, res) => {
       return newStaff.id;
     });
     department.staffMembers.push(...savedStaffs);
-    await department.save();
-    res.sendStatus(201);
+    const savedDept = await department.save();
+    res.json({ savedDept });
   } catch (err) {
     console.error(err);
     if (err.code == 11000) {

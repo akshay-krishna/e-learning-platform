@@ -7,7 +7,7 @@ export const createUsers = async (token, id, data, type = "students") => {
         Authorization: token,
       },
     });
-    return res.status;
+    return res.data;
   } catch (err) {
     console.error(err.response);
     throw Error(`failed to create ${type}`);

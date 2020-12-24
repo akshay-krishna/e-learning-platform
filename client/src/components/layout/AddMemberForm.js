@@ -7,7 +7,7 @@ import { useContext, useState } from "react";
 import { userContext } from "../../context/userContext";
 import UserCard from "./userCard";
 
-const AddMemberForm = ({ id }) => {
+const AddMemberForm = ({ id, setAllStaffs }) => {
   const { token } = useContext(userContext).user;
   const [user, setUser] = useState({
     name: "",
@@ -38,7 +38,13 @@ const AddMemberForm = ({ id }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createUsers(token, id, { staffList: users }, "staffs");
+      const { staffMembers } = await createUsers(
+        token,
+        id,
+        { staffList: users },
+        "staffs"
+      );
+      setAllStaffs(true);
     } catch (err) {
       console.error(err);
     }
