@@ -2,14 +2,15 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getDepartment } from "../../api/department";
 import { userContext } from "../../context/userContext";
+import { departmentContext } from "../../context/departmentContext";
 import AddMemberForm from "../layout/AddMemberForm";
 import ShowMembers from "../layout/ShowMembers";
 import "./styles/departmentDetails.css";
 
 const DepartmentDetails = () => {
   const { token } = useContext(userContext).user;
+  const { department, setDepartment } = useContext(departmentContext);
   const { id } = useParams();
-  const [department, setDepartment] = useState({});
   const [option, setOption] = useState({
     type: "cls",
   });
@@ -18,14 +19,14 @@ const DepartmentDetails = () => {
     const fetchData = async (token) => {
       try {
         const { department } = await getDepartment(token, id);
-        setDepartment(department);
+        setDepartment({ type: "set", data: department });
       } catch (err) {
         console.error(err);
       }
     };
     fetchData(token);
-  }, [token, id]);
-
+  }, [token, id, department.studentMembers?.length]);
+  console.log(department);
   const navOnClick = (e) => {
     setOption({ type: e.target.id });
   };
@@ -46,33 +47,33 @@ const DepartmentDetails = () => {
             Students
           </div>
         </div>
-        <Option option={option} department={department} />
+        <Option option={option} />
       </div>
     </div>
   );
 };
 
-const Option = ({ option, department, setIsUpdate }) => {
+const Option = ({ option }) => {
   const { type } = option;
   let component = null;
   switch (type) {
     case "staff":
-      component = (
-        <Staffs staffMembers={department.staffMembers} id={department._id} />
-      );
+      component = <Staffs />;
       break;
     case "cls":
-      component = <Classrooms department={department} />;
+      component = <Classrooms />;
       break;
     case "student":
-      component = <Students department={department} />;
+      component = <Students />;
       break;
   }
   return component;
 };
 
-const Staffs = ({ staffMembers, id, setIsUpdate }) => {
+const Staffs = () => {
+  const { staffMembers } = useContext(departmentContext).department;
   const [allStaffs, setAllStaffs] = useState(true);
+
   const onClick = (e) => {
     const parent = e.target.parentNode;
     if (e.target === parent.firstChild) {
@@ -102,9 +103,9 @@ const Staffs = ({ staffMembers, id, setIsUpdate }) => {
         </div>
       </div>
       {allStaffs ? (
-        <ShowMembers staffMembers={staffMembers} />
+        <ShowMembers members={staffMembers} />
       ) : (
-        <AddMemberForm id={id} setAllStaffs={setAllStaffs} />
+        <AddMemberForm setAll={setAllStaffs} type="staffs" />
       )}
     </div>
   );
@@ -113,8 +114,44 @@ const Staffs = ({ staffMembers, id, setIsUpdate }) => {
 const Classrooms = ({ department }) => {
   return <h1>classrooms</h1>;
 };
-const Students = ({ department }) => {
-  return <h1>students</h1>;
+const Students = () => {
+  const { studentMembers } = useContext(departmentContext).department;
+  const [allStaffs, setAllStudents] = useState(true);
+
+  const onClick = (e) => {
+    const parent = e.target.parentNode;
+    if (e.target === parent.firstChild) {
+      parent.firstChild.classList.add("staffs__navItems--active");
+      parent.lastChild.classList.remove("staffs__navItems--active");
+      setAllStudents(true);
+    } else {
+      parent.firstChild.classList.remove("staffs__navItems--active");
+      parent.lastChild.classList.add("staffs__navItems--active");
+      setAllStudents(false);
+    }
+  };
+  return (
+    <div className="staffs">
+      <div className="staffs__nav">
+        <div className="staffs__navContainer">
+          <div
+            className="staffs__navItems staffs__navItems--active"
+            onClick={onClick}
+          >
+            All Students
+          </div>
+          <div onClick={onClick} className="staffs__navItems">
+            Add Students
+          </div>
+        </div>
+      </div>
+      {allStaffs ? (
+        <ShowMembers members={studentMembers} />
+      ) : (
+        <AddMemberForm setAll={setAllStudents} type="students" />
+      )}
+    </div>
+  );
 };
 
 export default DepartmentDetails;

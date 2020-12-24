@@ -25,16 +25,11 @@ html {
   width: 100%;
   font-family: "Titillium Web", sans-serif;
   overflow-x: hidden;
+  background-color: var(--bg-color);
 }
 
 #root {
   height: 100%;
-}
-.app__container {
-  background-color: var(--bg-color);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 .container {

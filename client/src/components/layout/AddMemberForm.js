@@ -6,9 +6,13 @@ import "./styles/addMembers.css";
 import { useContext, useState } from "react";
 import { userContext } from "../../context/userContext";
 import UserCard from "./userCard";
+import { departmentContext } from "../../context/departmentContext";
+import { getDepartment } from "../../api/department";
 
-const AddMemberForm = ({ id, setAllStaffs }) => {
+const AddMemberForm = ({ setAll, type }) => {
   const { token } = useContext(userContext).user;
+  const { department, setDepartment } = useContext(departmentContext);
+  const { _id } = department;
   const [user, setUser] = useState({
     name: "",
     eduMail: "",
@@ -38,13 +42,9 @@ const AddMemberForm = ({ id, setAllStaffs }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { staffMembers } = await createUsers(
-        token,
-        id,
-        { staffList: users },
-        "staffs"
-      );
-      setAllStaffs(true);
+      const res = await createUsers(token, _id, { list: users }, type);
+      setDepartment({ type: "set", data: res.savedDept });
+      setAll(true);
     } catch (err) {
       console.error(err);
     }

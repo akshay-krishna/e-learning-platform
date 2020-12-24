@@ -35,17 +35,17 @@ router.get("/", admin, async (req, res) => {
  *  *Create a student
  *  @method POST
  *  ?route --> /departments/:deptId/students
- *  @param {studentList: [<{name, password, eduMail}>]}
+ *  @param {list: [<{name, password, eduMail}>]}
  *  @access admin
  */
 
 router.post("/", admin, async (req, res) => {
   const { deptId } = req.params;
-  const { studentList } = req.body;
+  const { list } = req.body;
   try {
     const department = await Department.findById(deptId);
     if (!department) return res.sendStatus(404);
-    const savedStudents = studentList.map((student) => {
+    const savedStudents = list.map((student) => {
       const { name, password, eduMail } = student;
       const newStudent = new Student({
         eduMail,
@@ -57,8 +57,8 @@ router.post("/", admin, async (req, res) => {
       return newStudent.id;
     });
     department.studentMembers.push(...savedStudents);
-    await department.save();
-    res.sendStatus(201);
+    const savedDept = await department.save();
+    res.json({ savedDept });
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);

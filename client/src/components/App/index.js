@@ -1,5 +1,6 @@
 import { Fragment, useContext } from "react";
 import { Route, Switch } from "react-router-dom";
+import DepartmentContextProvider from "../../context/departmentContext";
 import { userContext } from "../../context/userContext";
 import Menu from "../layout/Menu";
 import Dashboard from "../pages/Dashboard";
@@ -13,7 +14,7 @@ const App = () => {
   const { auth } = useContext(userContext).user;
   return (
     <Fragment>
-      <div className="app__container">
+      <div>
         {auth ? <Menu /> : null}
         <Switch>{auth ? <PrivateRoutes /> : <AuthRoute />}</Switch>
       </div>
@@ -26,8 +27,10 @@ const PrivateRoutes = () => {
     <Fragment>
       <Switch>
         <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/departments" component={Department} />
-        <Route exact path="/departments/:id" component={DepartmentDetails} />
+        <DepartmentContextProvider>
+          <Route exact path="/departments" component={Department} />
+          <Route exact path="/departments/:id" component={DepartmentDetails} />
+        </DepartmentContextProvider>
       </Switch>
     </Fragment>
   );

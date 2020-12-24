@@ -35,18 +35,18 @@ router.get("/", admin, async (req, res) => {
  *  *Create a staff
  *  @method POST
  *  ?route --> /departments/:deptId/staffs
- *  @param {deptId: <id of department>, staffList: [<{name, password, eduMail}>]}
+ *  @param {deptId: <id of department>, list: [<{name, password, eduMail}>]}
  *  @access admin
  */
 
 router.post("/", admin, async (req, res) => {
-  const { staffList } = req.body;
+  const { list } = req.body;
   const { deptId } = req.params;
 
   try {
     const department = await Department.findById(deptId);
     if (!department) return res.sendStatus(404);
-    const savedStaffs = staffList.map((staff) => {
+    const savedStaffs = list.map((staff) => {
       const { name, password, eduMail } = staff;
       const newStaff = new Staff({
         eduMail,
