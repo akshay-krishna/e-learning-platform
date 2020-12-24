@@ -25,8 +25,8 @@ const DepartmentDetails = () => {
       }
     };
     fetchData(token);
-  }, [token, id, department.studentMembers?.length]);
-  console.log(department);
+  }, [token, id]);
+
   const navOnClick = (e) => {
     setOption({ type: e.target.id });
   };

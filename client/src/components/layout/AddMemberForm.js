@@ -7,11 +7,11 @@ import { useContext, useState } from "react";
 import { userContext } from "../../context/userContext";
 import UserCard from "./userCard";
 import { departmentContext } from "../../context/departmentContext";
-import { getDepartment } from "../../api/department";
+import { useHistory } from "react-router-dom";
 
 const AddMemberForm = ({ setAll, type }) => {
   const { token } = useContext(userContext).user;
-  const { department, setDepartment } = useContext(departmentContext);
+  const { department } = useContext(departmentContext);
   const { _id } = department;
   const [user, setUser] = useState({
     name: "",
@@ -19,6 +19,7 @@ const AddMemberForm = ({ setAll, type }) => {
     password: "",
   });
   const [users, setUsers] = useState([]);
+  const history = useHistory();
   const onClick = (e) => {
     e.preventDefault();
     setUsers([...users, user]);
@@ -43,7 +44,7 @@ const AddMemberForm = ({ setAll, type }) => {
     e.preventDefault();
     try {
       const res = await createUsers(token, _id, { list: users }, type);
-      setDepartment({ type: "set", data: res.savedDept });
+      history.go(0);
       setAll(true);
     } catch (err) {
       console.error(err);
