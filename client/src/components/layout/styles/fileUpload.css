@@ -2,18 +2,22 @@
   width: 100%;
   height: 40vh;
   position: relative;
-  border: 8px dashed #7f50ff5a;
+  border: 8px dashed var(--shadow);
   border-radius: 5px;
   display: flex;
   justify-content: center;
-  transition: all 0.22s ease-in-out;
   align-items: center;
+  transition: all 0.22s ease-in-out;
+  color: var(--shadow);
 }
 
+.drag__dropContainer--drag,
 .drag__dropContainer:hover {
   border: 8px dashed var(--primary);
+  color: var(--primary) !important;
 }
 .drag__drop {
+  cursor: pointer;
   background-color: #000;
   position: absolute;
   top: 0;
@@ -30,33 +34,19 @@
   flex-direction: column;
 }
 
-.browse::before {
-  content: "select your file or drop it here";
-  color: var(--primary);
-  display: inline-block;
-  border: 3px solid var(--primary);
-  border-radius: 5px;
-  padding: 8px 25px;
-  outline: none;
-  white-space: nowrap;
-  -webkit-user-select: none;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 10pt;
-  transition: all 0.22s ease-in-out;
+.file__uploadContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 35%;
 }
 
-.browse:hover::before {
-  color: var(--white);
-  background-color: var(--primary);
-  border-color: var(--white);
+.file__uploadContent > div {
+  margin-right: 8px;
 }
-.browse::-webkit-file-upload-button {
-  visibility: hidden;
-}
+
 .browse {
-  border: none;
-  outline: none;
-  z-index: 1000;
-  color: transparent;
+  font-weight: 600;
+  color: var(--primary);
 }

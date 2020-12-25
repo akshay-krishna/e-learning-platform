@@ -102,7 +102,7 @@ const AddMemberForm = () => {
       </form>
       <div className="addMember__card__container">
         {users.map((user, index) => (
-          <UserCard key={index} user={user} />
+          <UserCard key={index} data={user} />
         ))}
         <div className="create__staffs">
           <form onSubmit={onSubmit}>

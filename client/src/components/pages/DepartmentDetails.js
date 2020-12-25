@@ -69,7 +69,7 @@ const Staffs = () => {
   return (
     <div className="staffs">
       <ChooseOption setAll={setAll} />
-      {all ? <ShowMembers members={staffMembers} /> : <AddMemberForm />}
+      {all ? <ShowMembers members={staffMembers} saved /> : <AddMemberForm />}
     </div>
   );
 };
@@ -91,7 +91,7 @@ const Students = () => {
   return (
     <div className="students">
       <ChooseOption setAll={setAll} />
-      {all ? <ShowMembers members={studentMembers} /> : <AddMemberForm />}
+      {all ? <ShowMembers members={studentMembers} saved /> : <AddMemberForm />}
     </div>
   );
 };

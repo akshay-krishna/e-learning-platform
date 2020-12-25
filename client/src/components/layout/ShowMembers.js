@@ -1,11 +1,17 @@
 import UserCard from "./userCard";
 import "./styles/showMembers.css";
-const ShowMembers = ({ members }) => {
+import { Fragment } from "react";
+
+const ShowMembers = ({ members, saved }) => {
   return (
     <div className="showMember__card__container">
-      {members?.map((member, index) => (
-        <UserCard key={index} user={member} />
-      ))}
+      {saved
+        ? members?.map((member) => (
+            <UserCard key={member._id} data={member} saved />
+          ))
+        : members?.map((member, index) => (
+            <UserCard data={member} index={index} />
+          ))}
     </div>
   );
 };

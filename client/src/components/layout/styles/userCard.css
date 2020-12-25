@@ -20,3 +20,15 @@
 .addMember__card > div {
   width: 15%;
 }
+
+/** Icons */
+.fa-trash-alt,
+.fa-pen-nib {
+  transition: all 0.2s ease-in-out;
+  color: var(--textSecondary);
+}
+
+.fa-trash-alt:hover,
+.fa-pen-nib:hover {
+  color: red;
+}

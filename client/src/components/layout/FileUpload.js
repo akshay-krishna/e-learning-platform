@@ -1,8 +1,9 @@
 import fileParser from "xlsx-parse-json";
 import "./styles/fileUpload.css";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileUpload } from "@fortawesome/free-solid-svg-icons";
 const FileUpload = ({ setUsers }) => {
-  const onChange = (e) => {
+  const onInput = (e) => {
     const file = e.target.files[0];
     fileParser
       .onFileSelection(file)
@@ -13,16 +14,33 @@ const FileUpload = ({ setUsers }) => {
         console.error(err);
       });
   };
+  const onDragEnter = (e) => {
+    const parent = e.target.parentNode;
+    parent.classList.add("drag__dropContainer--drag");
+  };
+  const onDrop = (e) => {
+    e.target.parentNode.classList.remove("drag__dropContainer--drag");
+  };
+  const onDragLeave = onDrop;
   return (
     <div className="file__upload">
       <div className="drag__dropContainer">
         <input
           type="file"
           className="drag__drop"
-          onInput={onChange}
-          onDrop={onChange}
+          onInput={onInput}
+          onDrop={onDrop}
+          onDragLeave={onDragLeave}
+          onDragEnter={onDragEnter}
         />
-        <input type="file" name="data" className="browse" onInput={onChange} />
+        <div className="file__uploadContent">
+          <div>
+            <FontAwesomeIcon icon={faFileUpload} size="5x" />
+          </div>
+          <div>
+            Drag and drop or <span className="browse">browse</span>
+          </div>
+        </div>
       </div>
     </div>
   );

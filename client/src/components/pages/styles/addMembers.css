@@ -72,12 +72,3 @@
   margin: 0 auto;
 }
 
-/** Icons */
-.fa-trash-alt {
-  transition: all 0.8s ease-in-out;
-  color: var(--textSecondary);
-}
-
-.fa-trash-alt:hover {
-  color: red;
-}
