@@ -1,0 +1,75 @@
+.newClassroom {
+  background-color: var(--white);
+  box-shadow: 2px 2px 8px var(--shadow);
+  border-radius: 5px;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4em;
+  z-index: 1;
+  padding: 4em 2em;
+  transform: translateY(3vh);
+}
+
+.newClassroom > form {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.newClassroom__title,
+.newClassroom__description {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  border: 3px solid var(--textSecondary);
+  margin-bottom: 1em;
+  transition: border 0.2s ease-in-out;
+}
+
+.newClassroom--focus {
+  border: 3px solid var(--primary);
+}
+
+.newClassroom__title > input,
+.newClassroom__description > textarea {
+  font-size: 1em;
+  height: 100%;
+  width: 100%;
+  padding: 0.7em 0.4em;
+  border: none;
+  outline: none;
+  color: var(--textPrimary);
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 600;
+}
+
+.newClassroom__title > input::placeholder,
+.newClassroom__description > textarea::placeholder {
+  color: var(--textSecondary);
+  font: 600;
+}
+
+.newClassroom > form > button {
+  width: 100%;
+  height: auto;
+  padding: 0.4em 0;
+  color: var(--primary);
+  background: none;
+  border-radius: 5px;
+  border: 3px solid var(--primary);
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 600;
+  font-size: 1em;
+  transition: all 0.2s ease-in-out;
+}
+
+.newClassroom > form > button:hover {
+  background-color: var(--primary);
+  color: var(--white);
+  border: 3px solid var(--white);
+}

@@ -29,7 +29,11 @@ const PrivateRoutes = () => {
         <Route exact path="/dashboard" component={Dashboard} />
         <DepartmentContextProvider>
           <Route exact path="/departments" component={Department} />
-          <Route exact path="/departments/:id" component={DepartmentDetails} />
+          <Route
+            exact
+            path="/departments/:id/:option"
+            component={DepartmentDetails}
+          />
         </DepartmentContextProvider>
       </Switch>
     </Fragment>

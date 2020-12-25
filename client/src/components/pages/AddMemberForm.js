@@ -3,23 +3,24 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { createUsers } from "../../api/staff";
 
 import "./styles/addMembers.css";
-import { useContext, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { userContext } from "../../context/userContext";
-import UserCard from "./userCard";
+import UserCard from "../layout/userCard";
 import { departmentContext } from "../../context/departmentContext";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
-const AddMemberForm = ({ setAll, type }) => {
+const AddMemberForm = () => {
   const { token } = useContext(userContext).user;
   const { department } = useContext(departmentContext);
   const { _id } = department;
+  const [users, setUsers] = useState([]);
   const [user, setUser] = useState({
     name: "",
     eduMail: "",
     password: "",
   });
-  const [users, setUsers] = useState([]);
   const history = useHistory();
+  const { option } = useParams();
   const onClick = (e) => {
     e.preventDefault();
     setUsers([...users, user]);
@@ -43,9 +44,8 @@ const AddMemberForm = ({ setAll, type }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await createUsers(token, _id, { list: users }, type);
-      history.go(0);
-      setAll(true);
+      await createUsers(token, _id, { list: users }, option);
+      history.go(`/departments/${_id}/${option}`);
     } catch (err) {
       console.error(err);
     }

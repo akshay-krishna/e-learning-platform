@@ -56,7 +56,7 @@ const NewDepartmentForm = ({ newForm, setNewForm }) => {
     try {
       await createDepartment(token, department);
       setNewForm(!newForm);
-      history.push("/department");
+      history.go("/department");
     } catch (err) {
       console.error(err.message);
     }

@@ -12,6 +12,7 @@ const initDb = async () => {
       if (!department) {
         department = new Department({
           name: "root",
+          description: "Root department",
         });
       }
       const staff = new Staff({

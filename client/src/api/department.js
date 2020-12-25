@@ -1,6 +1,7 @@
 import axios from "../libs/axios";
 
 export const getAll = async (token) => {
+  console.log(token);
   try {
     const res = await axios.get("/departments", {
       headers: {
