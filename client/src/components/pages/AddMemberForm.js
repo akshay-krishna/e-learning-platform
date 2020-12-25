@@ -8,6 +8,7 @@ import { userContext } from "../../context/userContext";
 import UserCard from "../layout/userCard";
 import { departmentContext } from "../../context/departmentContext";
 import { useHistory, useParams } from "react-router-dom";
+import FileUpload from "../layout/FileUpload";
 
 const AddMemberForm = () => {
   const { token } = useContext(userContext).user;
@@ -107,6 +108,9 @@ const AddMemberForm = () => {
           <form onSubmit={onSubmit}>
             <button type="submit">Create staffs</button>
           </form>
+        </div>
+        <div className="upload__section">
+          <FileUpload setUsers={setUsers} />
         </div>
       </div>
     </div>

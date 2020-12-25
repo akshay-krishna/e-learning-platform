@@ -68,8 +68,10 @@
   transition: all 0.2s ease-in-out;
 }
 
-.newClassroom > form > button:hover {
+.newClassroom > form > button:hover,
+.newClassroom > form > button:focus {
   background-color: var(--primary);
+  outline: none;
   color: var(--white);
   border: 3px solid var(--white);
 }
