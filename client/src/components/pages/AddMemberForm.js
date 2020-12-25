@@ -3,7 +3,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { createUsers } from "../../api/staff";
 
 import "./styles/addMembers.css";
-import { Fragment, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { userContext } from "../../context/userContext";
 import UserCard from "../layout/userCard";
 import { departmentContext } from "../../context/departmentContext";
@@ -22,6 +22,7 @@ const AddMemberForm = () => {
   });
   const history = useHistory();
   const { option } = useParams();
+
   const onClick = (e) => {
     e.preventDefault();
     setUsers([...users, user]);
@@ -51,6 +52,12 @@ const AddMemberForm = () => {
       console.error(err);
     }
   };
+
+  const deleteEntry = (index) => {
+    users.splice(index, 1);
+    setUsers([...users]);
+  };
+  console.log(users);
 
   const { name, eduMail, password } = user;
 
@@ -102,7 +109,12 @@ const AddMemberForm = () => {
       </form>
       <div className="addMember__card__container">
         {users.map((user, index) => (
-          <UserCard key={index} data={user} />
+          <UserCard
+            key={index}
+            data={user}
+            index={index}
+            deleteEntry={deleteEntry}
+          />
         ))}
         <div className="create__staffs">
           <form onSubmit={onSubmit}>

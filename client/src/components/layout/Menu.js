@@ -9,10 +9,10 @@ import { userContext } from "../../context/userContext";
 const Menu = () => {
   const { dispatch } = useContext(userContext);
   const pathName = useLocation().pathname;
-
   const history = useHistory();
   const onClick = () => {
     dispatch({ type: "logout" });
+    localStorage.clear("user");
     history.push("/login");
   };
 

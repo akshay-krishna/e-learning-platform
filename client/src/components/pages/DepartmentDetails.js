@@ -7,9 +7,9 @@ import ChooseOption from "../layout/ChooseOption";
 import ShowMembers from "../layout/ShowMembers";
 import { useParams } from "react-router-dom";
 import AddMemberForm from "./AddMemberForm";
+import AddClassroomForm from "./AddClasroomForm";
 
 import "./styles/departmentDetails.css";
-import AddClassroomForm from "./AddClasroomForm";
 
 const DepartmentDetails = () => {
   const { token } = useContext(userContext).user;
@@ -91,7 +91,7 @@ const Students = () => {
   return (
     <div className="students">
       <ChooseOption setAll={setAll} />
-      {all ? <ShowMembers members={studentMembers} saved /> : <AddMemberForm />}
+      {all ? <ShowMembers members={studentMembers} /> : <AddMemberForm />}
     </div>
   );
 };

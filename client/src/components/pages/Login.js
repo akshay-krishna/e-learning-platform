@@ -19,9 +19,10 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await login(data);
-      res.data.auth = true;
-      dispatch({ type: "login", data: res.data });
+      const { data: resData } = await login(data);
+      resData.auth = true;
+      dispatch({ type: "login", data: resData });
+      localStorage.setItem("user", JSON.stringify(resData));
       history.push("/dashboard");
     } catch (err) {
       console.error(err.message);

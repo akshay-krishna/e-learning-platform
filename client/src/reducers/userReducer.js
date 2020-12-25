@@ -5,11 +5,9 @@ const userReducer = (state, action) => {
       break;
     case "login":
       state = { ...state, ...action.data };
-      localStorage.setItem("user", JSON.stringify(action.data));
       break;
     case "logout":
       state = { auth: false };
-      localStorage.clear("user");
       break;
   }
   return state;

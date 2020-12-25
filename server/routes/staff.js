@@ -125,11 +125,10 @@ router.put("/:id", auth, async (req, res) => {
 
 router.delete("/:id", admin, async (req, res) => {
   const { id, deptId } = req.params;
-
   try {
     const isHead = await Department.exists({ _id: deptId, head: id });
     if (isHead) return res.sendStatus(406);
-    const department = await Department.findById(id);
+    const department = await Department.findById(deptId);
     const staffIndex = department.staffMembers.indexOf(id);
     await Staff.findByIdAndDelete(id);
     department.staffMembers.splice(staffIndex, 1);
