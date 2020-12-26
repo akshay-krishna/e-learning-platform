@@ -57,7 +57,11 @@ const AddMemberForm = () => {
     users.splice(index, 1);
     setUsers([...users]);
   };
-  console.log(users);
+
+  const updateEntry = (index, data) => {
+    deleteEntry(index);
+    setUsers([...users, data]);
+  };
 
   const { name, eduMail, password } = user;
 
@@ -114,6 +118,7 @@ const AddMemberForm = () => {
             data={user}
             index={index}
             deleteEntry={deleteEntry}
+            updateEntry={updateEntry}
           />
         ))}
         <div className="create__staffs">

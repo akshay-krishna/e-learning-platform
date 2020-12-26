@@ -8,27 +8,60 @@
   width: 100%;
   height: 60px;
   display: flex;
+  font-size: 1em;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   transition: all 0.2s ease-in-out;
+  padding: 2em;
 }
 
 .addMember__card:hover {
   top: -1px;
   box-shadow: 2px 4px 8px var(--shadow);
 }
-.addMember__card > div {
+.addMember__card > div,
+input {
   width: 15%;
+  text-align: center;
+}
+
+.addMember__card > input {
+  border: none;
+  pointer-events: none;
+  color: var(--textPrimary);
+  padding: 0.5em 0;
+  outline: none;
+  font-size: 1em;
+}
+.edit__mode input {
+  border: 1px solid var(--shadow);
+  border-radius: 3px;
+  pointer-events: all;
+  text-align: center;
+}
+.edit__mode input:focus {
+  color: var(--primary);
+  border-color: var(--primary);
 }
 
 /** Icons */
 .fa-trash-alt,
-.fa-pen-nib {
+.fa-pen-nib,
+.fa-times,
+.fa-check {
   transition: all 0.2s ease-in-out;
   color: var(--textSecondary);
 }
 
 .fa-trash-alt:hover,
-.fa-pen-nib:hover {
+.fa-times:hover {
   color: red;
+}
+.fa-pen-nib:hover {
+  color: blue;
+}
+
+.fa-check:hover {
+  transition: all 0.2s ease-in-out;
+  color: var(--secondary);
 }
