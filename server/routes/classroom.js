@@ -41,10 +41,11 @@ router.get("/", deptHead, async (req, res) => {
 
 router.post("/", deptHead, async (req, res) => {
   const { deptId } = req.params;
-  const { name } = req.body;
+  const { name, description } = req.body;
   try {
     const classroom = new Classroom({
       name,
+      description,
       department: deptId,
     });
     const department = await Department.findById(deptId);
@@ -121,8 +122,7 @@ router.put("/:id", classCharge, async (req, res) => {
 
 router.put("/:id/courses", deptHead, async (req, res) => {
   const { course } = req.body;
-  const { id, 
-    deptId } = req.params;
+  const { id, deptId } = req.params;
   try {
     const classroom = await Classroom.findById(id);
     classroom.courses.push(course);

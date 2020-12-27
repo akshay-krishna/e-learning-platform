@@ -1,5 +1,30 @@
-const showClassrooms = () => {
-  return <div></div>;
+import "./styles/showClassrooms.css";
+import { useHistory, useParams } from "react-router-dom";
+
+const ShowClassrooms = ({ classrooms }) => {
+  const history = useHistory();
+  const { id: deptId } = useParams();
+  return (
+    <div className="showClassrooms">
+      {classrooms?.map((classroom) => {
+        const { name, description, _id: id } = classroom;
+        return (
+          <div
+            key={id}
+            className="showClassrooms__card"
+            onClick={() => {
+              history.push(`/departments/${deptId}/classrooms/${id}`);
+            }}
+          >
+            <div className="showClassroom__cardContents">
+              <h3>{name}</h3>
+              <p>{description}</p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
-export default showClassrooms;
+export default ShowClassrooms;

@@ -22,6 +22,7 @@ router.get("/", admin, async (req, res) => {
   try {
     const departments = await Department.find({ name: { $ne: "root" } });
     if (!departments) return res.sendStatus(404);
+    console.log(departments);
     res.json({ departments });
   } catch (err) {
     console.error(err.message);
@@ -66,7 +67,7 @@ router.get("/:id", deptHead, async (req, res) => {
     const department = await Department.findById(id)
       .populate({
         path: "staffMembers studentMembers classrooms head",
-        select: "name eduMail",
+        select: "name eduMail description",
       })
       .exec();
     if (!department) return res.sendStatus(404);

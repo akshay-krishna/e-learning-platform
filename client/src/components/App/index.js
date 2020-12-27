@@ -34,6 +34,11 @@ const PrivateRoutes = () => {
             path="/departments/:id/:option"
             component={DepartmentDetails}
           />
+          <Route
+            exact
+            path="/departments/:id/classrooms/:cid"
+            component={Login}
+          />
         </DepartmentContextProvider>
       </Switch>
     </Fragment>

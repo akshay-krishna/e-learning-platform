@@ -10,6 +10,7 @@ import AddMemberForm from "./AddMemberForm";
 import AddClassroomForm from "./AddClasroomForm";
 
 import "./styles/departmentDetails.css";
+import ShowClassrooms from "../layout/showClassrooms";
 
 const DepartmentDetails = () => {
   const { token } = useContext(userContext).user;
@@ -80,7 +81,7 @@ const Classrooms = () => {
   return (
     <div className="classrooms">
       <ChooseOption setAll={setAll} />
-      {all ? <ShowMembers members={classrooms} /> : <AddClassroomForm />}
+      {all ? <ShowClassrooms classrooms={classrooms} /> : <AddClassroomForm />}
     </div>
   );
 };

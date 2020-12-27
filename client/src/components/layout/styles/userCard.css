@@ -20,9 +20,8 @@
   box-shadow: 2px 4px 8px var(--shadow);
 }
 .addMember__card > div,
-input {
+.addMember__card > input {
   width: 15%;
-  text-align: center;
 }
 
 .addMember__card > input {
@@ -33,13 +32,13 @@ input {
   outline: none;
   font-size: 1em;
 }
-.edit__mode input {
+.edit__mode > input {
   border: 1px solid var(--shadow);
   border-radius: 3px;
   pointer-events: all;
   text-align: center;
 }
-.edit__mode input:focus {
+.edit__mode > input:focus {
   color: var(--primary);
   border-color: var(--primary);
 }
