@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { createClassrooms } from "../../api/classrooms";
-import { userContext } from "../../context/userContext";
+import { userContext } from "../../../context/userContext";
+import { createClassrooms } from "../../../api/classrooms";
 
-import "./styles/addClassroomForm.css";
+import "./addClassroomForm.css";
 
 const AddClassroomForm = () => {
   const [classroom, setClassroom] = useState({

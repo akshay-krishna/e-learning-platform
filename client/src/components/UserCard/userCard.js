@@ -6,7 +6,7 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
-import "./styles/userCard.css";
+import "./userCard.css";
 import { useContext, useEffect, useState } from "react";
 import { userContext } from "../../context/userContext";
 import { useHistory, useParams } from "react-router-dom";

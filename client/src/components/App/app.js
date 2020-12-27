@@ -2,13 +2,13 @@ import { Fragment, useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 import DepartmentContextProvider from "../../context/departmentContext";
 import { userContext } from "../../context/userContext";
-import Menu from "../layout/Menu";
-import Dashboard from "../pages/Dashboard";
-import Department from "../pages/Department";
-import DepartmentDetails from "../pages/DepartmentDetails";
-import Login from "../pages/Login";
 
 import "./app.css";
+import Login from "../Login/login";
+import Dashboard from "../Dashboard/dashboard";
+import Department from "../Department/department";
+import DepartmentDetails from "../DepartmentDetails/departmentDetails";
+import Menu from "../Menu/menu";
 
 const App = () => {
   const { auth } = useContext(userContext).user;
@@ -47,4 +47,5 @@ const PrivateRoutes = () => {
 const AuthRoute = () => {
   return <Route exact path="/login" component={Login} />;
 };
+
 export default App;

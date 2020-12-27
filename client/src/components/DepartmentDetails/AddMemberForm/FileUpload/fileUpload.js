@@ -1,5 +1,5 @@
 import fileParser from "xlsx-parse-json";
-import "./styles/fileUpload.css";
+import "./fileUpload.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileUpload } from "@fortawesome/free-solid-svg-icons";
 const FileUpload = ({ setUsers }) => {

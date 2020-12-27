@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
-import "./styles/menu.css";
+import "./menu.css";
 
 import { useContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";

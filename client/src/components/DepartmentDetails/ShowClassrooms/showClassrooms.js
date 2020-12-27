@@ -1,4 +1,4 @@
-import "./styles/showClassrooms.css";
+import "./showClassrooms.css";
 import { useHistory, useParams } from "react-router-dom";
 
 const ShowClassrooms = ({ classrooms }) => {

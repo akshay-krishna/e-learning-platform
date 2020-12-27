@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { createDepartment, getAll } from "../../api/department";
 import { userContext } from "../../context/userContext";
-import Card from "../layout/Card";
-import "./styles/department.css";
+import Card from "../Card/card";
+import "./department.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";

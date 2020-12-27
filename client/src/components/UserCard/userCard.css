@@ -31,6 +31,7 @@
   padding: 0.5em 0;
   outline: none;
   font-size: 1em;
+  text-align: center;
 }
 .edit__mode > input {
   border: 1px solid var(--shadow);

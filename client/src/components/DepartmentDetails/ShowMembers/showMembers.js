@@ -1,5 +1,5 @@
-import UserCard from "./userCard";
-import "./styles/showMembers.css";
+import UserCard from "../../UserCard/userCard";
+import "./showMembers.css";
 
 const ShowMembers = ({ members }) => {
   return (

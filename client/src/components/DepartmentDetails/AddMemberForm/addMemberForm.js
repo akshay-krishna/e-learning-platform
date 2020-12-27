@@ -1,15 +1,17 @@
+import { useContext, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { createUsers } from "../../api/staff";
 
-import "./styles/addMembers.css";
-import { useContext, useState } from "react";
-import { userContext } from "../../context/userContext";
-import UserCard from "../layout/userCard";
-import { departmentContext } from "../../context/departmentContext";
-import { useHistory, useParams } from "react-router-dom";
-import FileUpload from "../layout/FileUpload";
+import { createUsers } from "../../../api/staff";
+import { departmentContext } from "../../../context/departmentContext";
+import { userContext } from "../../../context/userContext";
 
+import UserCard from "../../UserCard/userCard";
+import FileUpload from "./FileUpload/fileUpload";
+
+import "./addMembers.css";
 const AddMemberForm = () => {
   const { token } = useContext(userContext).user;
   const { department } = useContext(departmentContext);

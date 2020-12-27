@@ -3,7 +3,7 @@ import login from "../../api/login";
 import { userContext } from "../../context/userContext";
 import { useHistory } from "react-router-dom";
 
-import "./styles/login.css";
+import "./login.css";
 const Login = () => {
   const history = useHistory();
   const { dispatch } = useContext(userContext);
