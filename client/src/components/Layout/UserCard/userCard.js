@@ -8,9 +8,9 @@ import {
 
 import "./userCard.css";
 import { useContext, useEffect, useState } from "react";
-import { userContext } from "../../context/userContext";
+import { userContext } from "../../../context/userContext";
 import { useHistory, useParams } from "react-router-dom";
-import { deleteUsers, updateUsers } from "../../api/staff";
+import { deleteUsers, updateUsers } from "../../../api/users";
 
 const UserCard = ({ data, index, deleteEntry, updateEntry }) => {
   const backup = data;

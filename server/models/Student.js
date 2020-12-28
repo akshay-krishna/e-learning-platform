@@ -29,9 +29,16 @@ const StudentSchema = new Schema({
     type: Schema.Types.Number,
     default: 1,
   },
+
   department: {
     type: Schema.Types.ObjectId,
     ref: "departments",
+    required: true,
+  },
+
+  classroom: {
+    type: Schema.Types.ObjectId,
+    ref: "classrooms",
   },
   //   admitNo: {
   //     type: Schema.Types.Number,

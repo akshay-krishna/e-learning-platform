@@ -4,11 +4,11 @@ import { useHistory, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-import { createUsers } from "../../../api/staff";
+import { createUsers } from "../../../api/users";
 import { departmentContext } from "../../../context/departmentContext";
 import { userContext } from "../../../context/userContext";
 
-import UserCard from "../../UserCard/userCard";
+import { UserCard } from "../../Layout";
 import FileUpload from "./FileUpload/fileUpload";
 
 import "./addMembers.css";
@@ -37,12 +37,12 @@ const AddMemberForm = () => {
 
   const onBlur = (e) => {
     const parent = e.target.parentNode;
-    parent.classList.remove("input__container--focus");
+    parent.classList.remove("addMember__inputContainer--focus");
   };
 
   const onFocus = (e) => {
     const parent = e.target.parentNode;
-    parent.classList.add("input__container--focus");
+    parent.classList.add("addMember__inputContainer--focus");
   };
 
   const onSubmit = async (e) => {
@@ -70,7 +70,7 @@ const AddMemberForm = () => {
   return (
     <div className="addMember">
       <form onSubmit={onClick}>
-        <div className="input__container">
+        <div className="addMember__inputContainer">
           <label htmlFor="name">Name</label>
           <input
             id="name"
@@ -83,7 +83,7 @@ const AddMemberForm = () => {
             onFocus={onFocus}
           />
         </div>
-        <label className="input__container">
+        <label className="addMember__inputContainer">
           <label htmlFor="email">Email</label>
           <input
             placeholder="Eg.johndoe@gmail.com"
@@ -96,7 +96,7 @@ const AddMemberForm = () => {
             onFocus={onFocus}
           />
         </label>
-        <div className="input__container">
+        <div className="addMember__inputContainer">
           <label htmlFor="password">Password</label>
           <input
             id="password"

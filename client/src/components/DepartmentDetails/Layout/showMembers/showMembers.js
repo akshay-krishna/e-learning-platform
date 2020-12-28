@@ -1,4 +1,4 @@
-import UserCard from "../../UserCard/userCard";
+import { UserCard } from "../../../Layout/";
 import "./showMembers.css";
 
 const ShowMembers = ({ members }) => {

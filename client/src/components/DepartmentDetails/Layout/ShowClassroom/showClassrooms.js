@@ -1,5 +1,5 @@
-import "./showClassrooms.css";
 import { useHistory, useParams } from "react-router-dom";
+import "./showClassrooms.css";
 
 const ShowClassrooms = ({ classrooms }) => {
   const history = useHistory();

@@ -8,15 +8,26 @@ import Login from "../Login/login";
 import Dashboard from "../Dashboard/dashboard";
 import Department from "../Department/department";
 import DepartmentDetails from "../DepartmentDetails/departmentDetails";
-import Menu from "../Menu/menu";
+import Classroom from "../Classroom/classroom";
 
+import { Menu } from "../Layout";
 const App = () => {
   const { auth } = useContext(userContext).user;
   return (
     <Fragment>
-      <div>
-        {auth ? <Menu /> : null}
+      <div className="app__menu">{auth ? <Menu /> : null}</div>
+      <div className="app">
         <Switch>{auth ? <PrivateRoutes /> : <AuthRoute />}</Switch>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     </Fragment>
   );
@@ -37,7 +48,7 @@ const PrivateRoutes = () => {
           <Route
             exact
             path="/departments/:id/classrooms/:cid"
-            component={Login}
+            component={Classroom}
           />
         </DepartmentContextProvider>
       </Switch>

@@ -27,7 +27,7 @@
 .addMember__card > input {
   border: none;
   pointer-events: none;
-  color: var(--textPrimary);
+  color: var(--textSecondary);
   padding: 0.5em 0;
   outline: none;
   font-size: 1em;
@@ -50,7 +50,7 @@
 .fa-times,
 .fa-check {
   transition: all 0.2s ease-in-out;
-  color: var(--textSecondary);
+  color: #aeaeae;
 }
 
 .fa-trash-alt:hover,
@@ -63,5 +63,5 @@
 
 .fa-check:hover {
   transition: all 0.2s ease-in-out;
-  color: var(--secondary);
+  color: #20e10a;
 }

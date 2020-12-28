@@ -4,12 +4,10 @@ import { useContext, useEffect, useState } from "react";
 import { getDepartment } from "../../api/department";
 import { useHistory, useParams } from "react-router-dom";
 
-import ChooseOption from "./ChooseOption/chooseOption";
-import ShowMembers from "./ShowMembers/showMembers";
 import AddMemberForm from "./AddMemberForm/addMemberForm";
 import AddClassroomForm from "./AddClassroomForm/addClassroomForm";
-import ShowClassrooms from "./ShowClassrooms/showClassrooms";
-
+import { ShowClassrooms, ShowMembers } from "./Layout";
+import { ChooseOption } from "../Layout";
 import "./departmentDetails.css";
 
 const DepartmentDetails = () => {
@@ -47,54 +45,44 @@ const DepartmentDetails = () => {
 };
 
 const Option = () => {
+  const { staffMembers, classrooms, studentMembers } = useContext(
+    departmentContext
+  ).department;
   const { option } = useParams();
+  const [all, setAll] = useState(true);
   let component = null;
+
   switch (option) {
     case "staffs":
-      component = <Staffs />;
+      component = (
+        <div className="staffs">
+          <ChooseOption setAll={setAll} />
+          {all ? <ShowMembers members={staffMembers} /> : <AddMemberForm />}
+        </div>
+      );
       break;
     case "classrooms":
-      component = <Classrooms />;
+      component = (
+        <div className="classrooms">
+          <ChooseOption setAll={setAll} />
+          {all ? (
+            <ShowClassrooms classrooms={classrooms} />
+          ) : (
+            <AddClassroomForm />
+          )}
+        </div>
+      );
       break;
     case "students":
-      component = <Students />;
+      component = (
+        <div className="students">
+          <ChooseOption setAll={setAll} />
+          {all ? <ShowMembers members={studentMembers} /> : <AddMemberForm />}
+        </div>
+      );
       break;
   }
   return component;
-};
-
-const Staffs = () => {
-  const { staffMembers } = useContext(departmentContext).department;
-  const [all, setAll] = useState(true);
-
-  return (
-    <div className="staffs">
-      <ChooseOption setAll={setAll} />
-      {all ? <ShowMembers members={staffMembers} saved /> : <AddMemberForm />}
-    </div>
-  );
-};
-
-const Classrooms = () => {
-  const { classrooms } = useContext(departmentContext).department;
-  const [all, setAll] = useState(true);
-  return (
-    <div className="classrooms">
-      <ChooseOption setAll={setAll} />
-      {all ? <ShowClassrooms classrooms={classrooms} /> : <AddClassroomForm />}
-    </div>
-  );
-};
-const Students = () => {
-  const { studentMembers } = useContext(departmentContext).department;
-  const [all, setAll] = useState(true);
-
-  return (
-    <div className="students">
-      <ChooseOption setAll={setAll} />
-      {all ? <ShowMembers members={studentMembers} /> : <AddMemberForm />}
-    </div>
-  );
 };
 
 const Nav = ({ option }) => {
@@ -108,7 +96,7 @@ const Nav = ({ option }) => {
     fontWeight: "400",
   };
   if (selection === option) {
-    style.color = "#7f50ff";
+    style.color = "#0030ea";
   }
   return (
     <div style={style} id={option.toLowerCase()} onClick={navOnClick}>

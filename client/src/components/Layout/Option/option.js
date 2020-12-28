@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
+import "./option.css";
 
-const ChooseOption = ({ setAll }) => {
+const Option = ({ setAll }) => {
   let { option } = useParams();
   const onClick = (e) => {
     const parent = e.target.parentNode;
@@ -35,4 +36,4 @@ const ChooseOption = ({ setAll }) => {
   );
 };
 
-export default ChooseOption;
+export default Option;

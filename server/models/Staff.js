@@ -31,6 +31,13 @@ const StaffSchema = new Schema({
     ref: "departments",
     required: true,
   },
+
+  classrooms: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "classrooms",
+    },
+  ],
 });
 
 StaffSchema.pre("save", async function () {

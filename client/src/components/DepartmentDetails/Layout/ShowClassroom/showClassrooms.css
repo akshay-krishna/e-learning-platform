@@ -33,3 +33,7 @@
   padding: 2em;
   height: 100%;
 }
+.showClassroom__cardContents > p,
+h3 {
+  cursor: pointer;
+}

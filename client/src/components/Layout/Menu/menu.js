@@ -4,12 +4,13 @@ import "./menu.css";
 
 import { useContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { userContext } from "../../context/userContext";
+import { userContext } from "../../../context/userContext";
 
 const Menu = () => {
   const { dispatch } = useContext(userContext);
   const pathName = useLocation().pathname;
   const history = useHistory();
+
   const onClick = () => {
     dispatch({ type: "logout" });
     localStorage.clear("user");
@@ -25,14 +26,6 @@ const Menu = () => {
       <div className="menu">
         <div className="container">
           <div className="menu__nav">
-            <div className="menu__navItem">
-              <Link
-                to="/classroom"
-                className={isActive("/classroom") ? "active__link" : null}
-              >
-                classroom
-              </Link>
-            </div>
             <div className="menu__navItem">
               <Link
                 to="/departments"

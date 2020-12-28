@@ -1,7 +1,7 @@
 .menu {
   display: flex;
   width: 100vw;
-  height: fit-content;
+  height: 50.6609px;
   background: var(--white);
   box-shadow: 2px 0px 8px 0px var(--shadow);
   position: fixed;
@@ -10,14 +10,12 @@
 
 .menu__navItem {
   flex: 0.06;
-  padding: 0.8em 0;
+  padding: 0.8rem 0;
   text-align: center;
-  font-size: 1.023em;
+  font-size: 0.9375rem;
 }
 
 .menu__navItem a {
-  color: var(--textPrimary);
-  text-decoration: none;
   font-weight: 600;
 }
 
