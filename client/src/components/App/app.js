@@ -1,14 +1,11 @@
 import { Fragment, useContext } from "react";
 import { Route, Switch } from "react-router-dom";
-import DepartmentContextProvider from "../../context/departmentContext";
 import { userContext } from "../../context/userContext";
 
 import "./app.css";
 import Login from "../Login/login";
 import Dashboard from "../Dashboard/dashboard";
 import Department from "../Department/department";
-import DepartmentDetails from "../DepartmentDetails/departmentDetails";
-import Classroom from "../Classroom/classroom";
 
 import { Menu } from "../Layout";
 const App = () => {
@@ -18,39 +15,27 @@ const App = () => {
       <div className="app__menu">{auth ? <Menu /> : null}</div>
       <div className="app">
         <Switch>{auth ? <PrivateRoutes /> : <AuthRoute />}</Switch>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
       </div>
     </Fragment>
   );
 };
 
 const PrivateRoutes = () => {
+  const { isAdmin } = useContext(userContext).user;
   return (
     <Fragment>
       <Switch>
         <Route exact path="/dashboard" component={Dashboard} />
-        <DepartmentContextProvider>
-          <Route exact path="/departments" component={Department} />
-          <Route
-            exact
-            path="/departments/:id/:option"
-            component={DepartmentDetails}
-          />
-          <Route
-            exact
-            path="/departments/:id/classrooms/:cid"
-            component={Classroom}
-          />
-        </DepartmentContextProvider>
+        <Route
+          exact
+          path="/departments/:id"
+          render={() => <Department specific />}
+        />
+        <Route
+          exact
+          path="/departments"
+          render={() => (isAdmin ? <Department /> : null)}
+        />
       </Switch>
     </Fragment>
   );

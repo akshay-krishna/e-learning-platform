@@ -39,12 +39,12 @@ router.get("/", admin, async (req, res) => {
  */
 
 router.post("/", admin, async (req, res) => {
-  let { name, description } = req.body;
+  let { name } = req.body;
   name = name.toLowerCase();
   try {
     const isPresent = await Department.exists({ name });
     if (isPresent) return res.sendStatus(409);
-    const department = new Department({ name, description });
+    const department = new Department({ name });
     await department.save();
     res.sendStatus(201);
   } catch (err) {

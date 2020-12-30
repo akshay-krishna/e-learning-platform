@@ -1,8 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600&display=swap");
 :root {
   --primary: #0030ea;
+  --primaryDark: #001d91;
+  --primaryDull: #0030ee;
   --secondary: #ff707e;
-  --primaryDull: #ece7fd;
+  --secondaryDull: #ff7c89;
   --textPrimary: #ffffff;
   --textSecondary: #000000;
   --shadow: #b0bec5;
@@ -35,46 +37,12 @@ html {
 .app {
   height: 100%;
   box-sizing: border-box;
-  transform: translateY(5vh);
 }
 .app__menu {
   position: relative;
 }
 
-.container {
-  width: 90%;
-  margin: 0 auto;
-  height: 100%;
-}
-
-button {
-  box-sizing: border-box;
-  background-color: transparent;
-  padding: 0.5rem 2rem;
-  border-radius: 3px;
-  color: var(--primary);
-  border: 2px solid var(--primary);
-  transition: all 0.22s ease-in-out;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  font-size: 1rem;
-  outline: none;
-}
-
 a {
   color: var(--textSecondary);
   text-decoration: none;
-}
-
-input {
-  border: 1px solid var(--primary);
-  border-radius: 5px;
-  padding: 0.5rem 0.2rem;
-  outline: none;
-}
-
-button:hover {
-  border-color: var(--white);
-  color: var(--white);
-  background-color: var(--primary);
 }

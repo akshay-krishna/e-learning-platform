@@ -47,9 +47,10 @@ router.post("/", admin, async (req, res) => {
     const department = await Department.findById(deptId);
     if (!department) return res.sendStatus(404);
     const savedStaffs = list.map((staff) => {
-      const { name, password, eduMail } = staff;
+      const { name, password, eduMail, phone } = staff;
       const newStaff = new Staff({
         eduMail,
+        phoneNo,
         name,
         password,
         department: deptId,

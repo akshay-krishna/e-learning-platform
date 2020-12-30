@@ -23,12 +23,6 @@
   flex-direction: column;
 }
 
-.login__container input {
-  padding: 0.6em 0.4em;
-  font-size: 1.1em;
-  margin: 2em;
-}
-
 .login__container button {
   margin: 2em;
   padding: 0.6em 0.4em;

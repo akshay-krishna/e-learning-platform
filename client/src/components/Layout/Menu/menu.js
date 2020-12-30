@@ -5,6 +5,7 @@ import "./menu.css";
 import { useContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { userContext } from "../../../context/userContext";
+import Container from "../Container/container";
 
 const Menu = () => {
   const { dispatch } = useContext(userContext);
@@ -24,7 +25,7 @@ const Menu = () => {
   return (
     <Fragment>
       <div className="menu">
-        <div className="container">
+        <Container>
           <div className="menu__nav">
             <div className="menu__navItem">
               <Link
@@ -48,7 +49,7 @@ const Menu = () => {
               </Link>
             </div>
           </div>
-        </div>
+        </Container>
       </div>
     </Fragment>
   );

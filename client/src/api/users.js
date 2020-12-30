@@ -1,5 +1,6 @@
 import axios from "../libs/axios";
 
+// get users
 export const getUsers = async (token, id, type = "students") => {
   try {
     const res = await axios.get(`/departments/${id}/${type}`, {
@@ -15,6 +16,7 @@ export const getUsers = async (token, id, type = "students") => {
   }
 };
 
+// create users
 export const createUsers = async (token, id, data, type = "students") => {
   try {
     const res = await axios.post(`/departments/${id}/${type}`, data, {
@@ -29,6 +31,22 @@ export const createUsers = async (token, id, data, type = "students") => {
   }
 };
 
+// get a user
+export const getUser = async (token, deptId, id, type = "students") => {
+  try {
+    const res = await axios.get(`/departments/${deptId}/${type}/${id}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return res.data;
+  } catch (err) {
+    console.error(err.response);
+    throw Error(`Failed to get the ${type} with the id ${id}`);
+  }
+};
+
+// update a user
 export const updateUsers = async (token, deptId, id, type, data) => {
   try {
     await axios.put(`/departments/${deptId}/${type}/${id}`, data, {
@@ -41,6 +59,8 @@ export const updateUsers = async (token, deptId, id, type, data) => {
     throw Error(`Failed to update the ${type}`);
   }
 };
+
+// Delete a user
 export const deleteUsers = async (token, deptId, id, type) => {
   try {
     await axios.delete(`/departments/${deptId}/${type}/${id}`, {

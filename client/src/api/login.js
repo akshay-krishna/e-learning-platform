@@ -1,5 +1,6 @@
 import axios from "../libs/axios";
 
+// authenticate a user
 const login = async (data) => {
   try {
     return await axios.post("/auth/staff", data);

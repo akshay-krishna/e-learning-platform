@@ -3,36 +3,3 @@
   height: 100%;
   padding-top: 5rem;
 }
-
-.department__cards {
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  margin: 0 auto;
-}
-
-.department__card {
-  width: 100%;
-  height: fit-content;
-  background-color: var(--white);
-  box-shadow: 2px 2px 8px var(--shadow);
-  border-radius: 5px;
-  margin-bottom: 1.5em;
-  display: flex;
-  align-items: center;
-  transition: all 0.22s ease-in-out;
-  cursor: pointer;
-}
-
-.department__card:hover {
-  top: -5px;
-  box-shadow: 2px 4px 10px 2px var(--shadow);
-}
-
-.department__cardContent {
-  font-size: 1.1rem;
-  padding: 1rem 2rem;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}

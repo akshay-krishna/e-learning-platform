@@ -6,25 +6,22 @@ const StaffSchema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
+
   password: {
     required: true,
     type: Schema.Types.String,
   },
+
   eduMail: {
     type: Schema.Types.String,
     required: true,
     unique: true,
   },
-  mails: [
-    {
-      type: Schema.Types.String,
-    },
-  ],
-  phoneNo: [
-    {
-      type: Schema.Types.String,
-    },
-  ],
+
+  phoneNo: {
+    type: Schema.Types.String,
+    required: true,
+  },
 
   department: {
     type: Schema.Types.ObjectId,

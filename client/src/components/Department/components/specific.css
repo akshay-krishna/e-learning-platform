@@ -1,0 +1,75 @@
+.navBar {
+  width: 100%;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+}
+
+.nav__btn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.nav__btn > .btn {
+  width: 30%;
+}
+
+/* Add Staff */
+
+.addStaff {
+  background: #fff;
+  position: absolute;
+  z-index: 100000;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addStaff__container {
+  width: 80%;
+  height: 80%;
+  border-radius: 5px;
+  box-shadow: 2px 2px 8px 2px var(--shadow);
+  display: flex;
+}
+
+.addStaff__container > div {
+  height: 100%;
+  width: 100%;
+}
+
+.addStaff__cards {
+  background-color: var(--primary);
+}
+
+.addStaffForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.addStaffForm > form {
+  width: 80%;
+}
+
+.form__btn {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.form__btn > .btn {
+  width: 40%;
+}
+
+.form__btn > .cancel {
+  background-color: var(--secondary);
+}
+
+.form__btn > .cancel:hover {
+  background-color: var(--secondaryDull);
+}

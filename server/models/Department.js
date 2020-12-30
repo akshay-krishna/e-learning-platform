@@ -5,10 +5,6 @@ const DepartmentSchema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
-  description: {
-    type: Schema.Types.String,
-    required: true,
-  },
   head: {
     type: Schema.Types.ObjectId,
     ref: "staffs",
