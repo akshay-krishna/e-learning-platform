@@ -1,6 +1,6 @@
 import { Container } from "../Layout";
-import Admin from "./components/Admin";
-import Specific from "./components/Specific";
+import Admin from "./components/Admin/Admin";
+import Specific from "./components/Specific/Specific";
 import "./department.css";
 
 const Department = ({ specific }) => {

@@ -8,6 +8,7 @@ import Dashboard from "../Dashboard/dashboard";
 import Department from "../Department/department";
 
 import { Menu } from "../Layout";
+import AddUser from "../Department/components/Specific/AddUser/addUser";
 const App = () => {
   const { auth } = useContext(userContext).user;
   return (
@@ -28,8 +29,13 @@ const PrivateRoutes = () => {
         <Route exact path="/dashboard" component={Dashboard} />
         <Route
           exact
-          path="/departments/:id"
+          path="/departments/:id/:option"
           render={() => <Department specific />}
+        />
+        <Route
+          exact
+          path="/departments/:id/:option/add"
+          render={() => <AddUser />}
         />
         <Route
           exact

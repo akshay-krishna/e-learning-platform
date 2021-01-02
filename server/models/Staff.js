@@ -18,7 +18,7 @@ const StaffSchema = new Schema({
     unique: true,
   },
 
-  phoneNo: {
+  phone: {
     type: Schema.Types.String,
     required: true,
   },

@@ -20,9 +20,10 @@ const StudentSchema = new Schema({
       type: Schema.Types.String,
     },
   ],
-  phoneNo: [
+  phone: [
     {
       type: Schema.Types.String,
+      required: true,
     },
   ],
   semester: {

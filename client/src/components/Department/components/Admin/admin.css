@@ -43,6 +43,10 @@
   background: #888;
 }
 
+.department__cards > .card {
+  padding: 0;
+}
+
 .department__cardContent {
   font-size: 1.1rem;
   height: 4rem;

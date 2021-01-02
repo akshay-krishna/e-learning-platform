@@ -1,22 +1,6 @@
-.navBar {
-  width: 100%;
-  height: 4rem;
-  display: flex;
-  align-items: center;
-}
-
-.nav__btn {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
-.nav__btn > .btn {
-  width: 30%;
-}
-
 /* Add Staff */
 
-.addStaff {
+.addUser {
   background: #fff;
   position: absolute;
   z-index: 100000;
@@ -29,7 +13,7 @@
   align-items: center;
 }
 
-.addStaff__container {
+.addUser__container {
   width: 80%;
   height: 80%;
   border-radius: 5px;
@@ -37,23 +21,19 @@
   display: flex;
 }
 
-.addStaff__container > div {
+.addUser__container > div {
   height: 100%;
   width: 100%;
 }
 
-.addStaff__cards {
-  background-color: var(--primary);
-}
-
-.addStaffForm {
+.addUserForm {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
 
-.addStaffForm > form {
+.addUserForm > form {
   width: 80%;
 }
 

@@ -6,11 +6,12 @@ import {
   createDepartment,
   deleteDepartment,
   getAll,
-} from "../../../api/department";
-import { userContext } from "../../../context/userContext";
+} from "../../../../api/department";
+import { userContext } from "../../../../context/userContext";
 import axios from "axios";
-import { Button, Card, Input } from "../../Layout";
+import { Button, Card, Input } from "../../../Layout";
 import "./admin.css";
+
 const Admin = () => {
   const [departments, setDepartments] = useState([]);
   const [department, setDepartment] = useState({ name: "" });
@@ -39,7 +40,7 @@ const Admin = () => {
   };
 
   const onClick = (id) => {
-    history.push(`/departments/${id}`);
+    history.push(`/departments/${id}/classrooms`);
   };
 
   const onSubmit = (e) => {

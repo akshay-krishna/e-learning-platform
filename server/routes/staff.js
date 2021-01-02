@@ -50,7 +50,7 @@ router.post("/", admin, async (req, res) => {
       const { name, password, eduMail, phone } = staff;
       const newStaff = new Staff({
         eduMail,
-        phoneNo,
+        phone,
         name,
         password,
         department: deptId,

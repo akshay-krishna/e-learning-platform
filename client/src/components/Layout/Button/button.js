@@ -1,7 +1,7 @@
 import "./button.css";
 
 const Button = (props) => {
-  const { onClick, className } = props;
+  const { onClick, className, type, children } = props;
   const onMouseDown = (e) => {
     e.stopPropagation();
     e.target.classList.add("btn--click");
@@ -16,7 +16,9 @@ const Button = (props) => {
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
     >
-      <button onClick={onClick}>{props.children}</button>
+      <button type={type} onClick={onClick}>
+        {children}
+      </button>
     </div>
   );
 };

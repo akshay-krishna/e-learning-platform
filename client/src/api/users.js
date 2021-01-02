@@ -17,13 +17,19 @@ export const getUsers = async (token, id, type = "students") => {
 };
 
 // create users
-export const createUsers = async (token, id, data, type = "students") => {
+export const createUsers = async (token, id, data, type) => {
+  console.log(data);
   try {
-    const res = await axios.post(`/departments/${id}/${type}`, data, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const res = await axios.post(
+      `/departments/${id}/${type}s`,
+      { list: data },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    console.log(res.data);
     return res.data;
   } catch (err) {
     console.error(err.response);
