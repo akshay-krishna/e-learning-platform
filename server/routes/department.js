@@ -22,7 +22,6 @@ router.get("/", admin, async (req, res) => {
   try {
     const departments = await Department.find({ name: { $ne: "root" } });
     if (!departments) return res.sendStatus(404);
-    console.log(departments);
     res.json({ departments });
   } catch (err) {
     console.error(err.message);

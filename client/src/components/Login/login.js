@@ -4,6 +4,7 @@ import { userContext } from "../../context/userContext";
 import { useHistory } from "react-router-dom";
 
 import "./login.css";
+import { Button, Input } from "../Layout";
 const Login = () => {
   const history = useHistory();
   const { dispatch } = useContext(userContext);
@@ -23,7 +24,7 @@ const Login = () => {
       resData.auth = true;
       dispatch({ type: "login", data: resData });
       localStorage.setItem("user", JSON.stringify(resData));
-      history.push("/dashboard");
+      history.push("/departments");
     } catch (err) {
       console.error(err.message);
     }
@@ -35,19 +36,21 @@ const Login = () => {
     <div className="login">
       <div className="login__container">
         <form onSubmit={onSubmit}>
-          <input
+          <Input
+            placeholder="email"
             type="text"
             name="eduMail"
             value={eduMail}
             onChange={onChange}
           />
-          <input
+          <Input
+            placeholder="password"
             type="password"
             name="password"
             value={password}
             onChange={onChange}
           />
-          <button type="submit">Submit</button>
+          <Button type="submit">Submit</Button>
         </form>
       </div>
     </div>

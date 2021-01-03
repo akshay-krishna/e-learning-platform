@@ -1,42 +1,37 @@
 import { useContext, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Button, Input } from "../../../../Layout";
-import { createUsers } from "../../../../../api/users";
+import { create } from "../../../../../api/users";
 
 import { userContext } from "../../../../../context/userContext";
-import "./addUser.css";
+import "./new.css";
+import NewClassroom from "./NewClassroom/newClassroom";
 
-const AddUser = () => {
-  const { token } = useContext(userContext);
+const New = () => {
+  const { token } = useContext(userContext).user;
   const { option, id } = useParams();
   const history = useHistory();
-  const initialState = {
-    name: "",
-    eduMail: "",
-    phone: "",
-    password: "",
-  };
-  const [user, setUser] = useState(initialState);
 
-  const onChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-  };
-
-  const onSubmit = (e) => {
+  const onSubmit = (e, classroom) => {
     e.preventDefault();
-    const res = createUsers(token, id, [user], option);
-    res.then(() => {}).catch((err) => console.error(err));
+    const res = create(token, id, [classroom], option);
+    res
+      .then(() => {
+        history.goBack();
+      })
+      .catch((err) => console.error(err));
   };
 
   const onClick = () => {
     history.goBack();
   };
 
-  const { name, eduMail, phone, password } = user;
+  const { name, eduMail, phone, password } = {};
   return (
-    <div className="addUser">
-      <div className="addUser__container">
-        <div className="addUserForm">
+    <div className="new">
+      <div className="new__container">
+        <NewClassroom onSubmit={onSubmit} />
+        {/*  <div className="newForm">
           <h2>Add new {option}</h2>
           <form onSubmit={onSubmit}>
             <Input
@@ -76,10 +71,10 @@ const AddUser = () => {
               </Button>
             </div>
           </form>
-        </div>
+        </div> */}
       </div>
     </div>
   );
 };
 
-export default AddUser;
+export default New;

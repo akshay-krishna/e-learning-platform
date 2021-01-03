@@ -9,6 +9,7 @@ const DepartmentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "staffs",
   },
+
   staffMembers: [
     {
       type: Schema.Types.ObjectId,

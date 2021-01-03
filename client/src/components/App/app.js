@@ -4,11 +4,9 @@ import { userContext } from "../../context/userContext";
 
 import "./app.css";
 import Login from "../Login/login";
-import Dashboard from "../Dashboard/dashboard";
-import Department from "../Department/department";
+import Departments from "../Departments/departments";
 
 import { Menu } from "../Layout";
-import AddUser from "../Department/components/Specific/AddUser/addUser";
 const App = () => {
   const { auth } = useContext(userContext).user;
   return (
@@ -22,26 +20,10 @@ const App = () => {
 };
 
 const PrivateRoutes = () => {
-  const { isAdmin } = useContext(userContext).user;
   return (
     <Fragment>
       <Switch>
-        <Route exact path="/dashboard" component={Dashboard} />
-        <Route
-          exact
-          path="/departments/:id/:option"
-          render={() => <Department specific />}
-        />
-        <Route
-          exact
-          path="/departments/:id/:option/add"
-          render={() => <AddUser />}
-        />
-        <Route
-          exact
-          path="/departments"
-          render={() => (isAdmin ? <Department /> : null)}
-        />
+        <Route path="/departments" component={Departments} />
       </Switch>
     </Fragment>
   );

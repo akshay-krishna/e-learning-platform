@@ -36,14 +36,6 @@ const Menu = () => {
               </Link>
             </div>
             <div className="menu__navItem">
-              <Link
-                to="/dashboard"
-                className={isActive("/dashboard") ? "active__link" : null}
-              >
-                dashboard
-              </Link>
-            </div>
-            <div className="menu__navItem">
               <Link to="/login" onClick={onClick}>
                 logout
               </Link>

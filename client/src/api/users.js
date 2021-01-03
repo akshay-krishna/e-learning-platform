@@ -1,7 +1,6 @@
 import axios from "../libs/axios";
 
-// get users
-export const getUsers = async (token, id, type = "students") => {
+export const fetchAll = async (token, id, type) => {
   try {
     const res = await axios.get(`/departments/${id}/${type}`, {
       headers: {
@@ -16,12 +15,11 @@ export const getUsers = async (token, id, type = "students") => {
   }
 };
 
-// create users
-export const createUsers = async (token, id, data, type) => {
+export const create = async (token, id, data, type) => {
   console.log(data);
   try {
     const res = await axios.post(
-      `/departments/${id}/${type}s`,
+      `/departments/${id}/${type}`,
       { list: data },
       {
         headers: {
@@ -37,8 +35,7 @@ export const createUsers = async (token, id, data, type) => {
   }
 };
 
-// get a user
-export const getUser = async (token, deptId, id, type = "students") => {
+export const fetchOne = async (token, deptId, id, type) => {
   try {
     const res = await axios.get(`/departments/${deptId}/${type}/${id}`, {
       headers: {
@@ -52,8 +49,7 @@ export const getUser = async (token, deptId, id, type = "students") => {
   }
 };
 
-// update a user
-export const updateUsers = async (token, deptId, id, type, data) => {
+export const updateOne = async (token, deptId, id, type, data) => {
   try {
     await axios.put(`/departments/${deptId}/${type}/${id}`, data, {
       headers: {
@@ -66,8 +62,7 @@ export const updateUsers = async (token, deptId, id, type, data) => {
   }
 };
 
-// Delete a user
-export const deleteUsers = async (token, deptId, id, type) => {
+export const deleteOne = async (token, deptId, id, type) => {
   try {
     await axios.delete(`/departments/${deptId}/${type}/${id}`, {
       headers: {

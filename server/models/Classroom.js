@@ -18,10 +18,6 @@ const ClassroomSchema = new Schema({
     required: true,
   },
 
-  description: {
-    type: Schema.Types.String,
-    required: true,
-  },
   department: {
     type: Schema.Types.ObjectId,
     ref: "departments",

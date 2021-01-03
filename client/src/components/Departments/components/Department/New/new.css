@@ -1,6 +1,4 @@
-/* Add Staff */
-
-.addUser {
+.new {
   background: #fff;
   position: absolute;
   z-index: 100000;
@@ -13,7 +11,7 @@
   align-items: center;
 }
 
-.addUser__container {
+.new__container {
   width: 80%;
   height: 80%;
   border-radius: 5px;
@@ -21,19 +19,19 @@
   display: flex;
 }
 
-.addUser__container > div {
+.new__container > div {
   height: 100%;
   width: 100%;
 }
 
-.addUserForm {
+.newForm {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
 
-.addUserForm > form {
+.newForm > form {
   width: 80%;
 }
 

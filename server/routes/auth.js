@@ -33,6 +33,8 @@ router.post("/student", async (req, res) => {
     payload.sub = undefined;
     payload.iat = undefined;
 
+    payload.deptId = student.department;
+
     res.json({ token, id: student.id, ...payload });
   } catch (err) {
     console.error(err.message);
@@ -63,6 +65,8 @@ router.post("/staff", async (req, res) => {
     payload.sub = undefined;
     payload.iat = undefined;
 
+    payload.deptId = staff.department;
+    console.log(payload);
     res.json({ token, id: staff.id, ...payload });
   } catch (err) {
     console.error(err.message);

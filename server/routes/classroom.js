@@ -41,11 +41,10 @@ router.get("/", deptHead, async (req, res) => {
 
 router.post("/", deptHead, async (req, res) => {
   const { deptId } = req.params;
-  const { name, description } = req.body;
+  const { name } = req.body.list[0];
   try {
     const classroom = new Classroom({
       name,
-      description,
       department: deptId,
     });
     const department = await Department.findById(deptId);
