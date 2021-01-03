@@ -45,14 +45,15 @@ const ComponentSelector = ({ onSubmit }) => {
   let component = null;
 
   switch (option) {
-    case "classrooms":
-      component = <NewClassroom onSubmit={onSubmit} />;
-      break;
     case "students":
       component = <NewStudent onSubmit={onSubmit} />;
       break;
     case "staffs":
       component = <NewStaff onSubmit={onSubmit} />;
+      break;
+    default:
+      component = <NewClassroom onSubmit={onSubmit} />;
+      break;
   }
 
   return component;

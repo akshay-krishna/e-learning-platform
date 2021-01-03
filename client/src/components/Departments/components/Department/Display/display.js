@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { userContext } from "../../../../../context/userContext";
 import { getDepartment } from "../../../../../api/department";
 
-export default ({
+const Display = ({
   staffMembers,
   studentMembers,
   classrooms,
@@ -40,7 +40,7 @@ export default ({
     case "students":
       data = studentMembers;
       break;
-    case "classrooms":
+    default:
       data = classrooms;
       break;
   }
@@ -63,3 +63,5 @@ export default ({
     </div>
   );
 };
+
+export default Display;

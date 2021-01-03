@@ -39,7 +39,7 @@ const Department = () => {
     return () => {
       source.cancel();
     };
-  }, []);
+  }, [id, token]);
 
   return (
     <div>

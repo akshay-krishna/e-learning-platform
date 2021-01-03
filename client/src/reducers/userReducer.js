@@ -9,6 +9,8 @@ const userReducer = (state, action) => {
     case "logout":
       state = { auth: false };
       break;
+    default:
+      break;
   }
   return state;
 };

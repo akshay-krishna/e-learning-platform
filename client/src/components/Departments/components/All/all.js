@@ -1,7 +1,7 @@
 import { faTrashAlt, faUserEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   createDepartment,
   deleteDepartment,
@@ -69,7 +69,6 @@ const All = () => {
   };
   const edit = (e) => {
     e.stopPropagation();
-    const { id } = e.target.parentNode;
   };
   return (
     <div className="admin">
