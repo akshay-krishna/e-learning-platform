@@ -5,7 +5,6 @@ import { userContext } from "../../context/userContext";
 import "./app.css";
 import Login from "../Login/login";
 import Departments from "../Departments/departments";
-import Classroom from "../Classroom/classroom";
 
 import { Menu } from "../Layout";
 const App = () => {
@@ -25,7 +24,6 @@ const PrivateRoutes = () => {
     <Fragment>
       <Switch>
         <Route path="/departments" component={Departments} />
-        <Route path="/classrooms" component={Classroom} />
       </Switch>
     </Fragment>
   );
