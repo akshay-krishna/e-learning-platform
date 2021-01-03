@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Button, Input } from "../../../../../Layout";
+import { Button, Input } from "../../../../Layout";
 
 import "./newClassroom.css";
 const NewClassroom = ({ onSubmit }) => {

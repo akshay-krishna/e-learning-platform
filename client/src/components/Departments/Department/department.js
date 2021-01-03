@@ -10,9 +10,9 @@ import {
 
 import axios from "axios";
 
-import { getDepartment } from "../../../../api/department";
-import { userContext } from "../../../../context/userContext";
-import { Button, Nav } from "../../../Layout";
+import { getDepartment } from "../../../api/department";
+import { userContext } from "../../../context/userContext";
+import { Button, Nav } from "../../Layout";
 
 import New from "./New/new";
 import Display from "./Display/display";

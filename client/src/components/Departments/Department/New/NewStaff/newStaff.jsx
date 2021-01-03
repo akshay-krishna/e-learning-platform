@@ -1,23 +1,22 @@
 import { Fragment, useState } from "react";
-import { Button, Input } from "../../../../../Layout";
+import { Button, Input } from "../../../../Layout";
+import "./newStaff.css";
 
-import "./newStudent.css";
-
-const NewStudent = ({ onSubmit }) => {
-  const [student, setStudent] = useState({
+const NewStaff = ({ onSubmit }) => {
+  const [staff, setStaff] = useState({
     name: "",
     password: "",
     eduMail: "",
   });
 
   const onChange = (e) => {
-    setStudent({ ...student, [e.target.name]: e.target.value });
+    setStaff({ ...staff, [e.target.name]: e.target.value });
   };
-  const { name, password, eduMail } = student;
+  const { name, password, eduMail } = staff;
 
   return (
     <Fragment>
-      <form className="newStudent" onSubmit={(e) => onSubmit(e, student)}>
+      <form className="newStaff" onSubmit={(e) => onSubmit(e, staff)}>
         <Input
           placeholder="name"
           name="name"
@@ -43,4 +42,5 @@ const NewStudent = ({ onSubmit }) => {
     </Fragment>
   );
 };
-export default NewStudent;
+
+export default NewStaff;

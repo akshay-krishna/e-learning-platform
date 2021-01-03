@@ -1,7 +1,7 @@
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { Container } from "../Layout";
-import All from "./components/All/all";
-import Department from "./components/Department/department";
+import All from "./All/all";
+import Department from "./Department/department";
 import "./departments.css";
 
 const Departments = () => {

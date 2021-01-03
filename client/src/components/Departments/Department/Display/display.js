@@ -1,13 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { Card } from "../../../../Layout";
+import { Card } from "../../../Layout";
 
 import "./display.css";
 import { useHistory, useParams } from "react-router-dom";
-import { deleteOne } from "../../../../../api/users";
+import { deleteOne } from "../../../../api/users";
 import { useContext } from "react";
-import { userContext } from "../../../../../context/userContext";
-import { getDepartment } from "../../../../../api/department";
+import { userContext } from "../../../../context/userContext";
+import { getDepartment } from "../../../../api/department";
 
 const Display = ({
   staffMembers,

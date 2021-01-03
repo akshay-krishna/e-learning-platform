@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { create } from "../../../../../api/users";
-import { userContext } from "../../../../../context/userContext";
+import { create } from "../../../../api/users";
+import { userContext } from "../../../../context/userContext";
 import NewClassroom from "./NewClassroom/newClassroom";
 import "./new.css";
 import NewStudent from "./NewStudent/newStudent";
-import { getDepartment } from "../../../../../api/department";
+import { getDepartment } from "../../../../api/department";
 import NewStaff from "./NewStaff/newStaff";
 
 const New = ({ setDepartment }) => {

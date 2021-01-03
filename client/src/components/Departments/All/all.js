@@ -6,10 +6,10 @@ import {
   createDepartment,
   deleteDepartment,
   getAll,
-} from "../../../../api/department";
-import { userContext } from "../../../../context/userContext";
+} from "../../../api/department";
+import { userContext } from "../../../context/userContext";
 import axios from "axios";
-import { Button, Card, Input } from "../../../Layout";
+import { Button, Card, Input } from "../../Layout";
 import "./all.css";
 
 const All = () => {
