@@ -7,6 +7,7 @@ import {
   Switch,
   useLocation,
 } from "react-router-dom";
+
 import axios from "axios";
 
 import { getDepartment } from "../../../../api/department";
@@ -23,7 +24,7 @@ const Department = () => {
   const { pathname } = useLocation();
   const { id } = useParams();
   const { token } = useContext(userContext).user;
-  const [department, setDepartment] = useState([]);
+  const [department, setDepartment] = useState({});
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -35,7 +36,6 @@ const Department = () => {
       .catch((err) => {
         console.error(err);
       });
-
     return () => {
       source.cancel();
     };
@@ -64,12 +64,11 @@ const Department = () => {
       </div>
 
       <Switch>
-        <Route path={`${path}/:option/new`}>
-          <New />
+        <Route exact path={`${path}/:option`}>
+          <Display {...department} setDepartment={setDepartment} />
         </Route>
-
-        <Route path={`${path}/:option`}>
-          <Display {...department} />
+        <Route path={`${path}/:option/new`}>
+          <New setDepartment={setDepartment} />
         </Route>
       </Switch>
     </div>

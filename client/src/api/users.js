@@ -16,7 +16,6 @@ export const fetchAll = async (token, id, type) => {
 };
 
 export const create = async (token, id, data, type) => {
-  console.log(data);
   try {
     const res = await axios.post(
       `/departments/${id}/${type}`,
@@ -27,8 +26,7 @@ export const create = async (token, id, data, type) => {
         },
       }
     );
-    console.log(res.data);
-    return res.data;
+    return res.status;
   } catch (err) {
     console.error(err.response);
     throw Error(`failed to create ${type}`);
@@ -51,11 +49,12 @@ export const fetchOne = async (token, deptId, id, type) => {
 
 export const updateOne = async (token, deptId, id, type, data) => {
   try {
-    await axios.put(`/departments/${deptId}/${type}/${id}`, data, {
+    const res = await axios.put(`/departments/${deptId}/${type}/${id}`, data, {
       headers: {
         Authorization: token,
       },
     });
+    return res.status;
   } catch (err) {
     console.error(err.response);
     throw Error(`Failed to update the ${type}`);
@@ -64,11 +63,12 @@ export const updateOne = async (token, deptId, id, type, data) => {
 
 export const deleteOne = async (token, deptId, id, type) => {
   try {
-    await axios.delete(`/departments/${deptId}/${type}/${id}`, {
+    const res = await axios.delete(`/departments/${deptId}/${type}/${id}`, {
       headers: {
         Authorization: token,
       },
     });
+    return res.status;
   } catch (err) {
     console.error(err.response);
     throw Error(`failed to create ${type}`);

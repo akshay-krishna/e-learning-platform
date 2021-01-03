@@ -46,22 +46,16 @@ router.post("/", admin, async (req, res) => {
   try {
     const department = await Department.findById(deptId);
     if (!department) return res.sendStatus(404);
-    const savedStaffs = list.map((staff) => {
-      const { name, password, eduMail, phone } = staff;
-      const newStaff = new Staff({
-        eduMail,
-        phone,
-        name,
-        password,
-        department: deptId,
-      });
-
-      saveToDb(newStaff);
-      return newStaff.id;
-    });
-    department.staffMembers.push(...savedStaffs);
-    const savedDept = await department.save();
-    res.json({ savedDept });
+    for (items of list) {
+      items.department = deptId;
+    }
+    const savedStaffs = await Staff.create(list);
+    department.staffMembers = [
+      ...department.staffMembers,
+      savedStaffs.map(({ id }) => id),
+    ];
+    await department.save();
+    res.sendStatus(201);
   } catch (err) {
     console.error(err);
     if (err.code == 11000) {

@@ -1,11 +1,12 @@
 import { Fragment, useState } from "react";
 import { Button, Input } from "../../../../../Layout";
 
+import "./newClassroom.css";
 const NewClassroom = ({ onSubmit }) => {
   const [classroom, setClassroom] = useState({ name: "" });
   return (
     <Fragment>
-      <form onSubmit={(e) => onSubmit(e, classroom)}>
+      <form className="newClassroom" onSubmit={(e) => onSubmit(e, classroom)}>
         <Input
           placeholder="class name"
           id="name"

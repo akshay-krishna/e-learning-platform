@@ -18,15 +18,14 @@ const StaffSchema = new Schema({
     unique: true,
   },
 
-  phone: {
-    type: Schema.Types.String,
-    required: true,
-  },
-
   department: {
     type: Schema.Types.ObjectId,
     ref: "departments",
     required: true,
+  },
+
+  phone: {
+    type: Schema.Types.String,
   },
 
   classrooms: [

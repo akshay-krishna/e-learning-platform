@@ -45,21 +45,18 @@ router.post("/", admin, async (req, res) => {
   try {
     const department = await Department.findById(deptId);
     if (!department) return res.sendStatus(404);
-    const savedStudents = list.map((student) => {
-      const { name, password, eduMail, phone } = student;
-      const newStudent = new Student({
-        eduMail,
-        phone,
-        name,
-        password,
-        department: deptId,
-      });
-      saveToDb(newStudent);
-      return newStudent.id;
-    });
-    department.studentMembers.push(...savedStudents);
-    const savedDept = await department.save();
-    res.json({ savedDept });
+    for (item of list) {
+      item.department = deptId;
+    }
+    const newStudent = await Student.create(list);
+
+    department.studentMembers = [
+      ...department.studentMembers,
+      newStudent.map(({ id }) => id),
+    ];
+
+    await department.save();
+    res.sendStatus(201);
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);

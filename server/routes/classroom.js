@@ -194,7 +194,6 @@ router.put("/:id/homeroom", deptHead, async (req, res) => {
 
 router.delete("/:id", deptHead, async (req, res) => {
   const { id, deptId } = req.params;
-
   try {
     const department = await Department.findById(deptId);
     if (!department) return res.sendStatus(404);

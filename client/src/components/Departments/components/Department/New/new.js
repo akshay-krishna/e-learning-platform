@@ -1,80 +1,61 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Button, Input } from "../../../../Layout";
 import { create } from "../../../../../api/users";
-
 import { userContext } from "../../../../../context/userContext";
-import "./new.css";
 import NewClassroom from "./NewClassroom/newClassroom";
+import "./new.css";
+import NewStudent from "./NewStudent/newStudent";
+import { getDepartment } from "../../../../../api/department";
+import NewStaff from "./NewStaff/newStaff";
 
-const New = () => {
+const New = ({ setDepartment }) => {
   const { token } = useContext(userContext).user;
   const { option, id } = useParams();
   const history = useHistory();
 
-  const onSubmit = (e, classroom) => {
+  const onSubmit = (e, data) => {
     e.preventDefault();
-    const res = create(token, id, [classroom], option);
+    const res = create(token, id, [data], option);
     res
       .then(() => {
-        history.goBack();
+        getDepartment(token, id)
+          .then(({ department }) => {
+            console.log(department);
+            setDepartment(department);
+            history.replace(`/departments/${id}/${option}`);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       })
       .catch((err) => console.error(err));
   };
 
-  const onClick = () => {
-    history.goBack();
-  };
-
-  const { name, eduMail, phone, password } = {};
   return (
     <div className="new">
       <div className="new__container">
-        <NewClassroom onSubmit={onSubmit} />
-        {/*  <div className="newForm">
-          <h2>Add new {option}</h2>
-          <form onSubmit={onSubmit}>
-            <Input
-              onChange={onChange}
-              placeholder="Name"
-              id="name"
-              name="name"
-              value={name}
-            />
-            <Input
-              onChange={onChange}
-              placeholder="Mail"
-              id="email"
-              type="email"
-              name="eduMail"
-              value={eduMail}
-            />
-            <Input
-              onChange={onChange}
-              placeholder="Mobile"
-              id="mobile"
-              name="phone"
-              value={phone}
-            />
-            <Input
-              onChange={onChange}
-              placeholder="password"
-              id="password"
-              type="password"
-              name="password"
-              value={password}
-            />
-            <div className="form__btn">
-              <Button type="submit">ADD</Button>
-              <Button className="cancel" onClick={onClick}>
-                Cancel
-              </Button>
-            </div>
-          </form>
-        </div> */}
+        <ComponentSelector onSubmit={onSubmit} />
       </div>
     </div>
   );
+};
+
+const ComponentSelector = ({ onSubmit }) => {
+  const { option } = useParams();
+  let component = null;
+
+  switch (option) {
+    case "classrooms":
+      component = <NewClassroom onSubmit={onSubmit} />;
+      break;
+    case "students":
+      component = <NewStudent onSubmit={onSubmit} />;
+      break;
+    case "staffs":
+      component = <NewStaff onSubmit={onSubmit} />;
+  }
+
+  return component;
 };
 
 export default New;
