@@ -7,6 +7,7 @@ const auth = require("../middleware/auth");
 
 // models
 const Department = require("../models/Department");
+const Classroom = require("../models/Classroom");
 const Student = require("../models/Student");
 
 const router = Router({ mergeParams: true }); //initialize the route
@@ -42,19 +43,26 @@ router.get("/", admin, async (req, res) => {
 router.post("/", admin, async (req, res) => {
   const { deptId } = req.params;
   const { list } = req.body;
+  const { classroom: clsId } = list[0];
   try {
     const department = await Department.findById(deptId);
-    if (!department) return res.sendStatus(404);
+    const classroom = await Classroom.findById(clsId);
+    if (!department || !classroom) return res.sendStatus(404);
+
     for (item of list) {
       item.department = deptId;
     }
     const newStudent = await Student.create(list);
-
+    classroom.studentMembers = [
+      ...department.studentMembers,
+      ...newStudent.map(({ classroom }) => classroom),
+    ];
     department.studentMembers = [
       ...department.studentMembers,
-      newStudent.map(({ id }) => id),
+      ...newStudent.map(({ id }) => id),
     ];
 
+    await classroom.save();
     await department.save();
     res.sendStatus(201);
   } catch (err) {

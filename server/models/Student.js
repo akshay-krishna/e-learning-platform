@@ -40,6 +40,7 @@ const StudentSchema = new Schema({
   classroom: {
     type: Schema.Types.ObjectId,
     ref: "classrooms",
+    required: true,
   },
   //   admitNo: {
   //     type: Schema.Types.Number,

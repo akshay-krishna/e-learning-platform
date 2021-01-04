@@ -75,7 +75,12 @@ router.get("/:id", deptHead, async (req, res) => {
     const department = await Department.findById(id)
       .populate({
         path: "staffMembers studentMembers classrooms head",
-        select: "name eduMail description",
+        populate: {
+          path: "homeRoomTeacher classroom",
+          select: "name",
+        },
+
+        select: "-phone -password -mails -department -courses -feeds",
       })
       .exec();
     if (!department) return res.sendStatus(404);
