@@ -38,12 +38,21 @@ router.get("/", admin, async (req, res) => {
  */
 
 router.post("/", admin, async (req, res) => {
-  let { name } = req.body;
-  name = name.toLowerCase();
+  let { deptName, name, password, eduMail } = req.body;
+  deptName = deptName.toLowerCase();
   try {
-    const isPresent = await Department.exists({ name });
+    const isPresent = await Department.exists({ name: deptName });
     if (isPresent) return res.sendStatus(409);
-    const department = new Department({ name });
+    const department = new Department({ name: deptName });
+    const staff = new Staff({
+      name,
+      password,
+      eduMail,
+      department: department.id,
+    });
+    department.head = staff.id;
+    department.staffMembers.push(staff.id);
+    await staff.save();
     await department.save();
     res.sendStatus(201);
   } catch (err) {

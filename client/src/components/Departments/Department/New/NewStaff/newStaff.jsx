@@ -32,7 +32,7 @@ const NewStaff = ({ onSubmit }) => {
         />
         <Input
           onChange={onChange}
-          placeholder="name"
+          placeholder="password"
           name="password"
           value={password}
           type="password"

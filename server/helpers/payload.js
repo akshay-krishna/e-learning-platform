@@ -11,7 +11,6 @@ const isStaff = require("./isStaff");
 
 const genPayload = async (data, time = Date.now()) => {
   const { id, name } = data;
-
   const payload = {
     sub: id,
     name: name,

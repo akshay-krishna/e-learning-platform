@@ -41,12 +41,10 @@ router.get("/", deptHead, async (req, res) => {
 
 router.post("/", deptHead, async (req, res) => {
   const { deptId } = req.params;
-  const { name } = req.body.list[0];
+  const [data] = req.body.list;
+  data.department = deptId;
   try {
-    const classroom = new Classroom({
-      name,
-      department: deptId,
-    });
+    const classroom = await Classroom.create(data);
     const department = await Department.findById(deptId);
     department.classrooms.push(classroom.id);
     await classroom.save();

@@ -65,7 +65,7 @@ const Department = () => {
 
       <Switch>
         <Route exact path={`${path}/:option`}>
-          <Display {...department} setDepartment={setDepartment} />
+          <Display department={department} setDepartment={setDepartment} />
         </Route>
         <Route path={`${path}/:option/new`}>
           <New setDepartment={setDepartment} />

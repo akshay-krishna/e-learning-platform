@@ -8,19 +8,18 @@ import NewStudent from "./NewStudent/newStudent";
 import { getDepartment } from "../../../../api/department";
 import NewStaff from "./NewStaff/newStaff";
 
-const New = ({ setDepartment }) => {
+const New = ({ setDepartment, staffMembers }) => {
+  console.log(staffMembers);
   const { token } = useContext(userContext).user;
   const { option, id } = useParams();
   const history = useHistory();
 
   const onSubmit = (e, data) => {
     e.preventDefault();
-    const res = create(token, id, [data], option);
-    res
+    create(token, id, [data], option)
       .then(() => {
         getDepartment(token, id)
           .then(({ department }) => {
-            console.log(department);
             setDepartment(department);
             history.replace(`/departments/${id}/${option}`);
           })

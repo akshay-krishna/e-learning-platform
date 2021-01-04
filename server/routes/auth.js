@@ -66,7 +66,6 @@ router.post("/staff", async (req, res) => {
     payload.iat = undefined;
 
     payload.deptId = staff.department;
-    console.log(payload);
     res.json({ token, id: staff.id, ...payload });
   } catch (err) {
     console.error(err.message);

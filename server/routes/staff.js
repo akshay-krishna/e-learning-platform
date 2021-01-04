@@ -4,6 +4,7 @@ const saveToDb = require("../helpers/saveToDb");
 // middleware
 const admin = require("../middleware/admin");
 const auth = require("../middleware/auth");
+const deptHead = require("../middleware/deptHead");
 
 // models
 const Department = require("../models/Department");
@@ -19,7 +20,7 @@ const router = Router({ mergeParams: true }); //initialize the router
  *  @access admin
  */
 
-router.get("/", admin, async (req, res) => {
+router.get("/", deptHead, async (req, res) => {
   const { deptId } = req.params;
   try {
     const staffs = await Staff.find({ department: deptId }, "-password");
