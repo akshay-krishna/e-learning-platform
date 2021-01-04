@@ -5,7 +5,9 @@ import "./menu.css";
 import { useContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { userContext } from "../../../context/userContext";
-import Container from "../Container/container";
+
+import Container from "@material-ui/core/Container";
+import { AppBar } from "@material-ui/core";
 
 const Menu = () => {
   const { dispatch } = useContext(userContext);
@@ -24,7 +26,7 @@ const Menu = () => {
 
   return (
     <Fragment>
-      <div className="menu">
+      <AppBar color="transparent">
         <Container>
           <div className="menu__nav">
             <div className="menu__navItem">
@@ -42,7 +44,7 @@ const Menu = () => {
             </div>
           </div>
         </Container>
-      </div>
+      </AppBar>
     </Fragment>
   );
 };

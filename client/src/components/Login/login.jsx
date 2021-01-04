@@ -4,7 +4,8 @@ import { userContext } from "../../context/userContext";
 import { useHistory } from "react-router-dom";
 
 import "./login.css";
-import { Button, Input } from "../Layout";
+
+import { Button, TextField } from "@material-ui/core";
 const Login = () => {
   const history = useHistory();
   const { dispatch } = useContext(userContext);
@@ -36,21 +37,29 @@ const Login = () => {
     <div className="login">
       <div className="login__container">
         <form onSubmit={onSubmit}>
-          <Input
-            placeholder="email"
-            type="text"
-            name="eduMail"
+          <TextField
+            margin="dense"
+            fullWidth
+            required
+            variant="outlined"
             value={eduMail}
+            name="eduMail"
             onChange={onChange}
+            label="email"
           />
-          <Input
-            placeholder="password"
-            type="password"
-            name="password"
+          <TextField
+            fullWidth
+            margin="dense"
+            required
+            variant="outlined"
             value={password}
+            name="password"
             onChange={onChange}
+            label="password"
           />
-          <Button type="submit">Submit</Button>
+          <Button color="primary" variant="contained" type="submit">
+            Submit
+          </Button>
         </form>
       </div>
     </div>

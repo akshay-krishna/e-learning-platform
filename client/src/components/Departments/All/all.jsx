@@ -1,5 +1,3 @@
-import { faTrashAlt, faUserEdit } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -9,7 +7,17 @@ import {
 } from "../../../api/department";
 import { userContext } from "../../../context/userContext";
 import axios from "axios";
-import { Button, Card, Input } from "../../Layout";
+import {
+  Button,
+  Card,
+  CardContent,
+  FormControl,
+  IconButton,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+
 import "./all.css";
 
 const All = () => {
@@ -59,9 +67,8 @@ const All = () => {
       });
   };
 
-  const remove = (e) => {
+  const remove = (e, id) => {
     e.stopPropagation();
-    const { id } = e.target.parentNode;
     const res = deleteDepartment(token, id);
     res
       .then((res) => {
@@ -83,37 +90,62 @@ const All = () => {
         <div className="newDepartment">
           <h2> Add a Department</h2>
           <form onSubmit={onSubmit}>
-            <Input
-              placeholder="department name"
-              onChange={onChange}
-              value={deptName}
-              name="deptName"
-              id="department__name"
-            />
-            <Input
-              placeholder="name of dept head"
-              onChange={onChange}
-              value={name}
-              name="name"
-              id="department__head"
-            />
-            <Input
-              placeholder="Email"
-              onChange={onChange}
-              value={eduMail}
-              type="email"
-              name="eduMail"
-              id="department__headEmail"
-            />
-            <Input
-              placeholder="password"
-              onChange={onChange}
-              value={password}
-              type="password"
-              name="password"
-              id="department__headPassword"
-            />
-            <Button>Create</Button>
+            <FormControl fullWidth>
+              <TextField
+                required
+                variant="outlined"
+                label="department name"
+                onChange={onChange}
+                value={deptName}
+                name="deptName"
+                id="department__name"
+              />
+            </FormControl>
+            <FormControl fullWidth>
+              <TextField
+                required
+                variant="outlined"
+                label="name of dept head"
+                onChange={onChange}
+                value={name}
+                name="name"
+                id="department__head"
+              />
+            </FormControl>
+            <FormControl fullWidth>
+              <TextField
+                required
+                variant="outlined"
+                label="Email"
+                onChange={onChange}
+                value={eduMail}
+                type="email"
+                name="eduMail"
+                id="department__headEmail"
+              />
+            </FormControl>
+            <FormControl fullWidth>
+              <TextField
+                required
+                variant="outlined"
+                label="password"
+                onChange={onChange}
+                value={password}
+                type="password"
+                name="password"
+                id="department__headPassword"
+              />
+            </FormControl>
+            <FormControl fullWidth>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+              >
+                Create
+              </Button>
+            </FormControl>
           </form>
         </div>
       </div>
@@ -121,18 +153,15 @@ const All = () => {
         {departments.map(({ name, _id: id }) => {
           return (
             <Link key={id} to={`/departments/${id}/classrooms`}>
-              <Card>
-                <div id={id} className="department__cardContent">
-                  <div className="department__cardTitle">
-                    <p>{name}</p>
+              <Card variant="outlined">
+                <CardContent>
+                  <div className="card__contents">
+                    <Typography>{name}</Typography>
+                    <IconButton onClick={(e) => remove(e, id)}>
+                      <DeleteIcon />
+                    </IconButton>
                   </div>
-                  <div className="icon__btn" onClick={edit}>
-                    <FontAwesomeIcon icon={faUserEdit} />
-                  </div>
-                  <div className="icon__btn" onClick={remove}>
-                    <FontAwesomeIcon icon={faTrashAlt} />
-                  </div>
-                </div>
+                </CardContent>
               </Card>
             </Link>
           );

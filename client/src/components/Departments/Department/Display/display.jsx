@@ -1,14 +1,15 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { Card } from "../../../Layout";
+import Card from "@material-ui/core/Card";
 
 import "./display.css";
-import { Link, useHistory, useParams } from "react-router-dom";
+
+import { useHistory, useParams } from "react-router-dom";
 import { deleteOne } from "../../../../api/users";
 import { useContext } from "react";
 import { userContext } from "../../../../context/userContext";
 import { getDepartment } from "../../../../api/department";
-
+import { IconButton } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 const Display = ({ department, setDepartment }) => {
   const { option, id: deptId } = useParams();
   const { token } = useContext(userContext).user;
@@ -19,7 +20,6 @@ const Display = ({ department, setDepartment }) => {
         getDepartment(token, deptId)
           .then(({ department }) => {
             setDepartment(department);
-            console.log(department);
             history.replace(`/departments/${deptId}/${option}`);
           })
           .catch((err) => console.error(err));
@@ -54,36 +54,54 @@ const ChooseComponent = ({
   const component =
     option === "classrooms" ? (
       <div className="classrooms">
-        {data?.map(({ _id: id, name }) => (
-          <Card key={id}>
-            <div className="classroom__card">
-              <div>{name}</div>
-              <div onClick={() => remove(id)}>
-                <FontAwesomeIcon icon={faTrashAlt} />
+        {data?.map(
+          ({ _id: id, name, homeRoomTeacher: teach, studentMembers }) => (
+            <Card key={id}>
+              <div className="classroom__card">
+                <div>{name}</div>
+                <div>{teach.name}</div>
+                <div>{studentMembers.length}</div>
+                <div>
+                  <IconButton
+                    onClick={() => {
+                      console.log("object");
+                    }}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                </div>
+                <div>
+                  <IconButton onClick={() => remove(id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </div>
               </div>
-              <div
-                onClick={() => {
-                  console.log("object");
-                }}
-              >
-                <FontAwesomeIcon icon={faEllipsisV} />
-              </div>
-            </div>
-          </Card>
-        ))}
+            </Card>
+          )
+        )}
       </div>
     ) : (
       <div className="users">
-        {data?.map(({ _id: id, name, eduMail }) => (
+        {data?.map(({ _id: id, name, eduMail, semester, classroom }) => (
           <Card key={id}>
             <div className="user__card">
               <div>{name}</div>
+              <div>{classroom?.name}</div>
               <div>{eduMail}</div>
-              <div onClick={() => remove(id)}>
-                <FontAwesomeIcon icon={faTrashAlt} />
+              <div>{semester}</div>
+              <div>
+                <IconButton
+                  onClick={() => {
+                    console.log("object");
+                  }}
+                >
+                  <EditIcon />
+                </IconButton>
               </div>
               <div>
-                <FontAwesomeIcon icon={faEllipsisV} />
+                <IconButton onClick={() => remove(id)}>
+                  <DeleteIcon />
+                </IconButton>
               </div>
             </div>
           </Card>

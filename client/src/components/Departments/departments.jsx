@@ -1,16 +1,21 @@
 import { useContext } from "react";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { userContext } from "../../context/userContext";
-import { Container } from "../Layout";
+import Container from "@material-ui/core/Container";
 import All from "./All/all";
 import Department from "./Department/department";
-import "./departments.css";
 
 const Departments = () => {
   const { path } = useRouteMatch();
   const { isAdmin, deptId, isDeptHead } = useContext(userContext).user;
   return (
-    <div className="departments">
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        paddingTop: "5rem",
+      }}
+    >
       <Container>
         <Switch>
           <Route

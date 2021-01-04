@@ -46,3 +46,8 @@ a {
   color: var(--textSecondary);
   text-decoration: none;
 }
+
+.MuiFormControl-fullWidth,
+.MuiFormControl {
+  margin-bottom: 1rem !important;
+}
