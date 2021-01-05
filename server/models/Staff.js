@@ -27,7 +27,10 @@ const StaffSchema = new Schema({
   phone: {
     type: Schema.Types.String,
   },
-
+  homeroom: {
+    type: Schema.Types.ObjectId,
+    ref: "classrooms",
+  },
   classrooms: [
     {
       type: Schema.Types.ObjectId,

@@ -8,6 +8,7 @@ const auth = require("../middleware/auth");
 // models
 const Classroom = require("../models/Classroom");
 const Department = require("../models/Department");
+const Staff = require("../models/Staff");
 
 const router = Router({ mergeParams: true }); //initialize the route
 
@@ -46,7 +47,13 @@ router.post("/", deptHead, async (req, res) => {
   try {
     const classroom = await Classroom.create(data);
     const department = await Department.findById(deptId);
+    if (!(classroom && department)) return res.sendStatus(404);
     department.classrooms.push(classroom.id);
+
+    await Staff.findByIdAndUpdate(classroom.homeRoomTeacher, {
+      homeroom: classroom.id,
+    });
+
     await classroom.save();
     await department.save();
     res.sendStatus(201);
@@ -194,10 +201,15 @@ router.delete("/:id", deptHead, async (req, res) => {
   const { id, deptId } = req.params;
   try {
     const department = await Department.findById(deptId);
-    if (!department) return res.sendStatus(404);
-    const classIndex = department.classrooms.indexOf(id);
+    const { homeRoomTeacher } = await Classroom.findById(id);
+    if (!department || !homeRoomTeacher) return res.sendStatus(404);
+    department.classrooms.splice(department.classrooms.indexOf(id), 1);
+
+    await Staff.findByIdAndUpdate(homeRoomTeacher, {
+      homeroom: undefined,
+    });
+
     await Classroom.findByIdAndDelete(id);
-    department.classrooms.splice(classIndex, 1);
     await department.save();
     res.sendStatus(200);
   } catch (err) {

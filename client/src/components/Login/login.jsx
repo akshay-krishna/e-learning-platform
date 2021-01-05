@@ -25,7 +25,18 @@ const Login = () => {
       resData.auth = true;
       dispatch({ type: "login", data: resData });
       localStorage.setItem("user", JSON.stringify(resData));
-      history.push("/departments");
+      let URL = "";
+      const {
+        isAdmin,
+        isDeptHead,
+        deptId,
+        isHomeroomTeacher,
+        homeroom,
+      } = resData;
+      if (isAdmin) URL = "/departments";
+      else if (isDeptHead) URL = `/departments/${deptId}/classrooms`;
+      else if (isHomeroomTeacher) URL = `/classrooms/${homeroom}`;
+      history.push(URL);
     } catch (err) {
       console.error(err.message);
     }

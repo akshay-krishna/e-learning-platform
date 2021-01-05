@@ -34,7 +34,7 @@ router.post("/student", async (req, res) => {
     payload.iat = undefined;
 
     payload.deptId = student.department;
-
+    payload.cid = student.classroom;
     res.json({ token, id: student.id, ...payload });
   } catch (err) {
     console.error(err.message);
@@ -55,7 +55,6 @@ router.post("/staff", async (req, res) => {
   try {
     const staff = await Staff.findOne({ eduMail: eduMail });
     if (!staff) return res.sendStatus(404);
-
     const isValidPassword = await staff.isValidPassword(password);
     if (!isValidPassword) return res.sendStatus(401);
 
@@ -64,8 +63,8 @@ router.post("/staff", async (req, res) => {
     payload.exp = undefined;
     payload.sub = undefined;
     payload.iat = undefined;
-
     payload.deptId = staff.department;
+    payload.homeroom = staff.homeroom;
     res.json({ token, id: staff.id, ...payload });
   } catch (err) {
     console.error(err.message);

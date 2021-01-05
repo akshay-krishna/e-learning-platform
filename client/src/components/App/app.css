@@ -37,6 +37,7 @@ html {
 .app {
   height: 100%;
   box-sizing: border-box;
+  padding-top: 5rem;
 }
 .app__menu {
   position: relative;

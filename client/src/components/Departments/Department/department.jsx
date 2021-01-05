@@ -6,6 +6,7 @@ import {
   Switch,
   useLocation,
   useHistory,
+  Link,
 } from "react-router-dom";
 
 import axios from "axios";
@@ -69,10 +70,7 @@ const Department = () => {
     };
   }, [id, token]);
 
-  const onChange = (e, newValue) => {
-    history.push(`${url}/${links[newValue]}`);
-    setValue(newValue);
-  };
+  const onChange = (e, newValue) => setValue(newValue);
 
   return (
     <div>
@@ -84,9 +82,9 @@ const Department = () => {
             indicatorColor="primary"
             textColor="primary"
           >
-            <Tab label="Classrooms" />
-            <Tab label="Staffs" />
-            <Tab label="Students" />
+            <Tab label="Classrooms" to={`${url}/classrooms`} component={Link} />
+            <Tab label="Staffs" to={`${url}/staffs`} component={Link} />
+            <Tab label="Students" to={`${url}/students`} component={Link} />
           </Tabs>
         </Paper>
 
