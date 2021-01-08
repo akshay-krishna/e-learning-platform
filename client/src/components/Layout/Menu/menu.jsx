@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./menu.css";
 
 import { useContext } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { userContext } from "../../../context/userContext";
 
 import Container from "@material-ui/core/Container";
@@ -18,7 +18,7 @@ const Menu = () => {
 
   return (
     <Fragment>
-      <AppBar color="transparent" >
+      <AppBar color="transparent">
         <Container>
           <div className="menu__nav">
             <Tabs

@@ -43,6 +43,7 @@ router.get("/", admin, async (req, res) => {
 router.post("/", admin, async (req, res) => {
   const { deptId } = req.params;
   const { list } = req.body;
+  console.log(list[0]);
   const { classroom: clsId } = list[0];
   try {
     const department = await Department.findById(deptId);

@@ -40,7 +40,7 @@ const Department = () => {
 
   const onSubmit = (e, data) => {
     e.preventDefault();
-    create(token, id, [data], option)
+    create(token, id, data, option)
       .then(() => {
         getDepartment(token, id)
           .then(({ department }) => {

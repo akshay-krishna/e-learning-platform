@@ -37,16 +37,10 @@
   padding: 2em;
 }
 
-.upload__dataContainer {
+.form__btn {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
 }
-.upload__data {
-  outline: none;
-  border: none;
-  content: "test";
-}
-.upload__data::-webkit-file-upload-button {
-  visibility: hidden;
+.form__btn > button {
+  width: 48%;
 }
