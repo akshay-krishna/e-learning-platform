@@ -2,12 +2,13 @@ import { Fragment, useContext, useEffect, useState } from "react";
 
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { FormControl } from "@material-ui/core";
+import FormControl from "@material-ui/core/FormControl";
 import { fetchAll } from "../../../../api/users";
 import { useParams } from "react-router-dom";
 import { userContext } from "../../../../context/userContext";
 
 const NewStudent = ({ onSubmit, setAdd }) => {
+  const [students, setStudents] = useState([]);
   const [student, setStudent] = useState({
     name: "",
     password: "",
@@ -98,6 +99,15 @@ const NewStudent = ({ onSubmit, setAdd }) => {
           >
             Cancel
           </Button>
+        </FormControl>
+        <FormControl fullWidth>
+          <div className="upload__dataContainer">
+            <input
+              className="upload__data"
+              type="file"
+              placeholder="test"
+            ></input>
+          </div>
         </FormControl>
       </form>
     </Fragment>

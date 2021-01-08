@@ -10,6 +10,7 @@ import { getDepartment } from "../../../../api/department";
 import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+
 const Display = ({ department, setDepartment }) => {
   const { option, id: deptId } = useParams();
   const { token } = useContext(userContext).user;

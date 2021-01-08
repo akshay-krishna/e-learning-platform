@@ -36,3 +36,17 @@
 .new form {
   padding: 2em;
 }
+
+.upload__dataContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.upload__data {
+  outline: none;
+  border: none;
+  content: "test";
+}
+.upload__data::-webkit-file-upload-button {
+  visibility: hidden;
+}
