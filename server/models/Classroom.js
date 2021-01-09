@@ -38,6 +38,14 @@ const ClassroomSchema = new Schema({
     },
   ],
 
+  assignments: [
+    {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "assignments",
+    },
+  ],
+
   feeds: [
     {
       type: Schema.Types.ObjectId,
