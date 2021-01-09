@@ -1,4 +1,5 @@
-.user__card,
+.staffs__card,
+.students__card,
 .classroom__card {
   width: 100%;
   height: 100%;
@@ -8,7 +9,8 @@
   position: relative;
 }
 
-.user__card > div,
+.staffs__card > div,
+.students__card > div,
 .classroom__card > div {
   width: 20%;
   height: 100%;
@@ -16,11 +18,8 @@
   justify-content: center;
   overflow-x: scroll;
 }
-.user__card > div::-webkit-scrollbar,
+.staffs__card > div::-webkit-scrollbar,
+.students__card > div::-webkit-scrollbar,
 .classroom__card > div::-webkit-scrollbar {
   display: none;
-}
-
-.fa-ellipsis-v {
-  color: var(--shadow);
 }

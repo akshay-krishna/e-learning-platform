@@ -1,15 +1,41 @@
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { FormControl } from "@material-ui/core";
+import department from "../../../../api/department";
+import { create } from "../../../../api/staff";
+import { userContext } from "../../../../context/userContext";
+import { useHistory, useParams } from "react-router-dom";
 
-const NewStaff = ({ onSubmit, setAdd }) => {
+const NewStaff = ({ setAdd, setDepartment }) => {
+  const { token } = useContext(userContext).user;
+  const { id } = useParams();
+  const history = useHistory();
+
   const [staff, setStaff] = useState({
     name: "",
     password: "",
     eduMail: "",
   });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    create({ token, deptId: id, staffs: [staff] })
+      .then(() => {
+        department
+          .fetchOne(token, id)
+          .then(({ department }) => {
+            setDepartment(department);
+            history.replace(`/departments/${id}/staffs`);
+            setAdd(false);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      })
+      .catch((err) => console.error(err));
+  };
 
   const onChange = (e) => {
     setStaff({ ...staff, [e.target.name]: e.target.value });
@@ -18,7 +44,7 @@ const NewStaff = ({ onSubmit, setAdd }) => {
 
   return (
     <Fragment>
-      <form onSubmit={(e) => onSubmit(e, staff)}>
+      <form onSubmit={onSubmit}>
         <FormControl fullWidth>
           <TextField
             variant="outlined"

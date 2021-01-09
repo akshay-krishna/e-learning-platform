@@ -1,10 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  createDepartment,
-  deleteDepartment,
-  getAll,
-} from "../../../api/department";
+import { create, destroy, fetchAll } from "../../../api/department";
 import { userContext } from "../../../context/userContext";
 import axios from "axios";
 import {
@@ -32,7 +28,7 @@ const All = () => {
 
   useEffect(() => {
     const source = axios.CancelToken.source();
-    const res = getAll(token, source.token);
+    const res = fetchAll(token, source.token);
     res
       .then(({ departments }) => {
         setDepartments(departments);
@@ -53,8 +49,7 @@ const All = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(department);
-    const res = createDepartment(token, department);
+    const res = create(token, department);
     res
       .then((res) => {
         if (res === 201) {
@@ -69,7 +64,7 @@ const All = () => {
 
   const remove = (e, id) => {
     e.stopPropagation();
-    const res = deleteDepartment(token, id);
+    const res = destroy(token, id);
     res
       .then((res) => {
         if (res === 200) {
@@ -80,9 +75,7 @@ const All = () => {
         console.error(err);
       });
   };
-  const edit = (e) => {
-    e.stopPropagation();
-  };
+
   const { deptName, name, password, eduMail } = department;
   return (
     <div className="admin">

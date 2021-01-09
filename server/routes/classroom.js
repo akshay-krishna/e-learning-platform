@@ -42,7 +42,7 @@ router.get("/", deptHead, async (req, res) => {
 
 router.post("/", deptHead, async (req, res) => {
   const { deptId } = req.params;
-  const [data] = req.body.list;
+  const { classroom: data } = req.body;
   data.department = deptId;
   try {
     const classroom = await Classroom.create(data);

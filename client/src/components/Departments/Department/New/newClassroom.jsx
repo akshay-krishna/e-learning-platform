@@ -1,31 +1,53 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchAll } from "../../../../api/users";
+import { fetchAll as fetchAllStaff } from "../../../../api/staff";
 import { userContext } from "../../../../context/userContext";
 
 import Button from "@material-ui/core/Button";
 import { FormControl, TextField } from "@material-ui/core";
 
-const NewClassroom = ({ onSubmit, setAdd }) => {
-  
+import { create as createClassroom } from "../../../../api/classroom";
+import department from "../../../../api/department";
+
+const NewClassroom = ({ setAdd, setDepartment }) => {
   const [classroom, setClassroom] = useState({ name: "", homeRoomTeacher: "" });
   const [staff, setStaff] = useState([]);
   const { token } = useContext(userContext).user;
   const { id } = useParams();
 
   useEffect(() => {
-    fetchAll(token, id, "staffs")
+    fetchAllStaff({ token, deptId: id })
       .then(({ staffs }) => {
         setStaff(staffs);
       })
       .catch((err) => {
         console.error(err);
       });
-  }, []);
+  }, [token, id]);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    createClassroom({ token, deptId: id, classroom: classroom })
+      .then((status) => {
+        if (status === 201) {
+          department
+            .fetchOne(token, id)
+            .then(({ department }) => {
+              setDepartment(department);
+              setAdd(false);
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        }
+      })
+      .catch((err) => console.error(err));
+  };
 
   return (
     <Fragment>
-      <form onSubmit={(e) => onSubmit(e, classroom)}>
+      <form onSubmit={onSubmit}>
         <FormControl fullWidth>
           <TextField
             variant="outlined"

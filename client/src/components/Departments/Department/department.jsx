@@ -5,23 +5,23 @@ import {
   useRouteMatch,
   Switch,
   useLocation,
-  useHistory,
   Link,
 } from "react-router-dom";
 
 import axios from "axios";
 
-import { getDepartment } from "../../../api/department";
+import { fetchOne } from "../../../api/department";
 import { userContext } from "../../../context/userContext";
 import Button from "@material-ui/core/Button";
-import Display from "./Display/display";
 
-import "./department.css";
 import { Container, Paper, Tab, Tabs } from "@material-ui/core";
+
+import Display from "./Display/display";
 import NewStaff from "./New/newStaff";
 import NewStudent from "./New/newStudent";
 import NewClassroom from "./New/newClassroom";
-import { create } from "../../../api/users";
+
+import "./department.css";
 
 const Department = () => {
   const links = ["classrooms", "staffs", "students"];
@@ -29,35 +29,17 @@ const Department = () => {
 
   const [department, setDepartment] = useState({});
   const { pathname } = useLocation();
-  const [_, option] = pathname.split(`${url}/`);
+  const option = pathname.split(`${url}/`)[1];
   const [value, setValue] = useState(links.indexOf(option));
 
-  const history = useHistory();
   const [add, setAdd] = useState(false);
 
   const { id } = useParams();
   const { token } = useContext(userContext).user;
 
-  const onSubmit = (e, data) => {
-    e.preventDefault();
-    create(token, id, data, option)
-      .then(() => {
-        getDepartment(token, id)
-          .then(({ department }) => {
-            setDepartment(department);
-            history.replace(`/departments/${id}/${option}`);
-            setAdd(false);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      })
-      .catch((err) => console.error(err));
-  };
-
   useEffect(() => {
     const source = axios.CancelToken.source();
-    const res = getDepartment(token, id, source.token);
+    const res = fetchOne(token, id, source.token);
     res
       .then(({ department }) => {
         setDepartment(department);
@@ -101,10 +83,10 @@ const Department = () => {
       </div>
 
       <ChooseComponent
+        setDepartment={setDepartment}
         setAdd={setAdd}
         add={add}
         option={option}
-        onSubmit={onSubmit}
       />
 
       <Switch>
@@ -116,18 +98,21 @@ const Department = () => {
   );
 };
 
-const ChooseComponent = ({ add, option, onSubmit, setAdd }) => {
+const ChooseComponent = ({ add, option, setAdd, setDepartment }) => {
   let component = null;
   if (!add) return component;
   switch (option) {
     case "staffs":
-      component = <NewStaff onSubmit={onSubmit} setAdd={setAdd} />;
+      component = <NewStaff setDepartment={setDepartment} setAdd={setAdd} />;
       break;
     case "students":
-      component = <NewStudent onSubmit={onSubmit} setAdd={setAdd} />;
+      component = <NewStudent setDepartment={setDepartment} setAdd={setAdd} />;
       break;
     default:
-      component = <NewClassroom onSubmit={onSubmit} setAdd={setAdd} />;
+      component = (
+        <NewClassroom setDepartment={setDepartment} setAdd={setAdd} />
+      );
+      break;
   }
 
   return (

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useContext, useEffect } from "react";
-import { fetchOne } from "../../api/users";
+import { fetchOne } from "../../api/staff";
 import { userContext } from "../../context/userContext";
 
 import Container from "@material-ui/core/Container";

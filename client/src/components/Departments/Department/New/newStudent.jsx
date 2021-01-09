@@ -3,52 +3,67 @@ import xlsxParser from "xlsx-parse-json";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
-import { fetchAll } from "../../../../api/users";
-import { useParams } from "react-router-dom";
+import { create } from "../../../../api/students";
+import { fetchAll as fetchAllClassrooms } from "../../../../api/classroom";
+import department from "../../../../api/department";
+import { useHistory, useParams } from "react-router-dom";
 import { userContext } from "../../../../context/userContext";
 
-const NewStudent = ({ onSubmit, setAdd }) => {
+const NewStudent = ({ setAdd, setDepartment }) => {
   const [upload, setUpload] = useState(false);
   const [students, setStudents] = useState([]);
+  const [classroom, setClassroom] = useState("");
   const [student, setStudent] = useState({
     name: "",
     password: "",
     eduMail: "",
-    classroom: "",
   });
   const { id } = useParams();
+  const history = useHistory();
   const { token } = useContext(userContext).user;
 
   const [classrooms, setClassrooms] = useState([]);
 
   useEffect(() => {
-    fetchAll(token, id, "classrooms")
+    fetchAllClassrooms({ token, deptId: id })
       .then(({ classrooms }) => {
         setClassrooms(classrooms);
       })
       .catch((err) => {
         console.error(err);
       });
-  }, []);
+  }, [token, id]);
 
   const onChange = (e) => {
     setStudent({ ...student, [e.target.name]: e.target.value });
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    create({ token, id, students: [student], classroom })
+      .then(() => {
+        department
+          .fetchOne(token, id)
+          .then(({ department }) => {
+            setDepartment(department);
+            history.replace(`/departments/${id}/students`);
+            setAdd(false);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      })
+      .catch((err) => console.error(err));
+  };
+
   const { name, password, eduMail } = student;
   return (
     <Fragment>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log(students);
-          // onSubmit(e, students);
-        }}
-      >
+      <form onSubmit={onSubmit}>
         <FormControl fullWidth>
           <select
             onChange={(e) => {
-              setStudent({ ...student, [e.target.name]: e.target.value });
+              setClassroom(e.target.value);
             }}
             name="classroom"
           >

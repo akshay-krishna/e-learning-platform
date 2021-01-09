@@ -18,7 +18,7 @@ const router = Router(); //initialize the router
  *  @access public
  */
 
-router.post("/student", async (req, res) => {
+router.post("/students", async (req, res) => {
   const { eduMail, password } = req.body;
   try {
     const student = await Student.findOne({ eduMail });
@@ -50,7 +50,7 @@ router.post("/student", async (req, res) => {
  *  @access public
  */
 
-router.post("/staff", async (req, res) => {
+router.post("/staffs", async (req, res) => {
   const { eduMail, password } = req.body;
   try {
     const staff = await Staff.findOne({ eduMail: eduMail });

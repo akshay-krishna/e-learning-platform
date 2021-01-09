@@ -26,7 +26,7 @@ router.get("/", deptHead, async (req, res) => {
     const staffs = await Staff.find({ department: deptId }, "-password");
     if (!staffs) return res.sendStatus(404);
     res.json({ staffs });
-  } catch (error) {
+  } catch (err) {
     console.error(err.message);
     res.sendStatus(500);
   }
@@ -43,7 +43,6 @@ router.get("/", deptHead, async (req, res) => {
 router.post("/", admin, async (req, res) => {
   const { list } = req.body;
   const { deptId } = req.params;
-
   try {
     const department = await Department.findById(deptId);
     if (!department) return res.sendStatus(404);

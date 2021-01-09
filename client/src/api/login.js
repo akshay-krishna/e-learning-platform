@@ -1,9 +1,10 @@
-import axios from "../libs/axios";
+import axios from "./lib/axios";
 
 // authenticate a user
-const login = async (data) => {
+const login = async (data, type) => {
+  const URL = `/auth/${type ? "staffs" : "students"}`;
   try {
-    return await axios.post("/auth/staff", data);
+    return await axios.post(URL, data);
   } catch (err) {
     console.error(err.response);
   }

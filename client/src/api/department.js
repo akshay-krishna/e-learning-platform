@@ -1,7 +1,7 @@
-import axios from "../libs/axios";
+import axios from "./lib/axios";
 
 // get all departments
-export const getAll = async (token, cancelToken) => {
+export const fetchAll = async (token, cancelToken) => {
   try {
     const res = await axios.get("/departments", {
       cancelToken: cancelToken,
@@ -17,7 +17,7 @@ export const getAll = async (token, cancelToken) => {
 };
 
 // create a department
-export const createDepartment = async (token, data) => {
+export const create = async (token, data) => {
   try {
     const res = await axios.post("/departments", data, {
       headers: {
@@ -32,9 +32,9 @@ export const createDepartment = async (token, data) => {
 };
 
 // get a department
-export const getDepartment = async (token, id, cancelToken) => {
+export const fetchOne = async (token, deptId, cancelToken) => {
   try {
-    const res = await axios.get(`/departments/${id}`, {
+    const res = await axios.get(`/departments/${deptId}`, {
       cancelToken: cancelToken,
       headers: {
         Authorization: token,
@@ -43,14 +43,14 @@ export const getDepartment = async (token, id, cancelToken) => {
     return res.data;
   } catch (err) {
     console.error(err.response);
-    throw Error(`Failed to fetch ${id}`);
+    throw Error(`Failed to fetch ${deptId}`);
   }
 };
 
 // update a department
-export const updateDepartment = async (token, id, data) => {
+export const update = async (token, deptId, data) => {
   try {
-    const res = await axios.put(`/departments/${id}`, data, {
+    const res = await axios.put(`/departments/${deptId}`, data, {
       headers: {
         Authorization: token,
       },
@@ -58,14 +58,14 @@ export const updateDepartment = async (token, id, data) => {
     return res.status;
   } catch (err) {
     console.error(err.response);
-    throw Error(`Failed to update the department ${id}`);
+    throw Error(`Failed to update the department ${deptId}`);
   }
 };
 
 // delete a department
-export const deleteDepartment = async (token, id) => {
+export const destroy = async (token, deptId) => {
   try {
-    const res = await axios.delete(`/departments/${id}`, {
+    const res = await axios.delete(`/departments/${deptId}`, {
       headers: {
         Authorization: token,
       },
@@ -73,6 +73,16 @@ export const deleteDepartment = async (token, id) => {
     return res.status;
   } catch (err) {
     console.error(err.response);
-    throw Error(`Failed to delete the department ${id}`);
+    throw Error(`Failed to delete the department ${deptId}`);
   }
 };
+
+const department = {
+  fetchAll,
+  create,
+  fetchOne,
+  update,
+  destroy,
+};
+
+export default department;

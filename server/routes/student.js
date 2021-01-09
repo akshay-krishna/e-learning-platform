@@ -42,16 +42,15 @@ router.get("/", admin, async (req, res) => {
 
 router.post("/", admin, async (req, res) => {
   const { deptId } = req.params;
-  const { list } = req.body;
-  console.log(list[0]);
-  const { classroom: clsId } = list[0];
+  const { list, cid } = req.body;
   try {
     const department = await Department.findById(deptId);
-    const classroom = await Classroom.findById(clsId);
+    const classroom = await Classroom.findById(cid);
     if (!department || !classroom) return res.sendStatus(404);
 
     for (item of list) {
       item.department = deptId;
+      item.classroom = cid;
     }
     const newStudent = await Student.create(list);
     classroom.studentMembers = [
