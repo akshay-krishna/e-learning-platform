@@ -10,7 +10,14 @@ const CourseSchema = new Schema({
     ref: "staffs",
     required: true,
   },
+
+  assignments: [
+    {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "assignments",
+    },
+  ],
 });
 
-// module.exports = model("courses", model(CourseSchema));
-
+module.exports = model("courses", CourseSchema);

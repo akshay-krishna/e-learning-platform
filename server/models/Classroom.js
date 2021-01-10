@@ -1,17 +1,5 @@
 const { model, Schema } = require("mongoose");
 
-const CourseSchema = new Schema({
-  courseName: {
-    type: Schema.Types.String,
-    required: true,
-  },
-  teach: {
-    type: Schema.Types.ObjectId,
-    ref: "staffs",
-    required: true,
-  },
-});
-
 const ClassroomSchema = new Schema({
   name: {
     type: Schema.Types.String,
@@ -24,32 +12,24 @@ const ClassroomSchema = new Schema({
     required: true,
   },
 
-  courses: [CourseSchema],
+  courses: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "courses",
+      required: true,
+    },
+  ],
 
   homeRoomTeacher: {
     type: Schema.Types.ObjectId,
     ref: "staffs",
+    required: true,
   },
 
   studentMembers: [
     {
       type: Schema.Types.ObjectId,
       ref: "students",
-    },
-  ],
-
-  assignments: [
-    {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "assignments",
-    },
-  ],
-
-  feeds: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "feeds",
     },
   ],
 });

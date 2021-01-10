@@ -51,6 +51,7 @@ router.post("/students", async (req, res) => {
  */
 
 router.post("/staffs", async (req, res) => {
+  console.log("object");
   const { eduMail, password } = req.body;
   try {
     const staff = await Staff.findOne({ eduMail: eduMail });

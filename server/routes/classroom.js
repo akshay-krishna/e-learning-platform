@@ -105,10 +105,10 @@ router.get("/:id", auth, async (req, res) => {
 
 router.put("/:id", classCharge, async (req, res) => {
   const { id } = req.params;
-  const { body } = req.body;
+  const { updateData } = req.body;
 
   try {
-    await Classroom.findByIdAndUpdate(id, body);
+    await Classroom.findByIdAndUpdate(id, updateData);
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);
@@ -126,7 +126,7 @@ router.put("/:id", classCharge, async (req, res) => {
 
 router.put("/:id/courses", deptHead, async (req, res) => {
   const { course } = req.body;
-  const { id, deptId } = req.params;
+  const { id } = req.params;
   try {
     const classroom = await Classroom.findById(id);
     classroom.courses.push(course);

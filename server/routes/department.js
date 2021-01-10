@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const admin = require("../middleware/admin");
+const auth = require("../middleware/auth");
 const deptHead = require("../middleware/deptHead");
 const Classroom = require("../models/Classroom");
 
@@ -69,7 +70,7 @@ router.post("/", admin, async (req, res) => {
  *  @access deptHead
  */
 
-router.get("/:id", deptHead, async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   const { id } = req.params;
   try {
     const department = await Department.findById(id)

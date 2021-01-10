@@ -53,7 +53,6 @@ const Department = () => {
   }, [id, token]);
 
   const onChange = (e, newValue) => setValue(newValue);
-
   return (
     <div>
       <div className="navBar">

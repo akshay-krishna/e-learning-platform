@@ -51,7 +51,7 @@ export const update = async ({ token, deptId, cid, updateData }) => {
   try {
     const res = await axios.put(
       `/departments/${deptId}/classrooms/${cid}`,
-      updateData,
+      { updateData },
       {
         headers: {
           Authorization: token,
