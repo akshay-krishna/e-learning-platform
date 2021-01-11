@@ -1,10 +1,8 @@
 import { useParams } from "react-router-dom";
-import Staffs from "./staffs";
-import Students from "./students";
-import Classrooms from "./classrooms";
-
+import Staffs from "./components/staffs/staffs";
+import Students from "./components/students/students";
+import Classrooms from "./components/classrooms/classrooms";
 import "./display.css";
-
 const Display = ({ department, setDepartment }) => {
   const { option } = useParams();
   const { staffMembers, studentMembers, classrooms } = department;
@@ -22,7 +20,11 @@ const Display = ({ department, setDepartment }) => {
       break;
     default:
       component = (
-        <Classrooms classrooms={classrooms} setDepartment={setDepartment} />
+        <Classrooms
+          classrooms={classrooms}
+          staffs={staffMembers}
+          setDepartment={setDepartment}
+        />
       );
       break;
   }

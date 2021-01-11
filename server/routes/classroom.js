@@ -106,31 +106,13 @@ router.get("/:id", auth, async (req, res) => {
 router.put("/:id", classCharge, async (req, res) => {
   const { id } = req.params;
   const { updateData } = req.body;
-
   try {
     await Classroom.findByIdAndUpdate(id, updateData);
-    res.sendStatus(200);
-  } catch (err) {
-    console.error(err.message);
-    res.sendStatus(500);
-  }
-});
-
-/**
- *  *Create a course under the classroom
- *  @method PUT
- *  ?route --> /departments/:deptId/classrooms/:id/courses
- *  @param {staffs: <array of staffs id>}
- *  @access deptHead
- */
-
-router.put("/:id/courses", deptHead, async (req, res) => {
-  const { course } = req.body;
-  const { id } = req.params;
-  try {
-    const classroom = await Classroom.findById(id);
-    classroom.courses.push(course);
-    await classroom.save();
+    await Staff.findOneAndUpdate({ homeroom: id }, { homeroom: undefined });
+    await Staff.findOneAndUpdate(
+      { _id: updateData.homeRoomTeacher },
+      { homeroom: id }
+    );
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);
@@ -170,24 +152,25 @@ router.put("/:id/students", classCharge, async (req, res) => {
  *  @access deptHead
  */
 
-router.put("/:id/homeroom", deptHead, async (req, res) => {
-  const { id } = req.params;
-  const { staffId } = req.body;
-  try {
-    const isMemberOfClass = await Classroom.exists({
-      _id: id,
-      staffMembers: staffId,
-    });
-    if (!isMemberOfClass) return res.sendStatus(400);
-    const classroom = await Classroom.findById(id);
-    classroom.homeRoomTeacher = staffId;
-    await classroom.save();
-    res.sendStatus(200);
-  } catch (err) {
-    console.error(err.message);
-    res.sendStatus(500);
-  }
-});
+// router.put("/:id/homeroom", deptHead, async (req, res) => {
+//   const { id } = req.params;
+//   const { staffId } = req.body;
+//   try {
+//     const isMemberOfClass = await Classroom.exists({
+//       _id: id,
+//       staffMembers: staffId,
+//     });
+//     if (!isMemberOfClass) return res.sendStatus(400);
+//     const classroom = await Classroom.findById(id);
+//     console.log(classroom.homeRoomTeacher);
+//     classroom.homeRoomTeacher = staffId;
+//     await classroom.save();
+//     res.sendStatus(200);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.sendStatus(500);
+//   }
+// });
 
 /**
  *  *delete a classroom

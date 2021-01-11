@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 // create a connection to the database
-
+console.log(process.env);
 require("dotenv").config();
 require("./config/db")();
 require("./config/initDb")();

@@ -6,33 +6,33 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import Card from "@material-ui/core/Card";
 
-import { userContext } from "../../../../context/userContext";
-import { fetchOne } from "../../../../api/department";
+import { userContext } from "@context/userContext";
+import { fetchOne } from "@api/department";
+import { destroy } from "@api/staff";
 
-import { destroy } from "../../../../api/students";
-
-const Students = ({ students, setDepartment }) => {
+const Staffs = ({ staffs, setDepartment }) => {
   const { id: deptId } = useParams();
   const { token } = useContext(userContext).user;
   const history = useHistory();
 
   const remove = (id) => {
-    destroy({ token, deptId, studentId: id })
+    destroy({ token, deptId, staffId: id })
       .then(() => {
         fetchOne(token, deptId)
           .then(({ department }) => {
             setDepartment(department);
-            history.replace(`/departments/${deptId}/students`);
+            history.replace(`/departments/${deptId}/staffs`);
           })
           .catch((err) => console.error(err));
       })
       .catch((err) => console.error(err));
   };
+
   return (
-    <div className="students">
-      {students?.map(({ _id: id, name }) => (
+    <div className="staffs">
+      {staffs?.map(({ _id: id, name }) => (
         <Card key={id}>
-          <div className="students__card">
+          <div className="staffs__card">
             <div>{name}</div>
             <div>
               <IconButton
@@ -55,4 +55,4 @@ const Students = ({ students, setDepartment }) => {
   );
 };
 
-export default Students;
+export default Staffs;

@@ -59,3 +59,21 @@
   justify-content: flex-end;
   margin-bottom: 0.5rem;
 }
+.select {
+  width: 100%;
+  border: 2px solid #00c853;
+  border-radius: 5px;
+  height: fit-content;
+  padding: 0.5rem;
+}
+.select > select {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+option {
+  background-color: none;
+  padding: 0.5rem !important;
+}

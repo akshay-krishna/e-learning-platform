@@ -1,6 +1,6 @@
 import { Fragment, useContext } from "react";
 import { Route, Switch } from "react-router-dom";
-import { userContext } from "../../context/userContext";
+import { userContext } from "@context/userContext";
 
 import "./app.css";
 import Login from "../Login/login";
