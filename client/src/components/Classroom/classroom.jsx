@@ -3,7 +3,6 @@ import { useContext, useEffect } from "react";
 
 import { fetchOne } from "../../api/classroom";
 
-import department from "../../api/department";
 import courses from "../../api/course";
 import { userContext } from "../../context/userContext";
 
@@ -73,7 +72,7 @@ const Course = ({ courseId }) => {
 };
 
 const NewCourse = () => {
-  const { deptId, token } = useContext(userContext).user;
+  const { token } = useContext(userContext).user;
   const { cid } = useParams();
   const [course, setCourse] = useState({ courseName: "", teach: "" });
   const [staffs, setStaffs] = useState([]);
